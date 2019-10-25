@@ -81,6 +81,48 @@ int TileMap::infer_num_tiles()
 }
 
 
+int TileMap::get_tile(int tile_x, int tile_y)
+{
+   if (tile_x < 0 || (tile_x >= width)) return -1;
+   if (tile_y < 0 || (tile_y >= height)) return -1;
+
+   return tiles[tile_x % width + tile_y * width];
+}
+
+
+bool TileMap::set_tile(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index)
+   // if the tile is set to a negative number, then the tiles[tile_index] will be set to that number, but
+   // the image will be the bitmap at index 0
+{
+   if (tile_x < 0 || (tile_x >= width)) return false;
+   if (tile_y < 0 || (tile_y >= height)) return false;
+
+   tiles[tile_x + tile_y * width] = tile_index;
+
+   if (tile_index >= (int)tile_atlas.get_tile_index().size()) return false;
+
+
+   // texture the appropriate vetexes in the mesh
+
+   if (tile_index < 0) tile_index = 0; // IF the tile is < 0, the graphic will be set to 0
+
+   int u1, v1, u2, v2;
+   tile_atlas.get_tile_uv(tile_index, &u1, &v1, &u2, &v2);
+
+   set_tile_uv(tile_x, tile_y, u1, v1, u2, v2);
+
+   return true;
+}
+
+
+//bool TileMap::set_contiguous_tile_num(TileAtlas &tile_atlas, int contiguous_tile_num, int tile_index)
+//{
+   //int tile_x = contiguous_tile_num % width;
+   //int tile_y = contiguous_tile_num / width;
+   //return set_tile(tile_atlas, tile_x, tile_y, tile_index);
+//}
+
+
 void TileMap::resize(int w, int h, int tile_w, int tile_h)
 {
    // set the width and height of our map
@@ -165,48 +207,6 @@ void TileMap::resize(int w, int h, int tile_w, int tile_h)
 
    // unlock our buffer
    al_unlock_vertex_buffer(vertex_buffer);
-}
-
-
-//bool TileMap::set_contiguous_tile_num(TileAtlas &tile_atlas, int contiguous_tile_num, int tile_index)
-//{
-   //int tile_x = contiguous_tile_num % width;
-   //int tile_y = contiguous_tile_num / width;
-   //return set_tile(tile_atlas, tile_x, tile_y, tile_index);
-//}
-
-
-int TileMap::get_tile(int tile_x, int tile_y)
-{
-   if (tile_x < 0 || (tile_x >= width)) return -1;
-   if (tile_y < 0 || (tile_y >= height)) return -1;
-
-   return tiles[tile_x % width + tile_y * width];
-}
-
-
-bool TileMap::set_tile(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index)
-   // if the tile is set to a negative number, then the tiles[tile_index] will be set to that number, but
-   // the image will be the bitmap at index 0
-{
-   if (tile_x < 0 || (tile_x >= width)) return false;
-   if (tile_y < 0 || (tile_y >= height)) return false;
-
-   tiles[tile_x + tile_y * width] = tile_index;
-
-   if (tile_index >= (int)tile_atlas.get_tile_index().size()) return false;
-
-
-   // texture the appropriate vetexes in the mesh
-
-   if (tile_index < 0) tile_index = 0; // IF the tile is < 0, the graphic will be set to 0
-
-   int u1, v1, u2, v2;
-   tile_atlas.get_tile_uv(tile_index, &u1, &v1, &u2, &v2);
-
-   set_tile_uv(tile_x, tile_y, u1, v1, u2, v2);
-
-   return true;
 }
 
 

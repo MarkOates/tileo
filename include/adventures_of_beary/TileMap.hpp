@@ -30,11 +30,11 @@ public:
    int get_height();
    int infer_num_tiles();
 
-   void resize(int w, int h, int tile_w, int tile_h);
-
    int get_tile(int tile_x, int tile_y);
    bool set_tile(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index);
    //bool set_contiguous_tile_num(TileAtlas &tile_atlas, int contiguous_tile_num, int tile_index);
+
+   void resize(int w, int h, int tile_w, int tile_h);
 
    void draw(ALLEGRO_BITMAP *tile_atlas_bitmap, int camera_x, int camera_y);
 };
