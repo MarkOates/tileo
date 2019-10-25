@@ -5,6 +5,24 @@
 #include <iostream>
 
 
+int TileMap::get_width()
+{
+   return width;
+}
+
+
+int TileMap::get_height()
+{
+   return height;
+}
+
+
+int TileMap::infer_num_tiles()
+{
+   return width * height;
+}
+
+
 void TileMap::set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2)
 {
    int index_start = (tile_x * 6) + tile_y * (width*6);
@@ -153,12 +171,6 @@ void TileMap::resize(int w, int h, int tile_w, int tile_h)
 }
 
 
-int TileMap::get_num_tiles()
-{
-   return width * height;
-}
-
-
 bool TileMap::set_contiguous_tile_num(int contiguous_tile_num, int tile_index)
 {
    int tile_x = contiguous_tile_num % width;
@@ -214,18 +226,6 @@ void TileMap::draw(ALLEGRO_BITMAP *tile_atlas_bitmap, int camera_x, int camera_y
    al_draw_vertex_buffer(vertex_buffer, tile_atlas_bitmap, 0, al_get_vertex_buffer_size(vertex_buffer), ALLEGRO_PRIM_TRIANGLE_LIST);
 
    al_use_transform(&prev);
-}
-
-
-int TileMap::get_width()
-{
-   return width;
-}
-
-
-int TileMap::get_height()
-{
-   return height;
 }
 
 
