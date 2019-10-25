@@ -13,6 +13,24 @@ TileMapMeshRenderer::TileMapMeshRenderer(ALLEGRO_BITMAP *tile_atlas_bitmap)
 }
 
 
+int TileMapMeshRenderer::get_width()
+{
+   return width;
+}
+
+
+int TileMapMeshRenderer::get_height()
+{
+   return height;
+}
+
+
+int TileMapMeshRenderer::infer_num_tiles()
+{
+   return width * height;
+}
+
+
 TileMapMeshRenderer::~TileMapMeshRenderer()
 {
 }

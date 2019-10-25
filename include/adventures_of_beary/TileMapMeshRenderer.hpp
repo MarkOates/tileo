@@ -19,6 +19,10 @@ public:
    TileMapMeshRenderer(ALLEGRO_BITMAP *tile_atlas_bitmap=nullptr);
    ~TileMapMeshRenderer();
 
+   int get_width();
+   int get_height();
+   int infer_num_tiles();
+
    void render(int camera_x, int camera_y);
 };
 
