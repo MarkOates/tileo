@@ -3,11 +3,9 @@
 
 
 
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_image.h>
-#include <allegro5/allegro_primitives.h>
-#include <vector>
 #include <adventures_of_beary/TileIndexInfo.hpp>
+#include <allegro5/allegro.h>
+#include <vector>
 
 
 
