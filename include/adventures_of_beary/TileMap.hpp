@@ -37,7 +37,6 @@ public:
    //bool set_contiguous_tile_num(TileAtlas &tile_atlas, int contiguous_tile_num, int tile_index);
 
    void resize(TileMapMeshRenderer &mesh_renderer, int w, int h, int tile_w, int tile_h);
-   void resize_mesh(int w, int h, int tile_w, int tile_h);
 };
 
 
