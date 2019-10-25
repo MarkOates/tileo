@@ -14,33 +14,33 @@ void TileMapMeshRenderer::set_tile_uv(int tile_x, int tile_y, int u1, int v1, in
    ALLEGRO_VERTEX *vbuff = (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, index_start, 6, ALLEGRO_LOCK_WRITEONLY);
    if (!vbuff) std::cout << "could not lock vertex buffer" << std::endl;
 
-   if (use_vtx) vtx[i+0].u = u1;
-   if (use_vtx) vtx[i+0].v = v1;
+   if (use_primitive) vtx[i+0].u = u1;
+   if (use_primitive) vtx[i+0].v = v1;
    vbuff[0].u = u1;
    vbuff[0].v = v1;
 
-   if (use_vtx) vtx[i+1].u = u1;
-   if (use_vtx) vtx[i+1].v = v2;
+   if (use_primitive) vtx[i+1].u = u1;
+   if (use_primitive) vtx[i+1].v = v2;
    vbuff[1].u = u1;
    vbuff[1].v = v2;
 
-   if (use_vtx) vtx[i+2].u = u2;
-   if (use_vtx) vtx[i+2].v = v2;
+   if (use_primitive) vtx[i+2].u = u2;
+   if (use_primitive) vtx[i+2].v = v2;
    vbuff[2].u = u2;
    vbuff[2].v = v2;
 
-   if (use_vtx) vtx[i+3].u = u2;
-   if (use_vtx) vtx[i+3].v = v2;
+   if (use_primitive) vtx[i+3].u = u2;
+   if (use_primitive) vtx[i+3].v = v2;
    vbuff[3].u = u2;
    vbuff[3].v = v2;
 
-   if (use_vtx) vtx[i+4].u = u2;
-   if (use_vtx) vtx[i+4].v = v1;
+   if (use_primitive) vtx[i+4].u = u2;
+   if (use_primitive) vtx[i+4].v = v1;
    vbuff[4].u = u2;
    vbuff[4].v = v1;
 
-   if (use_vtx) vtx[i+5].u = u1;
-   if (use_vtx) vtx[i+5].v = v1;
+   if (use_primitive) vtx[i+5].u = u1;
+   if (use_primitive) vtx[i+5].v = v1;
    vbuff[5].u = u1;
    vbuff[5].v = v1;
 
@@ -54,7 +54,7 @@ TileMapMeshRenderer::TileMapMeshRenderer(ALLEGRO_BITMAP *tile_atlas_bitmap)
    , tile_atlas_bitmap(tile_atlas_bitmap)
    , width(0)
    , height(0)
-   , use_vtx(false)
+   , use_primitive(false)
 {
 }
 
@@ -107,7 +107,7 @@ void TileMapMeshRenderer::resize_mesh(int w, int h, int tile_w, int tile_h)
 {
    // resize the vtx vector
    vtx.clear();
-   if (use_vtx) vtx.resize(width*height*6);
+   if (use_primitive) vtx.resize(width*height*6);
 
    // create a vertex_buffer
    if (vertex_buffer) al_destroy_vertex_buffer(vertex_buffer);
@@ -131,33 +131,33 @@ void TileMapMeshRenderer::resize_mesh(int w, int h, int tile_w, int tile_h)
       int x2 = x1 + 1;
       int y2 = y1 + 1;
 
-      if (use_vtx) vtx[v+0].x = x1;
-      if (use_vtx) vtx[v+0].y = y1;
+      if (use_primitive) vtx[v+0].x = x1;
+      if (use_primitive) vtx[v+0].y = y1;
       vbuff[0].x = x1;
       vbuff[0].y = y1;
 
-      if (use_vtx) vtx[v+1].x = x1;
-      if (use_vtx) vtx[v+1].y = y2;
+      if (use_primitive) vtx[v+1].x = x1;
+      if (use_primitive) vtx[v+1].y = y2;
       vbuff[1].x = x1;
       vbuff[1].y = y2;
 
-      if (use_vtx) vtx[v+2].x = x2;
-      if (use_vtx) vtx[v+2].y = y2;
+      if (use_primitive) vtx[v+2].x = x2;
+      if (use_primitive) vtx[v+2].y = y2;
       vbuff[2].x = x2;
       vbuff[2].y = y2;
 
-      if (use_vtx) vtx[v+3].x = x2;
-      if (use_vtx) vtx[v+3].y = y2;
+      if (use_primitive) vtx[v+3].x = x2;
+      if (use_primitive) vtx[v+3].y = y2;
       vbuff[3].x = x2;
       vbuff[3].y = y2;
 
-      if (use_vtx) vtx[v+4].x = x2;
-      if (use_vtx) vtx[v+4].y = y1;
+      if (use_primitive) vtx[v+4].x = x2;
+      if (use_primitive) vtx[v+4].y = y1;
       vbuff[4].x = x2;
       vbuff[4].y = y1;
 
-      if (use_vtx) vtx[v+5].x = x1;
-      if (use_vtx) vtx[v+5].y = y1;
+      if (use_primitive) vtx[v+5].x = x1;
+      if (use_primitive) vtx[v+5].y = y1;
       vbuff[5].x = x1;
       vbuff[5].y = y1;
    }
@@ -168,10 +168,10 @@ void TileMapMeshRenderer::resize_mesh(int w, int h, int tile_w, int tile_h)
    v = 0;
    for (; v<num_vertexes; v++, vbuff++)
    {
-      if (use_vtx) vtx[v].x *= tile_w;
-      if (use_vtx) vtx[v].y *= tile_h;
-      if (use_vtx) vtx[v].z = 0;
-      if (use_vtx) vtx[v].color = al_map_rgba_f(1, 1, 1, 1);//color::mix(color::white, random_color(), 0.5);//color::transparent;
+      if (use_primitive) vtx[v].x *= tile_w;
+      if (use_primitive) vtx[v].y *= tile_h;
+      if (use_primitive) vtx[v].z = 0;
+      if (use_primitive) vtx[v].color = al_map_rgba_f(1, 1, 1, 1);//color::mix(color::white, random_color(), 0.5);//color::transparent;
       vbuff[0].x *= tile_w;
       vbuff[0].y *= tile_h;
       vbuff[0].z = 0;

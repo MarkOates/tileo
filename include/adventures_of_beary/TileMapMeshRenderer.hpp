@@ -15,7 +15,7 @@ private:
    ALLEGRO_BITMAP *tile_atlas_bitmap;
    int width;
    int height;
-   bool use_vtx;
+   bool use_primitive;
 
    void set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2);
 
