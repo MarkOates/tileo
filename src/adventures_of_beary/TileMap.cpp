@@ -8,7 +8,6 @@
 TileMap::TileMap()
    : vertex_buffer(NULL)
    , vtx()
-   , tile_atlas(NULL)
    , width(0)
    , height(0)
    , tiles()
@@ -79,13 +78,6 @@ void TileMap::set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2
    vbuff[5].v = v1;
 
    al_unlock_vertex_buffer(vertex_buffer);
-}
-
-
-void TileMap::use_tile_atlas(TileAtlas *atlas)
-{
-   if (tile_atlas != NULL) std::cout << "Warning: swapping new atlas; potentially unsafe operation" << std::endl;
-   tile_atlas = atlas;
 }
 
 
@@ -176,11 +168,11 @@ void TileMap::resize(int w, int h, int tile_w, int tile_h)
 }
 
 
-bool TileMap::set_contiguous_tile_num(int contiguous_tile_num, int tile_index)
+bool TileMap::set_contiguous_tile_num(TileAtlas &tile_atlas, int contiguous_tile_num, int tile_index)
 {
    int tile_x = contiguous_tile_num % width;
    int tile_y = contiguous_tile_num / width;
-   return set_tile(tile_x, tile_y, tile_index);
+   return set_tile(tile_atlas, tile_x, tile_y, tile_index);
 }
 
 
@@ -193,7 +185,7 @@ int TileMap::get_tile(int tile_x, int tile_y)
 }
 
 
-bool TileMap::set_tile(int tile_x, int tile_y, int tile_index)
+bool TileMap::set_tile(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index)
    // if the tile is set to a negative number, then the tiles[tile_index] will be set to that number, but
    // the image will be the bitmap at index 0
 {
@@ -202,8 +194,7 @@ bool TileMap::set_tile(int tile_x, int tile_y, int tile_index)
 
    tiles[tile_x + tile_y * width] = tile_index;
 
-   if (!tile_atlas) return false;
-   if (tile_index >= (int)tile_atlas->tile_index.size()) return false;
+   if (tile_index >= (int)tile_atlas.get_tile_index().size()) return false;
 
 
    // texture the appropriate vetexes in the mesh
@@ -211,7 +202,7 @@ bool TileMap::set_tile(int tile_x, int tile_y, int tile_index)
    if (tile_index < 0) tile_index = 0; // IF the tile is < 0, the graphic will be set to 0
 
    int u1, v1, u2, v2;
-   tile_atlas->get_tile_uv(tile_index, &u1, &v1, &u2, &v2);
+   tile_atlas.get_tile_uv(tile_index, &u1, &v1, &u2, &v2);
 
    set_tile_uv(tile_x, tile_y, u1, v1, u2, v2);
 

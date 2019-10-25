@@ -42,6 +42,10 @@
 
 
 
+std::vector<TileIndexInfo> &TileAtlas::get_tile_index()
+{
+   return tile_index;
+}
 
 
 // for future purposes, this (currently unused) function should be used to replace the current technique that is used to build the TileAtlas
