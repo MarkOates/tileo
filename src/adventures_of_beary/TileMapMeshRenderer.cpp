@@ -10,7 +10,6 @@ void TileMapMeshRenderer::set_tile_uv(int tile_x, int tile_y, int u1, int v1, in
    int index_start = (tile_x * 6) + tile_y * (width*6);
    int &i = index_start;
 
-   //ALLEGRO_VERTEX *vbuff = (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, index_start, 6, ALLEGRO_LOCK_WRITEONLY);
    ALLEGRO_VERTEX *vbuff = (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, index_start, 6, ALLEGRO_LOCK_WRITEONLY);
    if (!vbuff) std::cout << "could not lock vertex buffer" << std::endl;
 
