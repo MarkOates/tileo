@@ -12,13 +12,9 @@
 class TileMap
 {
 private:
-   ALLEGRO_VERTEX_BUFFER *vertex_buffer;
-   std::vector<ALLEGRO_VERTEX> vtx;
    int width;
    int height;
    std::vector<int> tiles;
-
-   bool use_vtx;
 
 public:
 

@@ -6,12 +6,9 @@
 
 
 TileMap::TileMap()
-   : vertex_buffer(NULL)
-   , vtx()
-   , width(0)
+   : width(0)
    , height(0)
    , tiles()
-   , use_vtx(false) // setting this to false will skip the creation of the ALLEGRO_VERTEX mesh
 {}
 
 
