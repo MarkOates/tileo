@@ -36,6 +36,7 @@ public:
    //bool set_contiguous_tile_num(TileAtlas &tile_atlas, int contiguous_tile_num, int tile_index);
 
    void resize(int w, int h, int tile_w, int tile_h);
+   void resize_mesh(int w, int h, int tile_w, int tile_h);
 
    void draw(ALLEGRO_BITMAP *tile_atlas_bitmap, int camera_x, int camera_y);
 };

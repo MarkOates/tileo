@@ -143,6 +143,12 @@ void TileMap::resize(int w, int h, int tile_w, int tile_h)
    // resize and clear the tiles
    tiles.assign(width * height, 0);
 
+   resize_mesh(w, h, tile_w, tile_h);
+}
+
+
+void TileMap::resize_mesh(int w, int h, int tile_w, int tile_h)
+{
    // resize the vtx vector
    vtx.clear();
    if (use_vtx) vtx.resize(width*height*6);
