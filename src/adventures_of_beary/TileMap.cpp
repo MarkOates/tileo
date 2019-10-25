@@ -5,6 +5,17 @@
 #include <iostream>
 
 
+TileMap::TileMap()
+   : vertex_buffer(NULL)
+   , vtx()
+   , tile_atlas(NULL)
+   , width(0)
+   , height(0)
+   , tiles()
+   , use_vtx(false) // setting this to false will skip the creation of the ALLEGRO_VERTEX mesh
+{}
+
+
 int TileMap::get_width()
 {
    return width;
@@ -64,17 +75,6 @@ void TileMap::set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2
 
    al_unlock_vertex_buffer(vertex_buffer);
 }
-
-
-TileMap::TileMap()
-   : vertex_buffer(NULL)
-   , vtx()
-   , tile_atlas(NULL)
-   , width(0)
-   , height(0)
-   , tiles()
-   , use_vtx(false) // setting this to false will skip the creation of the ALLEGRO_VERTEX mesh
-{}
 
 
 void TileMap::use_tile_atlas(TileAtlas *atlas)
