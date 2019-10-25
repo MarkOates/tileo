@@ -3,11 +3,9 @@
 #include <adventures_of_beary/TileMapMeshRenderer.hpp>
 
 
-TileMapMeshRenderer::TileMapMeshRenderer(ALLEGRO_BITMAP *tile_atlas_bitmap, int camera_x, int camera_y)
+TileMapMeshRenderer::TileMapMeshRenderer(ALLEGRO_BITMAP *tile_atlas_bitmap)
    : vertex_buffer(nullptr)
    , tile_atlas_bitmap(tile_atlas_bitmap)
-   , camera_x(camera_x)
-   , camera_y(camera_y)
 {
 }
 
@@ -17,7 +15,7 @@ TileMapMeshRenderer::~TileMapMeshRenderer()
 }
 
 
-void TileMapMeshRenderer::render()
+void TileMapMeshRenderer::render(int camera_x, int camera_y)
 {
    ALLEGRO_TRANSFORM prev, transform;
    al_copy_transform(&prev, al_get_current_transform());
