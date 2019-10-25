@@ -9,6 +9,7 @@ TileMapMeshRenderer::TileMapMeshRenderer(ALLEGRO_BITMAP *tile_atlas_bitmap)
    , tile_atlas_bitmap(tile_atlas_bitmap)
    , width(0)
    , height(0)
+   , use_vtx(false)
 {
 }
 

@@ -14,6 +14,7 @@ private:
    ALLEGRO_BITMAP *tile_atlas_bitmap;
    int width;
    int height;
+   bool use_vtx;
 
 public:
    TileMapMeshRenderer(ALLEGRO_BITMAP *tile_atlas_bitmap=nullptr);
