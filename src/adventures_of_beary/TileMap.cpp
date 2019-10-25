@@ -5,39 +5,6 @@
 #include <iostream>
 
 
-TileMap::TileMap()
-   : vertex_buffer(NULL)
-   , vtx()
-   , width(0)
-   , height(0)
-   , tiles()
-   , use_vtx(false) // setting this to false will skip the creation of the ALLEGRO_VERTEX mesh
-{}
-
-
-TileMap::~TileMap()
-{
-}
-
-
-int TileMap::get_width()
-{
-   return width;
-}
-
-
-int TileMap::get_height()
-{
-   return height;
-}
-
-
-int TileMap::infer_num_tiles()
-{
-   return width * height;
-}
-
-
 void TileMap::set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2)
 {
    int index_start = (tile_x * 6) + tile_y * (width*6);
@@ -78,6 +45,39 @@ void TileMap::set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2
    vbuff[5].v = v1;
 
    al_unlock_vertex_buffer(vertex_buffer);
+}
+
+
+TileMap::TileMap()
+   : vertex_buffer(NULL)
+   , vtx()
+   , width(0)
+   , height(0)
+   , tiles()
+   , use_vtx(false) // setting this to false will skip the creation of the ALLEGRO_VERTEX mesh
+{}
+
+
+TileMap::~TileMap()
+{
+}
+
+
+int TileMap::get_width()
+{
+   return width;
+}
+
+
+int TileMap::get_height()
+{
+   return height;
+}
+
+
+int TileMap::infer_num_tiles()
+{
+   return width * height;
 }
 
 
