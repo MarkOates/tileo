@@ -16,6 +16,11 @@ TileMap::TileMap()
 {}
 
 
+TileMap::~TileMap()
+{
+}
+
+
 int TileMap::get_width()
 {
    return width;
