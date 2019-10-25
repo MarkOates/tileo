@@ -4,13 +4,13 @@
 #include <string>
 
 
-class TileMapRenderer
+class TileMapMeshRenderer
 {
 private:
 
 public:
-   TileMapRenderer();
-   ~TileMapRenderer();
+   TileMapMeshRenderer();
+   ~TileMapMeshRenderer();
 
    void render();
 };

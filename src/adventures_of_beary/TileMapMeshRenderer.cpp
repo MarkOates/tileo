@@ -1,19 +1,19 @@
 
 
-#include <adventures_of_beary/TileMapRenderer.hpp>
+#include <adventures_of_beary/TileMapMeshRenderer.hpp>
 
 
-TileMapRenderer::TileMapRenderer()
+TileMapMeshRenderer::TileMapMeshRenderer()
 {
 }
 
 
-TileMapRenderer::~TileMapRenderer()
+TileMapMeshRenderer::~TileMapMeshRenderer()
 {
 }
 
 
-void TileMapRenderer::render()
+void TileMapMeshRenderer::render()
 {
 }
 

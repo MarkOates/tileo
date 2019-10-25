@@ -2,12 +2,12 @@
 
 #include <gtest/gtest.h>
 
-#include <adventures_of_beary/TileMapRenderer.hpp>
+#include <adventures_of_beary/TileMapMeshRenderer.hpp>
 
 
-TEST(adventures_of_beary_TileMapRendererTest, can_be_created_without_blowing_up)
+TEST(adventures_of_beary_TileMapMeshRendererTest, can_be_created_without_blowing_up)
 {
-   TileMapRenderer renderer;
+   TileMapMeshRenderer renderer;
 }
 
 
