@@ -9,11 +9,6 @@
 
 
 
-int random_int(int min, int max);
-
-
-
-
 void TileMap::set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2)
 {
    int index_start = (tile_x * 6) + tile_y * (width*6);
@@ -239,15 +234,6 @@ void TileMap::draw(int camera_x, int camera_y)
    al_draw_vertex_buffer(vertex_buffer, tile_atlas->bitmap, 0, al_get_vertex_buffer_size(vertex_buffer), ALLEGRO_PRIM_TRIANGLE_LIST);
 
    al_use_transform(&prev);
-}
-
-
-
-
-void TileMap::random_fill()
-{
-   for (unsigned i=0; i<(width*height); i++)
-      set_contiguous_tile_num(i, random_int(0, (int)tile_atlas->tile_index.size()));
 }
 
 

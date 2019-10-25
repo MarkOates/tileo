@@ -31,7 +31,6 @@ public:
    TileMap();
 
    void resize(int w, int h, int tile_w, int tile_h);
-   void random_fill();
    void use_tile_atlas(TileAtlas *atlas);
 
    int get_width();
