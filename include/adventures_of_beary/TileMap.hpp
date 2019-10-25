@@ -37,8 +37,6 @@ public:
 
    void resize(int w, int h, int tile_w, int tile_h);
    void resize_mesh(int w, int h, int tile_w, int tile_h);
-
-   void draw(ALLEGRO_BITMAP *tile_atlas_bitmap, int camera_x, int camera_y);
 };
 
 
