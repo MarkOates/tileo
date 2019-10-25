@@ -134,7 +134,7 @@ bool TileMap::set_tile_to_mesh(TileAtlas &tile_atlas, int tile_x, int tile_y, in
 //}
 
 
-void TileMap::resize(int w, int h, int tile_w, int tile_h)
+void TileMap::resize(TileMapMeshRenderer &mesh_renderer, int w, int h, int tile_w, int tile_h)
 {
    // set the width and height of our map
    width = w;
@@ -143,7 +143,7 @@ void TileMap::resize(int w, int h, int tile_w, int tile_h)
    // resize and clear the tiles
    tiles.assign(width * height, 0);
 
-   resize_mesh(w, h, tile_w, tile_h);
+   mesh_renderer.resize_mesh(w, h, tile_w, tile_h);
 }
 
 

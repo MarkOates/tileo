@@ -2,6 +2,7 @@
 
 
 #include <adventures_of_beary/TileAtlas.hpp>
+#include <adventures_of_beary/TileMapMeshRenderer.hpp>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
@@ -35,7 +36,7 @@ public:
    bool set_tile_to_mesh(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index);
    //bool set_contiguous_tile_num(TileAtlas &tile_atlas, int contiguous_tile_num, int tile_index);
 
-   void resize(int w, int h, int tile_w, int tile_h);
+   void resize(TileMapMeshRenderer &mesh_renderer, int w, int h, int tile_w, int tile_h);
    void resize_mesh(int w, int h, int tile_w, int tile_h);
 };
 
