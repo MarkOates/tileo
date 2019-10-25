@@ -32,6 +32,7 @@ public:
 
    int get_tile(int tile_x, int tile_y);
    bool set_tile(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index);
+   bool set_tile_to_mesh(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index);
    //bool set_contiguous_tile_num(TileAtlas &tile_atlas, int contiguous_tile_num, int tile_index);
 
    void resize(int w, int h, int tile_w, int tile_h);

@@ -99,6 +99,14 @@ bool TileMap::set_tile(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_i
 
    tiles[tile_x + tile_y * width] = tile_index;
 
+   set_tile_to_mesh(tile_atlas, tile_x, tile_y, tile_index);
+
+   return true;
+}
+
+
+bool TileMap::set_tile_to_mesh(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index)
+{
    if (tile_index >= (int)tile_atlas.get_tile_index().size()) return false;
 
 
