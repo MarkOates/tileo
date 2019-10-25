@@ -28,6 +28,7 @@ public:
    int infer_num_tiles();
 
    bool set_tile_to_mesh(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index);
+   void resize_mesh(int w, int h, int tile_w, int tile_h);
 
    void render(int camera_x, int camera_y);
 };
