@@ -10,6 +10,7 @@ class TileMapMeshRenderer
 {
 private:
    ALLEGRO_VERTEX_BUFFER *vertex_buffer;
+   std::vector<ALLEGRO_VERTEX> vtx;
    ALLEGRO_BITMAP *tile_atlas_bitmap;
    int width;
    int height;
