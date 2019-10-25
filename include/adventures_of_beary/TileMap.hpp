@@ -1,15 +1,11 @@
 #pragma once
 
 
-
-
 #include <adventures_of_beary/TileAtlas.hpp>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include <vector>
-
-
 
 
 class TileMap
@@ -42,7 +38,5 @@ public:
 
    void draw(ALLEGRO_BITMAP *tile_atlas_bitmap, int camera_x, int camera_y);
 };
-
-
 
 

@@ -1,12 +1,8 @@
 
 
-
-
 #include <adventures_of_beary/TileMap.hpp>
 
 #include <iostream>
-
-
 
 
 void TileMap::set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2)
@@ -52,8 +48,6 @@ void TileMap::set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2
 }
 
 
-
-
 TileMap::TileMap()
    : vertex_buffer(NULL)
    , vtx()
@@ -65,15 +59,11 @@ TileMap::TileMap()
 {}
 
 
-
-
 void TileMap::use_tile_atlas(TileAtlas *atlas)
 {
    if (tile_atlas != NULL) std::cout << "Warning: swapping new atlas; potentially unsafe operation" << std::endl;
    tile_atlas = atlas;
 }
-
-
 
 
 void TileMap::resize(int w, int h, int tile_w, int tile_h)
@@ -163,14 +153,10 @@ void TileMap::resize(int w, int h, int tile_w, int tile_h)
 }
 
 
-
-
 int TileMap::get_num_tiles()
 {
    return width * height;
 }
-
-
 
 
 bool TileMap::set_contiguous_tile_num(int contiguous_tile_num, int tile_index)
@@ -181,8 +167,6 @@ bool TileMap::set_contiguous_tile_num(int contiguous_tile_num, int tile_index)
 }
 
 
-
-
 int TileMap::get_tile(int tile_x, int tile_y)
 {
    if (tile_x < 0 || (tile_x >= width)) return -1;
@@ -190,8 +174,6 @@ int TileMap::get_tile(int tile_x, int tile_y)
 
    return tiles[tile_x % width + tile_y * width];
 }
-
-
 
 
 bool TileMap::set_tile(int tile_x, int tile_y, int tile_index)
@@ -220,8 +202,6 @@ bool TileMap::set_tile(int tile_x, int tile_y, int tile_index)
 }
 
 
-
-
 void TileMap::draw(ALLEGRO_BITMAP *tile_atlas_bitmap, int camera_x, int camera_y)
 {
    ALLEGRO_TRANSFORM prev, transform;
@@ -237,21 +217,15 @@ void TileMap::draw(ALLEGRO_BITMAP *tile_atlas_bitmap, int camera_x, int camera_y
 }
 
 
-
-
 int TileMap::get_width()
 {
    return width;
 }
 
 
-
-
 int TileMap::get_height()
 {
    return height;
 }
-
-
 
 
