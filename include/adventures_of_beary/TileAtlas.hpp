@@ -12,11 +12,13 @@
 
 class TileAtlas
 {
+private:
+   ALLEGRO_BITMAP *bitmap;
+   void clear();
+
 public:
    std::vector<TileIndexInfo> tile_index;
-   ALLEGRO_BITMAP *bitmap;
 
-   void clear();
    static ALLEGRO_BITMAP *build_tile_atlas(int tile_w, int tile_h, std::vector<TileIndexInfo> &tile_index);
    void load(ALLEGRO_BITMAP *tileset, int tile_width, int tile_height, int spacing=0);
    void draw_tile_to_atlas(ALLEGRO_BITMAP *tile, int tile_num, ALLEGRO_COLOR color=al_map_rgba_f(1, 1, 1, 1));
