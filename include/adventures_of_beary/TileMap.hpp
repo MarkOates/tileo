@@ -3,7 +3,7 @@
 
 
 
-#include <adventures_of_beary/tile_atlas.h>
+#include <adventures_of_beary/TileAtlas.hpp>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>

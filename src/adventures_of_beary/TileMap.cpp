@@ -2,7 +2,7 @@
 
 
 
-#include <adventures_of_beary/tile_map.h>
+#include <adventures_of_beary/TileMap.hpp>
 
 #include <iostream>
 
