@@ -90,7 +90,7 @@ int TileMap::get_tile(int tile_x, int tile_y)
 }
 
 
-bool TileMap::set_tile(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index)
+bool TileMap::set_tile(TileAtlas &tile_atlas, TileMapMeshRenderer &mesh_renderer, int tile_x, int tile_y, int tile_index)
    // if the tile is set to a negative number, then the tiles[tile_index] will be set to that number, but
    // the image will be the bitmap at index 0
 {
@@ -99,7 +99,7 @@ bool TileMap::set_tile(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_i
 
    tiles[tile_x + tile_y * width] = tile_index;
 
-   set_tile_to_mesh(tile_atlas, tile_x, tile_y, tile_index);
+   mesh_renderer.set_tile_to_mesh(tile_atlas, tile_x, tile_y, tile_index);
 
    return true;
 }
