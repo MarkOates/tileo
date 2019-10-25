@@ -11,6 +11,8 @@ class TileMapMeshRenderer
 private:
   ALLEGRO_VERTEX_BUFFER *vertex_buffer;
   ALLEGRO_BITMAP *tile_atlas_bitmap;
+  int width;
+  int height;
 
 public:
    TileMapMeshRenderer(ALLEGRO_BITMAP *tile_atlas_bitmap=nullptr);
