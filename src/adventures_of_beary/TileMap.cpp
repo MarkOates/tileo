@@ -107,17 +107,20 @@ bool TileMap::set_tile(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_i
 
 bool TileMap::set_tile_to_mesh(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index)
 {
+   // if the tile index does not exist in the tile_atlas, break out
    if (tile_index >= (int)tile_atlas.get_tile_index().size()) return false;
 
+   // if the tile_index is a negative number, use the number "0" instead
+   // I'm not sure how/why this is the preferred approach.  I think negative numbers
+   // should be allowed, any number should be allowed.  So this should be revisited
+   if (tile_index < 0) tile_index = 0;
 
-   // texture the appropriate vetexes in the mesh
-
-   if (tile_index < 0) tile_index = 0; // IF the tile is < 0, the graphic will be set to 0
-
-   int u1, v1, u2, v2;
-   tile_atlas.get_tile_uv(tile_index, &u1, &v1, &u2, &v2);
-
-   set_tile_uv(tile_x, tile_y, u1, v1, u2, v2);
+   // transfer the uv coordinates of the from the tile atlas bitmap to the mesh
+   // {
+      int u1, v1, u2, v2;
+      tile_atlas.get_tile_uv(tile_index, &u1, &v1, &u2, &v2);
+      set_tile_uv(tile_x, tile_y, u1, v1, u2, v2);
+   // }
 
    return true;
 }
