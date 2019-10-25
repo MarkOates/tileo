@@ -1,0 +1,7 @@
+
+bin/*
+!bin/data/*
+.DS_Store
+*.a
+obj/*
+.DS_Store

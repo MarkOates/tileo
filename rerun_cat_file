@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ "$#" == "0" ]
+then
+  echo "Error: You must provide an argument, which is the name of a file."
+  echo "Example: \"./rerun_cat_file include/MyProject/MyComponent.hpp\""
+else
+  rerun -c "echo -en \"\033[93m\"; cat -n $1; echo -en \"\033[0m\"" -p "$1"
+fi
