@@ -50,7 +50,7 @@ int TileMap::get_tile(int tile_x, int tile_y)
 }
 
 
-bool TileMap::set_tile(TileAtlas &tile_atlas, TileMapMeshRenderer &mesh_renderer, int tile_x, int tile_y, int tile_index)
+bool TileMap::set_tile(int tile_x, int tile_y, int tile_index)
    // if the tile is set to a negative number, then the tiles[tile_index] will be set to that number, but
    // the image will be the bitmap at index 0
 {
@@ -58,8 +58,6 @@ bool TileMap::set_tile(TileAtlas &tile_atlas, TileMapMeshRenderer &mesh_renderer
    if (tile_y < 0 || (tile_y >= height)) return false;
 
    tiles[tile_x + tile_y * width] = tile_index;
-
-   mesh_renderer.set_tile_to_mesh(tile_atlas, tile_x, tile_y, tile_index);
 
    return true;
 }
@@ -74,7 +72,7 @@ std::pair<int, int> TileMap::get_coordinates_from_contiguous_number(int contiguo
 }
 
 
-void TileMap::resize(TileMapMeshRenderer &mesh_renderer, int w, int h, int tile_w, int tile_h)
+void TileMap::resize(int w, int h)
 {
    // set the width and height of our map
    width = w;
@@ -82,8 +80,6 @@ void TileMap::resize(TileMapMeshRenderer &mesh_renderer, int w, int h, int tile_
 
    // resize and clear the tiles
    tiles.assign(width * height, 0);
-
-   mesh_renderer.resize_mesh(w, h, tile_w, tile_h);
 }
 
 
