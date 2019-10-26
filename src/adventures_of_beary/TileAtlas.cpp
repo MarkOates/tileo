@@ -48,6 +48,12 @@ TileAtlas::~TileAtlas()
 }
 
 
+int TileAtlas::get_tile_index_size()
+{
+   return tile_index.size();
+}
+
+
 std::vector<TileIndexInfo> &TileAtlas::get_tile_index()
 {
    return tile_index;

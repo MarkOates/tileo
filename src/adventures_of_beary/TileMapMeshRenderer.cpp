@@ -84,7 +84,7 @@ int TileMapMeshRenderer::infer_num_tiles()
 bool TileMapMeshRenderer::set_tile_to_mesh(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index)
 {
    // if the tile index does not exist in the tile_atlas, break out
-   if (tile_index >= (int)tile_atlas.get_tile_index().size()) return false;
+   if (tile_index >= (int)tile_atlas.get_tile_index_size()) return false;
 
    // if the tile_index is a negative number, use the number "0" instead
    // I'm not sure how/why this is the preferred approach.  I think negative numbers

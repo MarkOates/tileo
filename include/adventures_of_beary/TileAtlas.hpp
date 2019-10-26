@@ -17,6 +17,7 @@ public:
    TileAtlas();
    ~TileAtlas();
 
+   int get_tile_index_size();
    std::vector<TileIndexInfo> &get_tile_index();
 
    static ALLEGRO_BITMAP *build_tile_atlas(int tile_w, int tile_h, std::vector<TileIndexInfo> &tile_index);
