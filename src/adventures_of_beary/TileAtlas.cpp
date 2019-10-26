@@ -54,12 +54,6 @@ int TileAtlas::get_tile_index_size()
 }
 
 
-std::vector<TileIndexInfo> &TileAtlas::get_tile_index()
-{
-   return tile_index;
-}
-
-
 ALLEGRO_BITMAP *TileAtlas::build_tile_atlas(int tile_w, int tile_h, std::vector<TileIndexInfo> &tile_index)
 {
    //al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR | ALLEGRO_MIPMAP);
