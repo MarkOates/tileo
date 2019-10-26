@@ -143,8 +143,8 @@ void TileMapVertexBufferRenderer::resize(int w, int h, int tile_w, int tile_h)
    {
       long tile_num = v / 6;
 
-      int x1 = (tile_num % width);
-      int y1 = (tile_num / width);
+      int x1 = (tile_num % get_width());
+      int y1 = (tile_num / get_width()); // note the usage of get_width() and not get_height()
       int x2 = x1 + 1;
       int y2 = y1 + 1;
 
