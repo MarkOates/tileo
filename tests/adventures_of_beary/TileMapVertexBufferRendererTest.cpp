@@ -6,7 +6,8 @@
 
 TEST(adventures_of_beary_TileMapVertexBufferRendererTest, can_be_created_without_blowing_up)
 {
-   TileMapVertexBufferRenderer renderer;
+   TileAtlas atlas;
+   TileMapVertexBufferRenderer renderer(atlas);
 }
 
 

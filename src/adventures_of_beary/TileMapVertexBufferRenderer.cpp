@@ -58,9 +58,9 @@ void TileMapVertexBufferRenderer::set_tile_uv(int tile_x, int tile_y, int u1, in
 }
 
 
-TileMapVertexBufferRenderer::TileMapVertexBufferRenderer(ALLEGRO_BITMAP *tile_atlas_bitmap)
+TileMapVertexBufferRenderer::TileMapVertexBufferRenderer(TileAtlas &tile_atlas)
    : vertex_buffer(nullptr)
-   , tile_atlas_bitmap(tile_atlas_bitmap)
+   , tile_atlas(tile_atlas)
    , width(0)
    , height(0)
 {
@@ -179,7 +179,7 @@ void TileMapVertexBufferRenderer::render(int camera_x, int camera_y)
    al_translate_transform(&transform, -camera_x, -camera_y);
    al_use_transform(&transform);
 
-   al_draw_vertex_buffer(vertex_buffer, tile_atlas_bitmap, 0, al_get_vertex_buffer_size(vertex_buffer), ALLEGRO_PRIM_TRIANGLE_LIST);
+   al_draw_vertex_buffer(vertex_buffer, tile_atlas.get_bitmap(), 0, al_get_vertex_buffer_size(vertex_buffer), ALLEGRO_PRIM_TRIANGLE_LIST);
 
    al_use_transform(&prev);
 }

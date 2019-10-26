@@ -18,6 +18,7 @@ public:
    TileAtlas();
    ~TileAtlas();
 
+   ALLEGRO_BITMAP *get_bitmap();
    int get_tile_index_size();
 
    void load(ALLEGRO_BITMAP *tileset, int tile_width, int tile_height, int spacing=0);

@@ -48,6 +48,12 @@ TileAtlas::~TileAtlas()
 }
 
 
+ALLEGRO_BITMAP *TileAtlas::get_bitmap()
+{
+   return bitmap;
+}
+
+
 int TileAtlas::get_tile_index_size()
 {
    return tile_index.size();

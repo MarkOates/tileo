@@ -11,7 +11,7 @@ class TileMapVertexBufferRenderer
 {
 private:
    ALLEGRO_VERTEX_BUFFER *vertex_buffer;
-   ALLEGRO_BITMAP *tile_atlas_bitmap;
+   TileAtlas &tile_atlas;
    int width;
    int height;
 
@@ -23,7 +23,7 @@ private:
    void set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2);
 
 public:
-   TileMapVertexBufferRenderer(ALLEGRO_BITMAP *tile_atlas_bitmap=nullptr);
+   TileMapVertexBufferRenderer(TileAtlas &tile_atlas);
    ~TileMapVertexBufferRenderer();
 
    int get_width();
