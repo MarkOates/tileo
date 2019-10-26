@@ -17,6 +17,7 @@ private:
 
    ALLEGRO_VERTEX *locked_vertex_buffer_vertex_pos;
 
+   void initialize_or_recreate_vertex_buffer(int length);
    void lock_vertex_buffer(int start, int length);
    ALLEGRO_VERTEX *get_locked_vertex_buffer_vertex_pos();
    void unlock_vertex_buffer();

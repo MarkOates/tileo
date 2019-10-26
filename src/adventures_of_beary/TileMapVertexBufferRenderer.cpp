@@ -5,6 +5,19 @@
 #include <iostream> // for set_tile_uv
 
 
+void TileMapVertexBufferRenderer::initialize_or_recreate_vertex_buffer(int length)
+{
+   if (vertex_buffer) al_destroy_vertex_buffer(vertex_buffer);
+   vertex_buffer = al_create_vertex_buffer(NULL, NULL, length, ALLEGRO_PRIM_BUFFER_STATIC);
+   if (!vertex_buffer)
+   {
+      throw std::runtime_error("TileMapVertexBufferRenderer::lock_vertex_buffer] error: vertex buffer did not lock. " \
+                               "The vertex may have already been locked or there was an invalid range passed into the " \
+                               "buffer when attempting to lock it.");
+   }
+}
+
+
 void TileMapVertexBufferRenderer::lock_vertex_buffer(int start, int length)
 {
    locked_vertex_buffer_vertex_pos = (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, start, length, ALLEGRO_LOCK_WRITEONLY);
