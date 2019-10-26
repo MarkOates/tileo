@@ -150,33 +150,33 @@ void TileMapVertexBufferRenderer::resize(int w, int h, int tile_w, int tile_h)
 
       vbuff[0].x = x1;
       vbuff[0].y = y1;
+      vbuff[0].z = 0;
+      vbuff[0].color = al_map_rgba_f(1.0f, 1.0f, 1.0f, 1.0f);
 
       vbuff[1].x = x1;
       vbuff[1].y = y2;
+      vbuff[1].z = 0;
+      vbuff[1].color = al_map_rgba_f(1.0f, 1.0f, 1.0f, 1.0f);
 
       vbuff[2].x = x2;
       vbuff[2].y = y2;
+      vbuff[2].z = 0;
+      vbuff[2].color = al_map_rgba_f(1.0f, 1.0f, 1.0f, 1.0f);
 
       vbuff[3].x = x2;
       vbuff[3].y = y2;
+      vbuff[3].z = 0;
+      vbuff[3].color = al_map_rgba_f(1.0f, 1.0f, 1.0f, 1.0f);
 
       vbuff[4].x = x2;
       vbuff[4].y = y1;
+      vbuff[4].z = 0;
+      vbuff[4].color = al_map_rgba_f(1.0f, 1.0f, 1.0f, 1.0f);
 
       vbuff[5].x = x1;
       vbuff[5].y = y1;
-   }
-
-   // "scale" the vertexes to the tile_w and tile_h
-   // and set other default values
-   vbuff = vbuff_begin;
-   v = 0;
-   for (; v<num_vertexes; v++, vbuff++)
-   {
-      vbuff[0].x *= tile_w;
-      vbuff[0].y *= tile_h;
-      vbuff[0].z = 0;
-      vbuff[0].color = al_map_rgba_f(1.0f, 1.0f, 1.0f, 1.0f);
+      vbuff[5].z = 0;
+      vbuff[5].color = al_map_rgba_f(1.0f, 1.0f, 1.0f, 1.0f);
    }
 
    // unlock our buffer
