@@ -81,7 +81,7 @@ int TileMapMeshRenderer::infer_num_tiles()
 }
 
 
-bool TileMapMeshRenderer::set_tile_to_mesh(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index)
+bool TileMapMeshRenderer::set_tile(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index)
 {
    // if the tile index does not exist in the tile_atlas, break out
    if (tile_index >= (int)tile_atlas.get_tile_index_size()) return false;
@@ -102,7 +102,7 @@ bool TileMapMeshRenderer::set_tile_to_mesh(TileAtlas &tile_atlas, int tile_x, in
 }
 
 
-void TileMapMeshRenderer::resize_mesh(int w, int h, int tile_w, int tile_h)
+void TileMapMeshRenderer::resize(int w, int h, int tile_w, int tile_h)
 {
    // resize the vtx vector
    vtx.clear();
