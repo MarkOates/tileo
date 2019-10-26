@@ -126,10 +126,7 @@ bool TileMapVertexBufferRenderer::set_tile(TileAtlas &tile_atlas, int tile_x, in
 
 void TileMapVertexBufferRenderer::resize(int w, int h, int tile_w, int tile_h)
 {
-   // create a vertex_buffer
-   if (vertex_buffer) al_destroy_vertex_buffer(vertex_buffer);
-   vertex_buffer = al_create_vertex_buffer(NULL, NULL, width*height*6, ALLEGRO_PRIM_BUFFER_STATIC);
-   if (!vertex_buffer) std::cout << "There was an error creating the vertex buffer" << std::endl;
+   initialize_or_recreate_vertex_buffer(width*height*6);
 
    // lock the buffer before writing to it
    lock_vertex_buffer(0, al_get_vertex_buffer_size(vertex_buffer));
