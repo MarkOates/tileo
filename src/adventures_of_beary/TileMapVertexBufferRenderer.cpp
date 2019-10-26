@@ -137,8 +137,7 @@ void TileMapVertexBufferRenderer::resize(int w, int h, int tile_w, int tile_h)
    ALLEGRO_VERTEX *vbuff = get_locked_vertex_buffer_vertex_pos();
 
    // place the vertexes in the mesh
-   int v = 0;
-   for (; v<num_vertexes; v+=6, vbuff+=6)
+   for (int v=0; v<num_vertexes; v+=6, vbuff+=6)
    {
       long tile_num = v / 6;
 
