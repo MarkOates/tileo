@@ -30,7 +30,6 @@ ALLEGRO_VERTEX *TileMapVertexBufferRenderer::get_locked_vertex_buffer_vertex_pos
 void TileMapVertexBufferRenderer::set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2)
 {
    int index_start = (tile_x * 6) + tile_y * (width*6);
-   int &i = index_start;
 
    lock_vertex_buffer(index_start, 6);
    ALLEGRO_VERTEX *vbuff = get_locked_vertex_buffer_vertex_pos();
