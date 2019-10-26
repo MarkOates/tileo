@@ -10,8 +10,9 @@ class TileAtlas
 {
 private:
    ALLEGRO_BITMAP *bitmap;
-   void clear();
    std::vector<TileIndexInfo> tile_index;
+
+   void clear();
 
 public:
    TileAtlas();
