@@ -59,7 +59,6 @@ void TileMapVertexBufferRenderer::set_tile_uv(int tile_x, int tile_y, int u1, in
 
 TileMapVertexBufferRenderer::TileMapVertexBufferRenderer(ALLEGRO_BITMAP *tile_atlas_bitmap)
    : vertex_buffer(nullptr)
-   , vertexes()
    , tile_atlas_bitmap(tile_atlas_bitmap)
    , width(0)
    , height(0)
@@ -113,10 +112,6 @@ bool TileMapVertexBufferRenderer::set_tile(TileAtlas &tile_atlas, int tile_x, in
 
 void TileMapVertexBufferRenderer::resize(int w, int h, int tile_w, int tile_h)
 {
-   // resize the vertexes vector
-   vertexes.clear();
-   vertexes.resize(width*height*6);
-
    // create a vertex_buffer
    if (vertex_buffer) al_destroy_vertex_buffer(vertex_buffer);
    vertex_buffer = al_create_vertex_buffer(NULL, NULL, width*height*6, ALLEGRO_PRIM_BUFFER_STATIC);
@@ -183,7 +178,6 @@ void TileMapVertexBufferRenderer::render(int camera_x, int camera_y)
    al_translate_transform(&transform, -camera_x, -camera_y);
    al_use_transform(&transform);
 
-   //al_draw_prim(&vertexes[0], NULL, tile_atlas->bitmap, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
    al_draw_vertex_buffer(vertex_buffer, tile_atlas_bitmap, 0, al_get_vertex_buffer_size(vertex_buffer), ALLEGRO_PRIM_TRIANGLE_LIST);
 
    al_use_transform(&prev);
