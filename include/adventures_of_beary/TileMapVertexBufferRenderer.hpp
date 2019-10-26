@@ -15,7 +15,6 @@ private:
    ALLEGRO_BITMAP *tile_atlas_bitmap;
    int width;
    int height;
-   bool use_primitive;
 
    ALLEGRO_VERTEX *locked_vertex_buffer_vertex_pos;
 

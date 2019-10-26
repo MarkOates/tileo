@@ -35,33 +35,21 @@ void TileMapVertexBufferRenderer::set_tile_uv(int tile_x, int tile_y, int u1, in
    lock_vertex_buffer(index_start, 6);
    ALLEGRO_VERTEX *vbuff = get_locked_vertex_buffer_vertex_pos();
 
-   if (use_primitive) vertexes[i+0].u = u1;
-   if (use_primitive) vertexes[i+0].v = v1;
    vbuff[0].u = u1;
    vbuff[0].v = v1;
 
-   if (use_primitive) vertexes[i+1].u = u1;
-   if (use_primitive) vertexes[i+1].v = v2;
    vbuff[1].u = u1;
    vbuff[1].v = v2;
 
-   if (use_primitive) vertexes[i+2].u = u2;
-   if (use_primitive) vertexes[i+2].v = v2;
    vbuff[2].u = u2;
    vbuff[2].v = v2;
 
-   if (use_primitive) vertexes[i+3].u = u2;
-   if (use_primitive) vertexes[i+3].v = v2;
    vbuff[3].u = u2;
    vbuff[3].v = v2;
 
-   if (use_primitive) vertexes[i+4].u = u2;
-   if (use_primitive) vertexes[i+4].v = v1;
    vbuff[4].u = u2;
    vbuff[4].v = v1;
 
-   if (use_primitive) vertexes[i+5].u = u1;
-   if (use_primitive) vertexes[i+5].v = v1;
    vbuff[5].u = u1;
    vbuff[5].v = v1;
 
@@ -75,7 +63,6 @@ TileMapVertexBufferRenderer::TileMapVertexBufferRenderer(ALLEGRO_BITMAP *tile_at
    , tile_atlas_bitmap(tile_atlas_bitmap)
    , width(0)
    , height(0)
-   , use_primitive(false)
 {
 }
 
@@ -128,7 +115,7 @@ void TileMapVertexBufferRenderer::resize(int w, int h, int tile_w, int tile_h)
 {
    // resize the vertexes vector
    vertexes.clear();
-   if (use_primitive) vertexes.resize(width*height*6);
+   vertexes.resize(width*height*6);
 
    // create a vertex_buffer
    if (vertex_buffer) al_destroy_vertex_buffer(vertex_buffer);
@@ -152,33 +139,21 @@ void TileMapVertexBufferRenderer::resize(int w, int h, int tile_w, int tile_h)
       int x2 = x1 + 1;
       int y2 = y1 + 1;
 
-      if (use_primitive) vertexes[v+0].x = x1;
-      if (use_primitive) vertexes[v+0].y = y1;
       vbuff[0].x = x1;
       vbuff[0].y = y1;
 
-      if (use_primitive) vertexes[v+1].x = x1;
-      if (use_primitive) vertexes[v+1].y = y2;
       vbuff[1].x = x1;
       vbuff[1].y = y2;
 
-      if (use_primitive) vertexes[v+2].x = x2;
-      if (use_primitive) vertexes[v+2].y = y2;
       vbuff[2].x = x2;
       vbuff[2].y = y2;
 
-      if (use_primitive) vertexes[v+3].x = x2;
-      if (use_primitive) vertexes[v+3].y = y2;
       vbuff[3].x = x2;
       vbuff[3].y = y2;
 
-      if (use_primitive) vertexes[v+4].x = x2;
-      if (use_primitive) vertexes[v+4].y = y1;
       vbuff[4].x = x2;
       vbuff[4].y = y1;
 
-      if (use_primitive) vertexes[v+5].x = x1;
-      if (use_primitive) vertexes[v+5].y = y1;
       vbuff[5].x = x1;
       vbuff[5].y = y1;
    }
@@ -189,10 +164,6 @@ void TileMapVertexBufferRenderer::resize(int w, int h, int tile_w, int tile_h)
    v = 0;
    for (; v<num_vertexes; v++, vbuff++)
    {
-      if (use_primitive) vertexes[v].x *= tile_w;
-      if (use_primitive) vertexes[v].y *= tile_h;
-      if (use_primitive) vertexes[v].z = 0;
-      if (use_primitive) vertexes[v].color = al_map_rgba_f(1, 1, 1, 1);//color::mix(color::white, random_color(), 0.5);//color::transparent;
       vbuff[0].x *= tile_w;
       vbuff[0].y *= tile_h;
       vbuff[0].z = 0;
