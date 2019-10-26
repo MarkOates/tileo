@@ -13,33 +13,33 @@ void TileMapMeshRenderer::set_tile_uv(int tile_x, int tile_y, int u1, int v1, in
    ALLEGRO_VERTEX *vbuff = (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, index_start, 6, ALLEGRO_LOCK_WRITEONLY);
    if (!vbuff) std::cout << "could not lock vertex buffer" << std::endl;
 
-   if (use_primitive) vtx[i+0].u = u1;
-   if (use_primitive) vtx[i+0].v = v1;
+   if (use_primitive) vertexes[i+0].u = u1;
+   if (use_primitive) vertexes[i+0].v = v1;
    vbuff[0].u = u1;
    vbuff[0].v = v1;
 
-   if (use_primitive) vtx[i+1].u = u1;
-   if (use_primitive) vtx[i+1].v = v2;
+   if (use_primitive) vertexes[i+1].u = u1;
+   if (use_primitive) vertexes[i+1].v = v2;
    vbuff[1].u = u1;
    vbuff[1].v = v2;
 
-   if (use_primitive) vtx[i+2].u = u2;
-   if (use_primitive) vtx[i+2].v = v2;
+   if (use_primitive) vertexes[i+2].u = u2;
+   if (use_primitive) vertexes[i+2].v = v2;
    vbuff[2].u = u2;
    vbuff[2].v = v2;
 
-   if (use_primitive) vtx[i+3].u = u2;
-   if (use_primitive) vtx[i+3].v = v2;
+   if (use_primitive) vertexes[i+3].u = u2;
+   if (use_primitive) vertexes[i+3].v = v2;
    vbuff[3].u = u2;
    vbuff[3].v = v2;
 
-   if (use_primitive) vtx[i+4].u = u2;
-   if (use_primitive) vtx[i+4].v = v1;
+   if (use_primitive) vertexes[i+4].u = u2;
+   if (use_primitive) vertexes[i+4].v = v1;
    vbuff[4].u = u2;
    vbuff[4].v = v1;
 
-   if (use_primitive) vtx[i+5].u = u1;
-   if (use_primitive) vtx[i+5].v = v1;
+   if (use_primitive) vertexes[i+5].u = u1;
+   if (use_primitive) vertexes[i+5].v = v1;
    vbuff[5].u = u1;
    vbuff[5].v = v1;
 
@@ -49,7 +49,7 @@ void TileMapMeshRenderer::set_tile_uv(int tile_x, int tile_y, int u1, int v1, in
 
 TileMapMeshRenderer::TileMapMeshRenderer(ALLEGRO_BITMAP *tile_atlas_bitmap)
    : vertex_buffer(nullptr)
-   , vtx()
+   , vertexes()
    , tile_atlas_bitmap(tile_atlas_bitmap)
    , width(0)
    , height(0)
@@ -104,9 +104,9 @@ bool TileMapMeshRenderer::set_tile(TileAtlas &tile_atlas, int tile_x, int tile_y
 
 void TileMapMeshRenderer::resize(int w, int h, int tile_w, int tile_h)
 {
-   // resize the vtx vector
-   vtx.clear();
-   if (use_primitive) vtx.resize(width*height*6);
+   // resize the vertexes vector
+   vertexes.clear();
+   if (use_primitive) vertexes.resize(width*height*6);
 
    // create a vertex_buffer
    if (vertex_buffer) al_destroy_vertex_buffer(vertex_buffer);
@@ -130,33 +130,33 @@ void TileMapMeshRenderer::resize(int w, int h, int tile_w, int tile_h)
       int x2 = x1 + 1;
       int y2 = y1 + 1;
 
-      if (use_primitive) vtx[v+0].x = x1;
-      if (use_primitive) vtx[v+0].y = y1;
+      if (use_primitive) vertexes[v+0].x = x1;
+      if (use_primitive) vertexes[v+0].y = y1;
       vbuff[0].x = x1;
       vbuff[0].y = y1;
 
-      if (use_primitive) vtx[v+1].x = x1;
-      if (use_primitive) vtx[v+1].y = y2;
+      if (use_primitive) vertexes[v+1].x = x1;
+      if (use_primitive) vertexes[v+1].y = y2;
       vbuff[1].x = x1;
       vbuff[1].y = y2;
 
-      if (use_primitive) vtx[v+2].x = x2;
-      if (use_primitive) vtx[v+2].y = y2;
+      if (use_primitive) vertexes[v+2].x = x2;
+      if (use_primitive) vertexes[v+2].y = y2;
       vbuff[2].x = x2;
       vbuff[2].y = y2;
 
-      if (use_primitive) vtx[v+3].x = x2;
-      if (use_primitive) vtx[v+3].y = y2;
+      if (use_primitive) vertexes[v+3].x = x2;
+      if (use_primitive) vertexes[v+3].y = y2;
       vbuff[3].x = x2;
       vbuff[3].y = y2;
 
-      if (use_primitive) vtx[v+4].x = x2;
-      if (use_primitive) vtx[v+4].y = y1;
+      if (use_primitive) vertexes[v+4].x = x2;
+      if (use_primitive) vertexes[v+4].y = y1;
       vbuff[4].x = x2;
       vbuff[4].y = y1;
 
-      if (use_primitive) vtx[v+5].x = x1;
-      if (use_primitive) vtx[v+5].y = y1;
+      if (use_primitive) vertexes[v+5].x = x1;
+      if (use_primitive) vertexes[v+5].y = y1;
       vbuff[5].x = x1;
       vbuff[5].y = y1;
    }
@@ -167,10 +167,10 @@ void TileMapMeshRenderer::resize(int w, int h, int tile_w, int tile_h)
    v = 0;
    for (; v<num_vertexes; v++, vbuff++)
    {
-      if (use_primitive) vtx[v].x *= tile_w;
-      if (use_primitive) vtx[v].y *= tile_h;
-      if (use_primitive) vtx[v].z = 0;
-      if (use_primitive) vtx[v].color = al_map_rgba_f(1, 1, 1, 1);//color::mix(color::white, random_color(), 0.5);//color::transparent;
+      if (use_primitive) vertexes[v].x *= tile_w;
+      if (use_primitive) vertexes[v].y *= tile_h;
+      if (use_primitive) vertexes[v].z = 0;
+      if (use_primitive) vertexes[v].color = al_map_rgba_f(1, 1, 1, 1);//color::mix(color::white, random_color(), 0.5);//color::transparent;
       vbuff[0].x *= tile_w;
       vbuff[0].y *= tile_h;
       vbuff[0].z = 0;
@@ -190,7 +190,7 @@ void TileMapMeshRenderer::render(int camera_x, int camera_y)
    al_translate_transform(&transform, -camera_x, -camera_y);
    al_use_transform(&transform);
 
-   //al_draw_prim(&vtx[0], NULL, tile_atlas->bitmap, 0, vtx.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+   //al_draw_prim(&vertexes[0], NULL, tile_atlas->bitmap, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
    al_draw_vertex_buffer(vertex_buffer, tile_atlas_bitmap, 0, al_get_vertex_buffer_size(vertex_buffer), ALLEGRO_PRIM_TRIANGLE_LIST);
 
    al_use_transform(&prev);
