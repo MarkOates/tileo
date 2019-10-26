@@ -163,7 +163,7 @@ void TileMapVertexBufferRenderer::resize(int w, int h, int tile_w, int tile_h)
       vbuff[0].x *= tile_w;
       vbuff[0].y *= tile_h;
       vbuff[0].z = 0;
-      vbuff[0].color = al_map_rgba_f(1, 1, 1, 1);//color::mix(color::white, random_color(), 0.5);
+      vbuff[0].color = al_map_rgba_f(1.0f, 1.0f, 1.0f, 1.0f);
    }
 
    // unlock our buffer
