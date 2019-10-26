@@ -36,6 +36,18 @@
    */
 
 
+TileAtlas::TileAtlas()
+   : bitmap(nullptr)
+   , tile_index()
+{
+}
+
+
+TileAtlas::~TileAtlas()
+{
+}
+
+
 std::vector<TileIndexInfo> &TileAtlas::get_tile_index()
 {
    return tile_index;
