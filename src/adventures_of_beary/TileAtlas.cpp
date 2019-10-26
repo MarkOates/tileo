@@ -1,12 +1,8 @@
 
 
-
-
 #include <adventures_of_beary/TileAtlas.hpp>
 
 #include <iostream>
-
-
 
 
 // this vertex structure is something that could be used in the future when adding
@@ -38,8 +34,6 @@
 
    ALLEGRO_VERTEX_DECLARATION *vertex_declaration = al_create_vertex_decl(elems, sizeof(ALLEGRO_VERTEX_WITH_NORMAL));
    */
-
-
 
 
 std::vector<TileIndexInfo> &TileAtlas::get_tile_index()
@@ -158,8 +152,6 @@ ALLEGRO_BITMAP *TileAtlas::build_tile_atlas(int tile_w, int tile_h, std::vector<
 }
 
 
-
-
 void TileAtlas::clear()
 {
    for (unsigned i=0; i<tile_index.size(); i++) al_destroy_bitmap(tile_index[i].sub_bitmap);
@@ -167,8 +159,6 @@ void TileAtlas::clear()
    bitmap = NULL;
    tile_index.clear();
 }
-
-
 
 
 // load will *copy* the bitmap that you pass into it.  You probably would want to al_destroy_bitmap after loading; 
@@ -209,8 +199,6 @@ void TileAtlas::load(ALLEGRO_BITMAP *tileset, int tile_width, int tile_height, i
 }
 
 
-
-
 void TileAtlas::draw_tile_to_atlas(ALLEGRO_BITMAP *tile, int tile_num, ALLEGRO_COLOR color)
 {
    // ok, this is a serious bit of a hack.  It will only work when the tiles are spaced with spaces of 1 px.
@@ -249,8 +237,6 @@ void TileAtlas::draw_tile_to_atlas(ALLEGRO_BITMAP *tile, int tile_num, ALLEGRO_C
 }
 
 
-
-
 bool TileAtlas::get_tile_uv(int index_num, int *u1, int *v1, int *u2, int *v2)
 {
    if (index_num < 0 || index_num >= (int)tile_index.size()) return false;
@@ -262,7 +248,5 @@ bool TileAtlas::get_tile_uv(int index_num, int *u1, int *v1, int *u2, int *v2)
 
    return true;
 }
-
-
 
 

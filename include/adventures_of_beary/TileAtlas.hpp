@@ -1,13 +1,9 @@
 #pragma once
 
 
-
-
 #include <adventures_of_beary/TileIndexInfo.hpp>
 #include <allegro5/allegro.h>
 #include <vector>
-
-
 
 
 class TileAtlas
@@ -25,7 +21,5 @@ public:
    void draw_tile_to_atlas(ALLEGRO_BITMAP *tile, int tile_num, ALLEGRO_COLOR color=al_map_rgba_f(1, 1, 1, 1));
    bool get_tile_uv(int index_num, int *u1, int *v1, int *u2, int *v2);
 };
-
-
 
 
