@@ -117,8 +117,8 @@ void TileMapVertexBufferRenderer::resize(int w, int h, int tile_w, int tile_h)
    if (!vertex_buffer) std::cout << "There was an error creating the vertex buffer" << std::endl;
 
    // lock the buffer before writing to it
-   ALLEGRO_VERTEX *vbuff_begin = (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, 0, al_get_vertex_buffer_size(vertex_buffer), ALLEGRO_LOCK_WRITEONLY);
-   if (!vbuff_begin) std::cout << "There was an error locking the vertex buffer" << std::endl;
+   lock_vertex_buffer(0, al_get_vertex_buffer_size(vertex_buffer));
+   ALLEGRO_VERTEX *vbuff_begin = get_locked_vertex_buffer_vertex_pos();
 
    // place the vertexes in the mesh
    ALLEGRO_VERTEX *vbuff = vbuff_begin;
@@ -165,7 +165,7 @@ void TileMapVertexBufferRenderer::resize(int w, int h, int tile_w, int tile_h)
    }
 
    // unlock our buffer
-   al_unlock_vertex_buffer(vertex_buffer);
+   unlock_vertex_buffer();
 }
 
 
