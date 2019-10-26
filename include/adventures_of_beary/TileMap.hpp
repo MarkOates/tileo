@@ -24,6 +24,7 @@ public:
    int get_width();
    int get_height();
    int infer_num_tiles();
+   bool is_dimensionless();
 
    int get_tile(int tile_x, int tile_y);
    bool set_tile(TileAtlas &tile_atlas, TileMapMeshRenderer &mesh_renderer, int tile_x, int tile_y, int tile_index);

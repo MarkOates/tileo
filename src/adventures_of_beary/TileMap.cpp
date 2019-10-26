@@ -35,6 +35,12 @@ int TileMap::infer_num_tiles()
 }
 
 
+bool TileMap::is_dimensionless()
+{
+   return (width <= 0 || height <= 0);
+}
+
+
 int TileMap::get_tile(int tile_x, int tile_y)
 {
    if (tile_x < 0 || (tile_x >= width)) return -1;
