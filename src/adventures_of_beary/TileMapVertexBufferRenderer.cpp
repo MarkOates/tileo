@@ -21,13 +21,19 @@ void TileMapVertexBufferRenderer::unlock_vertex_buffer()
 }
 
 
+ALLEGRO_VERTEX *TileMapVertexBufferRenderer::get_locked_vertex_buffer_vertex_pos()
+{
+   return locked_vertex_buffer_vertex_pos;
+}
+
+
 void TileMapVertexBufferRenderer::set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2)
 {
    int index_start = (tile_x * 6) + tile_y * (width*6);
    int &i = index_start;
 
-   ALLEGRO_VERTEX *vbuff = (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, index_start, 6, ALLEGRO_LOCK_WRITEONLY);
-   if (!vbuff) std::cout << "could not lock vertex buffer" << std::endl;
+   lock_vertex_buffer(index_start, 6);
+   ALLEGRO_VERTEX *vbuff = get_locked_vertex_buffer_vertex_pos();
 
    if (use_primitive) vertexes[i+0].u = u1;
    if (use_primitive) vertexes[i+0].v = v1;
@@ -59,7 +65,7 @@ void TileMapVertexBufferRenderer::set_tile_uv(int tile_x, int tile_y, int u1, in
    vbuff[5].u = u1;
    vbuff[5].v = v1;
 
-   al_unlock_vertex_buffer(vertex_buffer);
+   unlock_vertex_buffer();
 }
 
 

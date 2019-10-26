@@ -20,6 +20,7 @@ private:
    ALLEGRO_VERTEX *locked_vertex_buffer_vertex_pos;
 
    void lock_vertex_buffer(int start, int length);
+   ALLEGRO_VERTEX *get_locked_vertex_buffer_vertex_pos();
    void unlock_vertex_buffer();
    void set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2);
 
