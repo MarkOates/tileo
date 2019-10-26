@@ -54,10 +54,7 @@ std::vector<TileIndexInfo> &TileAtlas::get_tile_index()
 }
 
 
-// for future purposes, this (currently unused) function should be used to replace the current technique that is used to build the TileAtlas
-
 ALLEGRO_BITMAP *TileAtlas::build_tile_atlas(int tile_w, int tile_h, std::vector<TileIndexInfo> &tile_index)
-   // this function is the superior tile atlas generator
 {
    //al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR | ALLEGRO_MIPMAP);
 
@@ -66,7 +63,6 @@ ALLEGRO_BITMAP *TileAtlas::build_tile_atlas(int tile_w, int tile_h, std::vector<
    ALLEGRO_BITMAP *target = al_create_bitmap(1024, 1024);
    al_set_target_bitmap(target);
 
-   //al_clear_to_color(color::transparent);
    al_clear_to_color(al_map_rgba_f(0, 0, 0, 0));
 
 
