@@ -27,7 +27,7 @@ public:
 
    int get_tile(int tile_x, int tile_y);
    bool set_tile(TileAtlas &tile_atlas, TileMapMeshRenderer &mesh_renderer, int tile_x, int tile_y, int tile_index);
-   //bool set_contiguous_tile_num(TileAtlas &tile_atlas, int contiguous_tile_num, int tile_index);
+   std::pair<int, int> get_coordinates_from_contiguous_number(int contiguous_tile_num);
 
    void resize(TileMapMeshRenderer &mesh_renderer, int w, int h, int tile_w, int tile_h);
 };

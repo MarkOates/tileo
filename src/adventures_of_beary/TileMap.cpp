@@ -59,12 +59,13 @@ bool TileMap::set_tile(TileAtlas &tile_atlas, TileMapMeshRenderer &mesh_renderer
 }
 
 
-//bool TileMap::set_contiguous_tile_num(TileAtlas &tile_atlas, int contiguous_tile_num, int tile_index)
-//{
-   //int tile_x = contiguous_tile_num % width;
-   //int tile_y = contiguous_tile_num / width;
-   //return set_tile(tile_atlas, tile_x, tile_y, tile_index);
-//}
+std::pair<int, int> TileMap::get_coordinates_from_contiguous_number(int contiguous_tile_num)
+{
+   int tile_x = contiguous_tile_num % width;
+   int tile_y = contiguous_tile_num / width;
+
+   return std::pair<int, int>(tile_x, tile_y);
+}
 
 
 void TileMap::resize(TileMapMeshRenderer &mesh_renderer, int w, int h, int tile_w, int tile_h)
