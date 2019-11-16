@@ -1,6 +1,6 @@
 
 
-#include <adventures_of_beary/TileIndexInfo.hpp>
+#include <Tileo/TileIndexInfo.hpp>
 
 
 TileIndexInfo::TileIndexInfo()

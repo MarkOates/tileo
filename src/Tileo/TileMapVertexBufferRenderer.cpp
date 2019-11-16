@@ -1,6 +1,6 @@
 
 
-#include <adventures_of_beary/TileMapVertexBufferRenderer.hpp>
+#include <Tileo/TileMapVertexBufferRenderer.hpp>
 
 #include <iostream> // for set_tile_uv
 

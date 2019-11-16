@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include <adventures_of_beary/TileIndexInfo.hpp>
+#include <Tileo/TileIndexInfo.hpp>
 #include <allegro5/allegro.h>
 #include <vector>
 

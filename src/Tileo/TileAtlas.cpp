@@ -1,6 +1,6 @@
 
 
-#include <adventures_of_beary/TileAtlas.hpp>
+#include <Tileo/TileAtlas.hpp>
 
 #include <iostream>
 

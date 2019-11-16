@@ -3,7 +3,7 @@
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
-#include <adventures_of_beary/TileAtlas.hpp>
+#include <Tileo/TileAtlas.hpp>
 #include <vector>
 
 

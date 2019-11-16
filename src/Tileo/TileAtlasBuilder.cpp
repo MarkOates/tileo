@@ -1,6 +1,6 @@
 
 
-#include <adventures_of_beary/TileAtlasBuilder.hpp>
+#include <Tileo/TileAtlasBuilder.hpp>
 
 
 TileAtlasBuilder::TileAtlasBuilder(int tile_w, int tile_h, std::vector<TileIndexInfo> tile_index)
