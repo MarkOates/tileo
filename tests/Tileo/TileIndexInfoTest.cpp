@@ -5,6 +5,6 @@
 
 TEST(Tileo__TileIndexInfoTest, can_be_created_without_blowing_up)
 {
-   TileIndexInfo tile_index_info;
+   Tileo::TileIndexInfo tile_index_info;
 }
 

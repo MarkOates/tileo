@@ -4,17 +4,40 @@
 #include <allegro5/allegro.h>
 
 
-class TileIndexInfo
+namespace Tileo
 {
-public:
-   int index_num;
+   class TileIndexInfo
+   {
+   private:
+      int index_num;
+      ALLEGRO_BITMAP* bitmap_source;
+      ALLEGRO_BITMAP* sub_bitmap;
+      int u1;
+      int v1;
+      int u2;
+      int v2;
 
-   ALLEGRO_BITMAP *bitmap_source;
-   ALLEGRO_BITMAP *sub_bitmap;
+   public:
+      TileIndexInfo();
+      ~TileIndexInfo();
 
-   int u1, v1, u2, v2;
+      void set_index_num(int index_num);
+      void set_bitmap_source(ALLEGRO_BITMAP* bitmap_source);
+      void set_sub_bitmap(ALLEGRO_BITMAP* sub_bitmap);
+      void set_u1(int u1);
+      void set_v1(int v1);
+      void set_u2(int u2);
+      void set_v2(int v2);
 
-   TileIndexInfo();
-};
+      int get_index_num();
+      ALLEGRO_BITMAP* get_bitmap_source();
+      ALLEGRO_BITMAP* get_sub_bitmap();
+      int get_u1();
+      int get_v1();
+      int get_u2();
+      int get_v2();
+   };
+}
+
 
 
