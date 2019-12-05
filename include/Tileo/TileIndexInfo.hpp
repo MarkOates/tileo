@@ -18,7 +18,7 @@ namespace Tileo
       int v2;
 
    public:
-      TileIndexInfo();
+      TileIndexInfo(int index_num=-1, ALLEGRO_BITMAP* bitmap_source=nullptr, ALLEGRO_BITMAP* sub_bitmap=nullptr, int u1=0, int v1=0, int u2=0, int v2=0);
       ~TileIndexInfo();
 
       void set_index_num(int index_num);

@@ -8,14 +8,14 @@ namespace Tileo
 {
 
 
-TileIndexInfo::TileIndexInfo()
-   : index_num(-1)
-   , bitmap_source(nullptr)
-   , sub_bitmap(nullptr)
-   , u1(0)
-   , v1(0)
-   , u2(0)
-   , v2(0)
+TileIndexInfo::TileIndexInfo(int index_num, ALLEGRO_BITMAP* bitmap_source, ALLEGRO_BITMAP* sub_bitmap, int u1, int v1, int u2, int v2)
+   : index_num(index_num)
+   , bitmap_source(bitmap_source)
+   , sub_bitmap(sub_bitmap)
+   , u1(u1)
+   , v1(v1)
+   , u2(u2)
+   , v2(v2)
 {
 }
 
