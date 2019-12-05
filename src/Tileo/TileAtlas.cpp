@@ -5,6 +5,8 @@
 #include <iostream>
 
 
+namespace Tileo
+{
 // this vertex structure is something that could be used in the future when adding
 // lighting features
 
@@ -156,5 +158,8 @@ bool TileAtlas::get_tile_uv(int index_num, int *u1, int *v1, int *u2, int *v2)
 
    return true;
 }
+
+
+} // namespace Tileo
 
 

@@ -71,7 +71,7 @@ void TileMapVertexBufferRenderer::set_tile_uv(int tile_x, int tile_y, int u1, in
 }
 
 
-TileMapVertexBufferRenderer::TileMapVertexBufferRenderer(TileAtlas &tile_atlas)
+TileMapVertexBufferRenderer::TileMapVertexBufferRenderer(Tileo::TileAtlas &tile_atlas)
    : vertex_buffer(nullptr)
    , tile_atlas(tile_atlas)
    , width(0)
@@ -103,7 +103,7 @@ int TileMapVertexBufferRenderer::infer_num_tiles()
 }
 
 
-bool TileMapVertexBufferRenderer::set_tile(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index)
+bool TileMapVertexBufferRenderer::set_tile(Tileo::TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index)
 {
    // if the tile index does not exist in the tile_atlas, break out
    if (tile_index >= (int)tile_atlas.get_tile_index_size()) return false;

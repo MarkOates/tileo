@@ -11,7 +11,7 @@ class TileMapVertexBufferRenderer
 {
 private:
    ALLEGRO_VERTEX_BUFFER *vertex_buffer;
-   TileAtlas &tile_atlas;
+   Tileo::TileAtlas &tile_atlas;
    int width;
    int height;
 
@@ -24,14 +24,14 @@ private:
    void set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2);
 
 public:
-   TileMapVertexBufferRenderer(TileAtlas &tile_atlas);
+   TileMapVertexBufferRenderer(Tileo::TileAtlas &tile_atlas);
    ~TileMapVertexBufferRenderer();
 
    int get_width();
    int get_height();
    int infer_num_tiles();
 
-   bool set_tile(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index);
+   bool set_tile(Tileo::TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index);
    void resize(int w, int h, int tile_w, int tile_h);
 
    void render(int camera_x, int camera_y);

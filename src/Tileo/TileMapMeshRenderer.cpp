@@ -81,7 +81,7 @@ int TileMapMeshRenderer::infer_num_tiles()
 }
 
 
-bool TileMapMeshRenderer::set_tile(TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index)
+bool TileMapMeshRenderer::set_tile(Tileo::TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index)
 {
    // if the tile index does not exist in the tile_atlas, break out
    if (tile_index >= (int)tile_atlas.get_tile_index_size()) return false;
