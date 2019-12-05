@@ -2,6 +2,7 @@
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_color.h>
 
 #include <AllegroFlare/FontBin.hpp>
@@ -36,15 +37,18 @@ class ProgramRunner
 {
 private:
    FontBin fonts;
+   std::string medium_font;
+
 public:
    ProgramRunner()
       : fonts()
+      , medium_font("consolas.ttf 32")
    {}
 
    void initialize()
    {
       fonts.set_path("data/fonts");
-      fonts["consolas.ttf -22"];
+      fonts[medium_font];
    }
 
    ~ProgramRunner()
@@ -53,6 +57,8 @@ public:
    void render()
    {
       al_clear_to_color(al_color_name("orange"));
+      al_draw_text(fonts[medium_font], al_color_name("purple"), 200, 200, 0, "Hello World!");
+      al_flip_display();
    }
 };
 
@@ -60,8 +66,11 @@ public:
 int main(int argc, char **argv)
 {
    al_init();
+   al_install_keyboard();
+   al_init_font_addon();
+   al_init_ttf_addon();
 
-   ALLEGRO_DISPLAY *display = al_create_display(1920, 1080);
+   ALLEGRO_DISPLAY *display = al_create_display(1920 * 3 / 2, 1080 * 3 / 2);
 
    ALLEGRO_EVENT_QUEUE *event_queue = al_create_event_queue();
    al_register_event_source(event_queue, al_get_keyboard_event_source());
@@ -72,6 +81,7 @@ int main(int argc, char **argv)
    al_start_timer(primary_timer);
 
    ProgramRunner program_runner;
+   program_runner.initialize();
 
    while(!shutdown_program)
    {
@@ -82,6 +92,9 @@ int main(int argc, char **argv)
       {
       case ALLEGRO_EVENT_DISPLAY_CLOSE:
          shutdown_program = true;
+         break;
+      case ALLEGRO_EVENT_KEY_DOWN:
+         if (this_event.keyboard.keycode == ALLEGRO_KEY_ESCAPE) shutdown_program = true;
          break;
       case ALLEGRO_EVENT_TIMER:
          program_runner.render();
