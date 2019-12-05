@@ -1,4 +1,4 @@
-/*
+
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
@@ -47,7 +47,8 @@ public:
       fonts["consolas.ttf -22"];
    }
 
-   ~ProgramRunner();
+   ~ProgramRunner()
+   {}
 
    void render()
    {
@@ -91,4 +92,4 @@ int main(int argc, char **argv)
    return 0;
 }
 
-*/
+
