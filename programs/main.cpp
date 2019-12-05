@@ -6,6 +6,10 @@
 #include <allegro5/allegro_color.h>
 
 #include <AllegroFlare/FontBin.hpp>
+#include <AllegroFlare/BitmapBin.hpp>
+
+#include <Tileo/TileAtlas.hpp>
+//#include <Tileo/TileMapMeshRenderer.hpp>
 
 #include <string>
 #include <vector>
@@ -13,6 +17,9 @@
 
 
 using AllegroFlare::FontBin;
+using AllegroFlare::BitmapBin;
+
+using Tileo::TileAtlas;
 
 
 static std::string resource_path(std::vector<std::string> components, std::string filename)
@@ -37,18 +44,31 @@ class ProgramRunner
 {
 private:
    FontBin fonts;
+   BitmapBin bitmaps;
    std::string medium_font;
+   TileAtlas tile_atlas;
+   //TileMapMeshRenderer tile_map_renderer;
 
 public:
    ProgramRunner()
       : fonts()
+      , bitmaps()
       , medium_font("consolas.ttf 32")
+      , tile_atlas()
+      //, tile_map_renderer()
    {}
 
    void initialize()
    {
       fonts.set_path("data/fonts");
+      bitmaps.set_path("data/bitmaps");
       fonts[medium_font];
+   }
+
+   void load_map()
+   {
+      tile_atlas.load(bitmaps["tiles_dungeon_v1.1.png"], 16, 16);
+      //tile_map_renderer.set_tile_atlas_bitmap(tile_atlas.get_bitmap());
    }
 
    ~ProgramRunner()
@@ -58,6 +78,7 @@ public:
    {
       al_clear_to_color(al_color_name("orange"));
       al_draw_text(fonts[medium_font], al_color_name("purple"), 200, 200, 0, "Hello World!");
+      //tile_map_renderer.render(20, 20);
       al_flip_display();
    }
 };
