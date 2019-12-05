@@ -12,7 +12,7 @@ namespace Tileo
    {
    private:
       ALLEGRO_BITMAP *bitmap;
-      std::vector<TileIndexInfo> tile_index;
+      std::vector<Tileo::TileIndexInfo> tile_index;
 
       void clear();
 

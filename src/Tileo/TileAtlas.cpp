@@ -67,7 +67,7 @@ void TileAtlas::clear()
 {
    std::cerr << "[TileAtlas::clear()] WARNING: this feature is destroying a bitmap that potentially may have depenedencies (as sub-bitmaps). This destruction mechanism has not yet been properly implemented." << std::endl;
 
-   for (unsigned i=0; i<tile_index.size(); i++) al_destroy_bitmap(tile_index[i].sub_bitmap);
+   for (unsigned i=0; i<tile_index.size(); i++) al_destroy_bitmap(tile_index[i].get_sub_bitmap());
    if (bitmap) al_destroy_bitmap(bitmap);
    bitmap = NULL;
    tile_index.clear();
@@ -101,13 +101,13 @@ void TileAtlas::load(ALLEGRO_BITMAP *tileset, int tile_width, int tile_height, i
       int x2 = x1 + tile_width;
       int y2 = y1 + tile_height;
 
-      tile_index[index_num].index_num = index_num;
-      tile_index[index_num].bitmap_source = NULL;
-      tile_index[index_num].sub_bitmap = al_create_sub_bitmap(bitmap, x1, y1, x2-x1, y2-y1);
-      tile_index[index_num].u1 = x1;
-      tile_index[index_num].v1 = y1;
-      tile_index[index_num].u2 = x2;
-      tile_index[index_num].v2 = y2;
+      tile_index[index_num].set_index_num(index_num);
+      tile_index[index_num].set_bitmap_source(nullptr);
+      tile_index[index_num].set_sub_bitmap(al_create_sub_bitmap(bitmap, x1, y1, x2-x1, y2-y1));
+      tile_index[index_num].set_u1(x1);
+      tile_index[index_num].set_v1(y1);
+      tile_index[index_num].set_u2(x2);
+      tile_index[index_num].set_v2(y2);
    }
 }
 
@@ -131,7 +131,7 @@ void TileAtlas::draw_tile_to_atlas(ALLEGRO_BITMAP *tile, int tile_num, ALLEGRO_C
 
       ALLEGRO_STATE previous_state;
       al_store_state(&previous_state, ALLEGRO_STATE_TARGET_BITMAP);
-      al_set_target_bitmap(tile_index[index_num].sub_bitmap);
+      al_set_target_bitmap(tile_index[index_num].get_sub_bitmap());
 
       al_clear_to_color(al_map_rgba_f(0, 0, 0, 0));
       al_draw_tinted_bitmap(tile, color, 0, 0, 0);
@@ -154,10 +154,10 @@ bool TileAtlas::get_tile_uv(int index_num, int *u1, int *v1, int *u2, int *v2)
 {
    if (index_num < 0 || index_num >= (int)tile_index.size()) return false;
 
-   *u1 = tile_index[index_num].u1;
-   *v1 = tile_index[index_num].v1;
-   *u2 = tile_index[index_num].u2;
-   *v2 = tile_index[index_num].v2;
+   *u1 = tile_index[index_num].get_u1();
+   *v1 = tile_index[index_num].get_v1();
+   *u2 = tile_index[index_num].get_u2();
+   *v2 = tile_index[index_num].get_v2();
 
    return true;
 }

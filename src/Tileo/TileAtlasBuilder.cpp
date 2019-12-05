@@ -3,7 +3,7 @@
 #include <Tileo/TileAtlasBuilder.hpp>
 
 
-TileAtlasBuilder::TileAtlasBuilder(int tile_w, int tile_h, std::vector<TileIndexInfo> tile_index)
+TileAtlasBuilder::TileAtlasBuilder(int tile_w, int tile_h, std::vector<Tileo::TileIndexInfo> tile_index)
    : tile_w(tile_w)
    , tile_h(tile_h)
    , tile_index(tile_index)
@@ -47,7 +47,7 @@ ALLEGRO_BITMAP *TileAtlasBuilder::build()
          int draw_x = x*step_x + 1;
          int draw_y = y*step_y + 1;
 
-         al_draw_bitmap(tile_index[index_num].sub_bitmap, draw_x, draw_y, 0);
+         al_draw_bitmap(tile_index[index_num].get_sub_bitmap(), draw_x, draw_y, 0);
       }
 
    tile_drawing_finished:
@@ -68,36 +68,36 @@ ALLEGRO_BITMAP *TileAtlasBuilder::build()
 
          // draw the top row of pixels
          al_set_clipping_rectangle(draw_x, draw_y-1, tile_w, 1);
-         al_draw_bitmap(tile_index[index_num].sub_bitmap, draw_x, draw_y-1, 0);
+         al_draw_bitmap(tile_index[index_num].get_sub_bitmap(), draw_x, draw_y-1, 0);
 
          // draw the bottom row of pixels
          al_set_clipping_rectangle(draw_x, draw_y+tile_h, tile_w, 1);
-         al_draw_bitmap(tile_index[index_num].sub_bitmap, draw_x, draw_y+1, 0);
+         al_draw_bitmap(tile_index[index_num].get_sub_bitmap(), draw_x, draw_y+1, 0);
 
          // draw the left row of pixels
          al_set_clipping_rectangle(draw_x-1, draw_y, 1, tile_h);
-         al_draw_bitmap(tile_index[index_num].sub_bitmap, draw_x-1, draw_y, 0);
+         al_draw_bitmap(tile_index[index_num].get_sub_bitmap(), draw_x-1, draw_y, 0);
 
          // draw the right row of pixels
          al_set_clipping_rectangle(draw_x+tile_w, draw_y, 1, tile_h);
-         al_draw_bitmap(tile_index[index_num].sub_bitmap, draw_x+1, draw_y, 0);
+         al_draw_bitmap(tile_index[index_num].get_sub_bitmap(), draw_x+1, draw_y, 0);
 
 
          // draw just the top-left pixel
          al_set_clipping_rectangle(draw_x-1, draw_y-1, 1, 1);
-         al_draw_bitmap(tile_index[index_num].sub_bitmap, draw_x-1, draw_y-1, 0);
+         al_draw_bitmap(tile_index[index_num].get_sub_bitmap(), draw_x-1, draw_y-1, 0);
 
          // draw just the bottom-left pixel
          al_set_clipping_rectangle(draw_x-1, draw_y+tile_h, 1, 1);
-         al_draw_bitmap(tile_index[index_num].sub_bitmap, draw_x-1, draw_y+1, 0);
+         al_draw_bitmap(tile_index[index_num].get_sub_bitmap(), draw_x-1, draw_y+1, 0);
 
          // draw just the top-right pixel
          al_set_clipping_rectangle(draw_x+tile_w, draw_y-1, 1, 1);
-         al_draw_bitmap(tile_index[index_num].sub_bitmap, draw_x+1, draw_y-1, 0);
+         al_draw_bitmap(tile_index[index_num].get_sub_bitmap(), draw_x+1, draw_y-1, 0);
 
          // draw just the top-right pixel
          al_set_clipping_rectangle(draw_x+tile_w, draw_y+tile_h, 1, 1);
-         al_draw_bitmap(tile_index[index_num].sub_bitmap, draw_x+1, draw_y+1, 0);
+         al_draw_bitmap(tile_index[index_num].get_sub_bitmap(), draw_x+1, draw_y+1, 0);
       }
 
    edge_extruding_finished:
