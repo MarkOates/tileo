@@ -102,6 +102,12 @@ bool TileMapMeshRenderer::set_tile(Tileo::TileAtlas &tile_atlas, int tile_x, int
 }
 
 
+void TileMapMeshRenderer::set_tile_atlas_bitmap(ALLEGRO_BITMAP *tile_atlas_bitmap)
+{
+   this->tile_atlas_bitmap = tile_atlas_bitmap;
+}
+
+
 void TileMapMeshRenderer::resize(int w, int h, int tile_w, int tile_h)
 {
    // resize the vertexes vector

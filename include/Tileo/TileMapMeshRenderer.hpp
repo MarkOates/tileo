@@ -28,6 +28,7 @@ public:
    int infer_num_tiles();
 
    bool set_tile(Tileo::TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index);
+   void set_tile_atlas_bitmap(ALLEGRO_BITMAP *tile_atlast_bitmap);
    void resize(int w, int h, int tile_w, int tile_h);
 
    void render(int camera_x, int camera_y);
