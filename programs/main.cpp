@@ -9,7 +9,7 @@
 #include <AllegroFlare/BitmapBin.hpp>
 
 #include <Tileo/TileAtlas.hpp>
-//#include <Tileo/TileMapMeshRenderer.hpp>
+#include <Tileo/TileMapMeshRenderer.hpp>
 
 #include <string>
 #include <vector>
@@ -32,7 +32,7 @@ private:
    BitmapBin bitmaps;
    std::string medium_font;
    TileAtlas tile_atlas;
-   //TileMapMeshRenderer tile_map_renderer;
+   TileMapMeshRenderer tile_map_renderer;
 
 public:
    ProgramRunner()
@@ -40,7 +40,7 @@ public:
       , bitmaps()
       , medium_font("consolas.ttf 32")
       , tile_atlas()
-      //, tile_map_renderer()
+      , tile_map_renderer()
    {}
 
    void initialize()
@@ -48,12 +48,13 @@ public:
       fonts.set_path("data/fonts");
       bitmaps.set_path("data/bitmaps");
       fonts[medium_font];
+      bitmaps["tiles_dungeon_v1.1.png"];
    }
 
    void load_map()
    {
       tile_atlas.load(bitmaps["tiles_dungeon_v1.1.png"], 16, 16);
-      //tile_map_renderer.set_tile_atlas_bitmap(tile_atlas.get_bitmap());
+      tile_map_renderer.set_tile_atlas_bitmap(tile_atlas.get_bitmap());
    }
 
    ~ProgramRunner()
@@ -75,6 +76,7 @@ int main(int argc, char **argv)
    al_install_keyboard();
    al_init_font_addon();
    al_init_ttf_addon();
+   al_init_image_addon();
 
    ALLEGRO_DISPLAY *display = al_create_display(1920 * 3 / 2, 1080 * 3 / 2);
 
