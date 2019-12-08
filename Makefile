@@ -60,21 +60,21 @@ endef
 
 main:
 	$(call output_terminal_message,"Compose componets from all quintessence files")
-	@make quintessences
+	@make quintessences -j8
 	$(call output_terminal_message,"Make all the component object files")
-	@make objects
+	@make objects -j8
 	$(call output_terminal_message,"Make all the test objects")
-	@make test_objects
+	@make test_objects -j8
 	$(call output_terminal_message,"Make all the test executables")
-	@make tests
+	@make tests -j8
 	$(call output_terminal_message,"Run the tests for all the components")
 	@make run_tests
 	$(call output_terminal_message,"Build the library")
 	@make library
 	$(call output_terminal_message,"Make all the programs")
-	@make programs
+	@make programs -j8
 	$(call output_terminal_message,"Make all the example programs")
-	@make examples
+	@make examples -j8
 	$(call output_terminal_message,"🀫 🀫 🀫 🀫 🀫 🀫 🀫 FINISHED! 🀫 🀫 🀫 🀫 🀫 🀫 🀫")
 
 
