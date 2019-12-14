@@ -5,6 +5,9 @@
 #include <iostream>
 
 
+namespace Tileo
+{
+
 TileMap::TileMap()
    : width(0)
    , height(0)
@@ -81,5 +84,8 @@ void TileMap::resize(int w, int h)
    // resize and clear the tiles
    tiles.assign(width * height, 0);
 }
+
+
+} // namespace Tileo
 
 
