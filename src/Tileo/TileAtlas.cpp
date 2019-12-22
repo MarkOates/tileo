@@ -2,6 +2,7 @@
 
 #include <Tileo/TileAtlas.hpp>
 
+#include <sstream>
 #include <iostream>
 
 
@@ -160,6 +161,19 @@ bool TileAtlas::get_tile_uv(int index_num, int *u1, int *v1, int *u2, int *v2)
    *v2 = tile_index[index_num].get_v2();
 
    return true;
+}
+
+
+ALLEGRO_BITMAP* TileAtlas::get_bitmap(int index_num)
+{
+   if (index_num < 0 || index_num >= (int)tile_index.size())
+   {
+      std::stringstream error_message;
+      error_message << "Can not TileAtlas::get_bitmap on index_num " << index_num << ".";
+      throw std::runtime_error(error_message.str());
+   }
+
+   return tile_index[index_num].get_sub_bitmap();
 }
 
 
