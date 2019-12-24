@@ -18,26 +18,26 @@ properties:
     setter: true
     constructor_arg: true
   - name: u1
-    type: int
+    type: float
     init_with: 0
     getter: true
     setter: true
     constructor_arg: true
   - name: v1
-    type: int
+    type: float
     init_with: 0
     getter: true
     setter: true
     constructor_arg: true
   - name: u2
-    type: int
-    init_with: 0
+    type: float
+    init_with: 1
     getter: true
     setter: true
     constructor_arg: true
   - name: v2
-    type: int
-    init_with: 0
+    type: float
+    init_with: 1
     getter: true
     setter: true
     constructor_arg: true

@@ -151,7 +151,7 @@ void TileAtlas::draw_tile_to_atlas(ALLEGRO_BITMAP *tile, int tile_num, ALLEGRO_C
 }
 
 
-bool TileAtlas::get_tile_uv(int index_num, int *u1, int *v1, int *u2, int *v2)
+bool TileAtlas::get_tile_uv(int index_num, float *u1, float *v1, float *u2, float *v2)
 {
    if (index_num < 0 || index_num >= (int)tile_index.size()) return false;
 

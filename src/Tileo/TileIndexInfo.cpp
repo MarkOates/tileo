@@ -8,7 +8,7 @@ namespace Tileo
 {
 
 
-TileIndexInfo::TileIndexInfo(int index_num, ALLEGRO_BITMAP* bitmap_source, ALLEGRO_BITMAP* sub_bitmap, int u1, int v1, int u2, int v2)
+TileIndexInfo::TileIndexInfo(int index_num, ALLEGRO_BITMAP* bitmap_source, ALLEGRO_BITMAP* sub_bitmap, float u1, float v1, float u2, float v2)
    : index_num(index_num)
    , bitmap_source(bitmap_source)
    , sub_bitmap(sub_bitmap)
@@ -43,25 +43,25 @@ void TileIndexInfo::set_sub_bitmap(ALLEGRO_BITMAP* sub_bitmap)
 }
 
 
-void TileIndexInfo::set_u1(int u1)
+void TileIndexInfo::set_u1(float u1)
 {
    this->u1 = u1;
 }
 
 
-void TileIndexInfo::set_v1(int v1)
+void TileIndexInfo::set_v1(float v1)
 {
    this->v1 = v1;
 }
 
 
-void TileIndexInfo::set_u2(int u2)
+void TileIndexInfo::set_u2(float u2)
 {
    this->u2 = u2;
 }
 
 
-void TileIndexInfo::set_v2(int v2)
+void TileIndexInfo::set_v2(float v2)
 {
    this->v2 = v2;
 }
@@ -85,25 +85,25 @@ ALLEGRO_BITMAP* TileIndexInfo::get_sub_bitmap()
 }
 
 
-int TileIndexInfo::get_u1()
+float TileIndexInfo::get_u1()
 {
    return u1;
 }
 
 
-int TileIndexInfo::get_v1()
+float TileIndexInfo::get_v1()
 {
    return v1;
 }
 
 
-int TileIndexInfo::get_u2()
+float TileIndexInfo::get_u2()
 {
    return u2;
 }
 
 
-int TileIndexInfo::get_v2()
+float TileIndexInfo::get_v2()
 {
    return v2;
 }
