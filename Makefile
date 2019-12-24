@@ -22,6 +22,12 @@ YAML_CPP_LIBS=yaml-cpp
 
 
 
+QUINTESSENCE_BUILDER_EXECUTABLE=~/Repos/blast/bin/programs/quintessence_from_yaml
+QUINTESSENCE_BUILDER_FLAGS=--less_verbose
+FOCUSED_COMPONENT_NAME=LabyrinthOfLore/Rendering/TileMapMeshCubeTexturer
+
+
+
 SOURCES := $(shell find src -name '*.cpp')
 QUINTESSENCE_SOURCES := $(shell find quintessence -name '*.q.yml')
 PROGRAM_SOURCES := $(shell find programs -name '*.cpp')
@@ -59,8 +65,8 @@ endef
 
 
 main:
-	$(call output_terminal_message,"Compose componets from all quintessence files")
-	@make quintessences -j8
+	#$(call output_terminal_message,"Compose componets from all quintessence files")
+	#@make quintessences -j8
 	$(call output_terminal_message,"Make all the component object files")
 	@make objects -j8
 	$(call output_terminal_message,"Make all the test objects")
@@ -80,7 +86,9 @@ main:
 
 
 quintessences: $(QUINTESSENCE_SOURCES)
-	@./build
+	@[ -f $(QUINTESSENCE_BUILDER_EXECUTABLE) ] || echo "The needed executable $(QUINTESSENCE_BUILDER_EXECUTABLE) was not found"
+	@find quintessence -name '*.q.yml' | xargs $(QUINTESSENCE_BUILDER_EXECUTABLE) --less_verbose -f
+	@echo "(finished)"
 
 
 
