@@ -48,7 +48,10 @@ TileAtlas::TileAtlas()
 
 TileAtlas::~TileAtlas()
 {
-   std::cout << "[~TileAtlas()] WARNING: tile atlas may contain a bitmap (and potentially depenedencies reliant on it) that has not been properly freed. This destruction mechanism has not yet been properly implemented." << std::endl;
+   std::cout << "[~TileAtlas()] WARNING: tile atlas may contain a bitmap (and potentially depenedencies "
+             << "reliant on it) that has not been properly freed. This destruction mechanism has not yet "
+             << "been properly implemented."
+             << std::endl;
 }
 
 
@@ -66,7 +69,10 @@ int TileAtlas::get_tile_index_size()
 
 void TileAtlas::clear()
 {
-   std::cout << "[TileAtlas::clear()] WARNING: this feature is destroying a bitmap that potentially may have depenedencies (as sub-bitmaps). This destruction mechanism has not yet been properly implemented." << std::endl;
+   std::cout << "[TileAtlas::clear()] WARNING: this feature is destroying a bitmap that potentially may "
+             << "have depenedencies (as sub-bitmaps). This destruction mechanism has not yet been properly "
+             << "implemented."
+             << std::endl;
 
    for (unsigned i=0; i<tile_index.size(); i++) al_destroy_bitmap(tile_index[i].get_sub_bitmap());
    if (bitmap) al_destroy_bitmap(bitmap);
@@ -75,7 +81,7 @@ void TileAtlas::clear()
 }
 
 
-// load will *copy* the bitmap that you pass into it.  You probably would want to al_destroy_bitmap after loading; 
+// load will *copy* the bitmap that you pass into it.  You probably would want to al_destroy_bitmap after loading;
 void TileAtlas::load(ALLEGRO_BITMAP *tileset, int tile_width, int tile_height, int spacing)
 {
    if (!tileset)
