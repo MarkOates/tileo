@@ -111,7 +111,7 @@ ALLEGRO_BITMAP *TileAtlasBuilder::build()
    al_restore_state(&prev);
 
 
-   // 
+   //
    // to solve an odd bug, the bitmap will be cloned so that OPENGL will correctly create the mipmaps
    ALLEGRO_BITMAP *cloned = al_clone_bitmap(target);
    al_destroy_bitmap(target);

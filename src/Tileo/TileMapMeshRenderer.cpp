@@ -10,7 +10,8 @@ void TileMapMeshRenderer::set_tile_uv(int tile_x, int tile_y, int u1, int v1, in
    int index_start = (tile_x * 6) + tile_y * (width*6);
    int &i = index_start;
 
-   ALLEGRO_VERTEX *vbuff = (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, index_start, 6, ALLEGRO_LOCK_WRITEONLY);
+   ALLEGRO_VERTEX *vbuff =
+      (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, index_start, 6, ALLEGRO_LOCK_WRITEONLY);
    if (!vbuff) std::cout << "could not lock vertex buffer" << std::endl;
 
    if (use_primitive) vertexes[i+0].u = u1;
@@ -120,7 +121,9 @@ void TileMapMeshRenderer::resize(int w, int h, int tile_w, int tile_h)
    if (!vertex_buffer) std::cout << "There was an error creating the vertex buffer" << std::endl;
 
    // lock the buffer before writing to it
-   ALLEGRO_VERTEX *vbuff_begin = (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, 0, al_get_vertex_buffer_size(vertex_buffer), ALLEGRO_LOCK_WRITEONLY);
+   int vertex_buffer_size = al_get_vertex_buffer_size(vertex_buffer);
+   ALLEGRO_VERTEX *vbuff_begin =
+      (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, 0, vertex_buffer_size, ALLEGRO_LOCK_WRITEONLY);
    if (!vbuff_begin) std::cout << "There was an error locking the vertex buffer" << std::endl;
 
    // place the vertexes in the mesh
@@ -176,7 +179,7 @@ void TileMapMeshRenderer::resize(int w, int h, int tile_w, int tile_h)
       if (use_primitive) vertexes[v].x *= tile_w;
       if (use_primitive) vertexes[v].y *= tile_h;
       if (use_primitive) vertexes[v].z = 0;
-      if (use_primitive) vertexes[v].color = al_map_rgba_f(1, 1, 1, 1);//color::mix(color::white, random_color(), 0.5);//color::transparent;
+      if (use_primitive) vertexes[v].color = al_map_rgba_f(1, 1, 1, 1);
       vbuff[0].x *= tile_w;
       vbuff[0].y *= tile_h;
       vbuff[0].z = 0;
@@ -197,7 +200,12 @@ void TileMapMeshRenderer::render(int camera_x, int camera_y)
    al_use_transform(&transform);
 
    //al_draw_prim(&vertexes[0], NULL, tile_atlas->bitmap, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
-   al_draw_vertex_buffer(vertex_buffer, tile_atlas_bitmap, 0, al_get_vertex_buffer_size(vertex_buffer), ALLEGRO_PRIM_TRIANGLE_LIST);
+   al_draw_vertex_buffer(
+      vertex_buffer,
+      tile_atlas_bitmap,
+      0,
+      al_get_vertex_buffer_size(vertex_buffer),
+      ALLEGRO_PRIM_TRIANGLE_LIST);
 
    al_use_transform(&prev);
 }
