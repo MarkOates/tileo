@@ -31,13 +31,13 @@ properties:
     constructor_arg: true
   - name: u2
     type: float
-    init_with: 1
+    init_with: 0
     getter: true
     setter: true
     constructor_arg: true
   - name: v2
     type: float
-    init_with: 1
+    init_with: 0
     getter: true
     setter: true
     constructor_arg: true
