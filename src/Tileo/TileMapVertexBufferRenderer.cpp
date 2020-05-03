@@ -20,7 +20,8 @@ void TileMapVertexBufferRenderer::initialize_or_recreate_vertex_buffer(int lengt
 
 void TileMapVertexBufferRenderer::lock_vertex_buffer(int start, int length)
 {
-   locked_vertex_buffer_vertex_pos = (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, start, length, ALLEGRO_LOCK_WRITEONLY);
+   locked_vertex_buffer_vertex_pos =
+      (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, start, length, ALLEGRO_LOCK_WRITEONLY);
    if (!locked_vertex_buffer_vertex_pos)
    {
       throw std::runtime_error("[TileMapVertexBufferRenderer::lock_vertex_buffer] error: vertex buffer did not lock. " \
@@ -190,7 +191,13 @@ void TileMapVertexBufferRenderer::render(int camera_x, int camera_y)
    al_translate_transform(&transform, -camera_x, -camera_y);
    al_use_transform(&transform);
 
-   al_draw_vertex_buffer(vertex_buffer, tile_atlas.get_bitmap(), 0, al_get_vertex_buffer_size(vertex_buffer), ALLEGRO_PRIM_TRIANGLE_LIST);
+   al_draw_vertex_buffer(
+      vertex_buffer,
+      tile_atlas.get_bitmap(),
+      0,
+      al_get_vertex_buffer_size(vertex_buffer),
+      ALLEGRO_PRIM_TRIANGLE_LIST
+      );
 
    al_use_transform(&prev);
 }
