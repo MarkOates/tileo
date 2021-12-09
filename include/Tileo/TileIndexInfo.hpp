@@ -28,7 +28,6 @@ namespace Tileo
       void set_v1(float v1);
       void set_u2(float u2);
       void set_v2(float v2);
-
       int get_index_num();
       ALLEGRO_BITMAP* get_bitmap_source();
       ALLEGRO_BITMAP* get_sub_bitmap();
