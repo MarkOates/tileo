@@ -27,7 +27,7 @@ public:
    int get_height();
    int infer_num_tiles();
 
-   bool set_tile(Tileo::TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index);
+   bool set_tile(Tileo::TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_id);
    void set_tile_atlas_bitmap(ALLEGRO_BITMAP *tile_atlast_bitmap);
    void resize(int w, int h, int tile_w, int tile_h);
 

@@ -7,11 +7,11 @@
 
 void TileMapMeshRenderer::set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2)
 {
-   int index_start = (tile_x * 6) + tile_y * (width*6);
-   int &i = index_start;
+   int id_start = (tile_x * 6) + tile_y * (width*6);
+   int &i = id_start;
 
    ALLEGRO_VERTEX *vbuff =
-      (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, index_start, 6, ALLEGRO_LOCK_WRITEONLY);
+      (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, id_start, 6, ALLEGRO_LOCK_WRITEONLY);
    if (!vbuff) std::cout << "could not lock vertex buffer" << std::endl;
 
    if (use_primitive) vertexes[i+0].u = u1;
@@ -82,20 +82,20 @@ int TileMapMeshRenderer::infer_num_tiles()
 }
 
 
-bool TileMapMeshRenderer::set_tile(Tileo::TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_index)
+bool TileMapMeshRenderer::set_tile(Tileo::TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_id)
 {
    // if the tile index does not exist in the tile_atlas, break out
-   if (tile_index >= (int)tile_atlas.get_tile_index_size()) return false;
+   if (tile_id >= (int)tile_atlas.get_tile_index_size()) return false;
 
-   // if the tile_index is a negative number, use the number "0" instead
+   // if the tile_id is a negative number, use the number "0" instead
    // I'm not sure how/why this is the preferred approach.  I think negative numbers
    // should be allowed, any number should be allowed.  So this should be revisited
-   if (tile_index < 0) tile_index = 0;
+   if (tile_id < 0) tile_id = 0;
 
    // transfer the uv coordinates of the from the tile atlas bitmap to the mesh
    // {
       int u1, v1, u2, v2;
-      tile_atlas.get_tile_uv(tile_index, &u1, &v1, &u2, &v2);
+      tile_atlas.get_tile_uv(tile_id, &u1, &v1, &u2, &v2);
       set_tile_uv(tile_x, tile_y, u1, v1, u2, v2);
    // }
 
