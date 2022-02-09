@@ -53,7 +53,7 @@ public:
 
    void load_map()
    {
-      atlas.load(bitmaps["tiles_dungeon_v1.1.png"], 16, 16);
+      atlas.duplicate_bitmap_and_load(bitmaps["tiles_dungeon_v1.1.png"], 16, 16);
       //mesh.set_atlas_bitmap(atlas.get_bitmap());
    }
 
@@ -64,7 +64,7 @@ public:
    {
       al_clear_to_color(al_color_name("orange"));
       al_draw_text(fonts[medium_font], al_color_name("purple"), 200, 200, 0, "Hello World!");
-      //tile_map_renderer.render(20, 20);
+      //mesh.render();
       al_flip_display();
    }
 };
