@@ -8,7 +8,7 @@
 #include <AllegroFlare/FontBin.hpp>
 #include <AllegroFlare/BitmapBin.hpp>
 
-#include <Tileo/TileAtlas.hpp>
+#include <Tileo/Atlas.hpp>
 #include <Tileo/Mesh.hpp>
 
 #include <string>
@@ -19,7 +19,7 @@
 using AllegroFlare::FontBin;
 using AllegroFlare::BitmapBin;
 
-using Tileo::TileAtlas;
+//using Tileo::Atlas;
 
 
 bool shutdown_program = false;
@@ -31,7 +31,7 @@ private:
    FontBin fonts;
    BitmapBin bitmaps;
    std::string medium_font;
-   TileAtlas tile_atlas;
+   Tileo::Atlas atlas;
    Tileo::Mesh tile_map_renderer;
 
 public:

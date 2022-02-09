@@ -1,6 +1,6 @@
 
 
-#include <Tileo/TileAtlas.hpp>
+#include <Tileo/Atlas.hpp>
 
 #include <sstream>
 #include <iostream>
@@ -39,37 +39,37 @@ namespace Tileo
    */
 
 
-TileAtlas::TileAtlas()
+Atlas::Atlas()
    : bitmap(nullptr)
    , tile_index()
 {
 }
 
 
-TileAtlas::~TileAtlas()
+Atlas::~Atlas()
 {
-   std::cout << "[~TileAtlas()] WARNING: tile atlas may contain a bitmap (and potentially depenedencies "
+   std::cout << "[~Atlas()] WARNING: tile atlas may contain a bitmap (and potentially depenedencies "
              << "reliant on it) that has not been properly freed. This destruction mechanism has not yet "
              << "been properly implemented."
              << std::endl;
 }
 
 
-ALLEGRO_BITMAP *TileAtlas::get_bitmap()
+ALLEGRO_BITMAP *Atlas::get_bitmap()
 {
    return bitmap;
 }
 
 
-int TileAtlas::get_tile_index_size()
+int Atlas::get_tile_index_size()
 {
    return tile_index.size();
 }
 
 
-void TileAtlas::clear()
+void Atlas::clear()
 {
-   std::cout << "[TileAtlas::clear()] WARNING: this feature is destroying a bitmap that potentially may "
+   std::cout << "[Atlas::clear()] WARNING: this feature is destroying a bitmap that potentially may "
              << "have depenedencies (as sub-bitmaps). This destruction mechanism has not yet been properly "
              << "implemented."
              << std::endl;
@@ -82,11 +82,11 @@ void TileAtlas::clear()
 
 
 // load will *copy* the bitmap that you pass into it.  You probably would want to al_destroy_bitmap after loading;
-void TileAtlas::load(ALLEGRO_BITMAP *tileset, int tile_width, int tile_height, int spacing)
+void Atlas::load(ALLEGRO_BITMAP *tileset, int tile_width, int tile_height, int spacing)
 {
    if (!tileset)
    {
-      std::cout << "[TileAtlas::load()] ERROR: the ALLEGRO_BITMAP provided is NULL" << std::endl;
+      std::cout << "[Atlas::load()] ERROR: the ALLEGRO_BITMAP provided is NULL" << std::endl;
    }
 
    // clear the existing contents of this tile atlas (if any)
@@ -119,7 +119,7 @@ void TileAtlas::load(ALLEGRO_BITMAP *tileset, int tile_width, int tile_height, i
 }
 
 
-void TileAtlas::draw_tile_to_atlas(ALLEGRO_BITMAP *tile, int tile_num, ALLEGRO_COLOR color)
+void Atlas::draw_tile_to_atlas(ALLEGRO_BITMAP *tile, int tile_num, ALLEGRO_COLOR color)
 {
    // ok, this is a serious bit of a hack.  It will only work when the tiles are spaced with spaces of 1 px.
    if (!tile) return;
@@ -128,7 +128,7 @@ void TileAtlas::draw_tile_to_atlas(ALLEGRO_BITMAP *tile, int tile_num, ALLEGRO_C
 
    if (!bitmap)
    {
-      std::cout << "[TileAtlas::draw_to_tile_atlas()] ERROR: the ALLEGRO_BITMAP provided is NULL" << std::endl;
+      std::cout << "[Atlas::draw_to_tile_atlas()] ERROR: the ALLEGRO_BITMAP provided is NULL" << std::endl;
       return;
    }
 
@@ -157,7 +157,7 @@ void TileAtlas::draw_tile_to_atlas(ALLEGRO_BITMAP *tile, int tile_num, ALLEGRO_C
 }
 
 
-bool TileAtlas::get_tile_uv(int index_num, int *u1, int *v1, int *u2, int *v2)
+bool Atlas::get_tile_uv(int index_num, int *u1, int *v1, int *u2, int *v2)
 {
    if (index_num < 0 || index_num >= (int)tile_index.size()) return false;
 
@@ -170,12 +170,12 @@ bool TileAtlas::get_tile_uv(int index_num, int *u1, int *v1, int *u2, int *v2)
 }
 
 
-ALLEGRO_BITMAP* TileAtlas::get_bitmap(int index_num)
+ALLEGRO_BITMAP* Atlas::get_bitmap(int index_num)
 {
    if (index_num < 0 || index_num >= (int)tile_index.size())
    {
       std::stringstream error_message;
-      error_message << "Can not TileAtlas::get_bitmap on index_num " << index_num << ".";
+      error_message << "Can not Atlas::get_bitmap on index_num " << index_num << ".";
       throw std::runtime_error(error_message.str());
    }
 

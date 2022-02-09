@@ -9,7 +9,7 @@
 
 namespace Tileo
 {
-   class TileAtlas
+   class Atlas
    {
    private:
       ALLEGRO_BITMAP *bitmap;
@@ -18,8 +18,8 @@ namespace Tileo
       void clear();
 
    public:
-      TileAtlas();
-      ~TileAtlas();
+      Atlas();
+      ~Atlas();
 
       ALLEGRO_BITMAP *get_bitmap();
       int get_tile_index_size();

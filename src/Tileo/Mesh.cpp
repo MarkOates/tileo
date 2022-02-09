@@ -51,10 +51,10 @@ void Mesh::set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2)
 }
 
 
-Mesh::Mesh(ALLEGRO_BITMAP *tile_atlas_bitmap)
+Mesh::Mesh(ALLEGRO_BITMAP *atlas_bitmap)
    : vertex_buffer(nullptr)
    , vertexes()
-   , tile_atlas_bitmap(tile_atlas_bitmap)
+   , atlas_bitmap(atlas_bitmap)
    , width(0)
    , height(0)
    , use_primitive(false)
@@ -85,10 +85,10 @@ int Mesh::infer_num_tiles()
 }
 
 
-bool Mesh::set_tile(Tileo::TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_id)
+bool Mesh::set_tile(Tileo::Atlas &atlas, int tile_x, int tile_y, int tile_id)
 {
-   // if the tile index does not exist in the tile_atlas, break out
-   if (tile_id >= (int)tile_atlas.get_tile_index_size()) return false;
+   // if the tile index does not exist in the atlas, break out
+   if (tile_id >= (int)atlas.get_tile_index_size()) return false;
 
    // if the tile_id is a negative number, use the number "0" instead
    // I'm not sure how/why this is the preferred approach.  I think negative numbers
@@ -98,7 +98,7 @@ bool Mesh::set_tile(Tileo::TileAtlas &tile_atlas, int tile_x, int tile_y, int ti
    // transfer the uv coordinates of the from the tile atlas bitmap to the mesh
    // {
       int u1, v1, u2, v2;
-      tile_atlas.get_tile_uv(tile_id, &u1, &v1, &u2, &v2);
+      atlas.get_tile_uv(tile_id, &u1, &v1, &u2, &v2);
       set_tile_uv(tile_x, tile_y, u1, v1, u2, v2);
    // }
 
@@ -106,9 +106,9 @@ bool Mesh::set_tile(Tileo::TileAtlas &tile_atlas, int tile_x, int tile_y, int ti
 }
 
 
-void Mesh::set_tile_atlas_bitmap(ALLEGRO_BITMAP *tile_atlas_bitmap)
+void Mesh::set_atlas_bitmap(ALLEGRO_BITMAP *atlas_bitmap)
 {
-   this->tile_atlas_bitmap = tile_atlas_bitmap;
+   this->atlas_bitmap = atlas_bitmap;
 }
 
 
@@ -202,10 +202,10 @@ void Mesh::render(int camera_x, int camera_y)
    al_translate_transform(&transform, -camera_x, -camera_y);
    al_use_transform(&transform);
 
-   //al_draw_prim(&vertexes[0], NULL, tile_atlas->bitmap, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+   //al_draw_prim(&vertexes[0], NULL, atlas->bitmap, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
    al_draw_vertex_buffer(
       vertex_buffer,
-      tile_atlas_bitmap,
+      atlas_bitmap,
       0,
       al_get_vertex_buffer_size(vertex_buffer),
       ALLEGRO_PRIM_TRIANGLE_LIST);
