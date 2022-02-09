@@ -51,10 +51,11 @@ void Mesh::set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2)
 }
 
 
-Mesh::Mesh(ALLEGRO_BITMAP *atlas_bitmap)
-   : vertex_buffer(nullptr)
+Mesh::Mesh(Tileo::Atlas *atlas) //ALLEGRO_BITMAP *atlas_bitmap)
+   : atlas(atlas)
+   , vertex_buffer(nullptr)
    , vertexes()
-   , atlas_bitmap(atlas_bitmap)
+   //, atlas_bitmap(atlas_bitmap)
    , width(0)
    , height(0)
    , use_primitive(false)
@@ -67,53 +68,14 @@ Mesh::~Mesh()
 }
 
 
-int Mesh::get_width()
+void Mesh::initialize(int w, int h, int tile_w, int tile_h)
 {
-   return width;
-}
+   if (initialized)
+   {
+      throw std::runtime_error("[Tileo::Mesh] error: initialized must be false");
+      //return false
+   }
 
-
-int Mesh::get_height()
-{
-   return height;
-}
-
-
-int Mesh::infer_num_tiles()
-{
-   return width * height;
-}
-
-
-bool Mesh::set_tile(Tileo::Atlas &atlas, int tile_x, int tile_y, int tile_id)
-{
-   // if the tile index does not exist in the atlas, break out
-   if (tile_id >= (int)atlas.get_tile_index_size()) return false;
-
-   // if the tile_id is a negative number, use the number "0" instead
-   // I'm not sure how/why this is the preferred approach.  I think negative numbers
-   // should be allowed, any number should be allowed.  So this should be revisited
-   if (tile_id < 0) tile_id = 0;
-
-   // transfer the uv coordinates of the from the tile atlas bitmap to the mesh
-   // {
-      int u1, v1, u2, v2;
-      atlas.get_tile_uv(tile_id, &u1, &v1, &u2, &v2);
-      set_tile_uv(tile_x, tile_y, u1, v1, u2, v2);
-   // }
-
-   return true;
-}
-
-
-void Mesh::set_atlas_bitmap(ALLEGRO_BITMAP *atlas_bitmap)
-{
-   this->atlas_bitmap = atlas_bitmap;
-}
-
-
-void Mesh::resize(int w, int h, int tile_w, int tile_h)
-{
    // resize the vertexes vector
    vertexes.clear();
    if (use_primitive) vertexes.resize(width*height*6);
@@ -191,16 +153,69 @@ void Mesh::resize(int w, int h, int tile_w, int tile_h)
 
    // unlock our buffer
    al_unlock_vertex_buffer(vertex_buffer);
+
+   // set as initialized
+   initialized = true;
 }
 
 
-void Mesh::render(int camera_x, int camera_y)
+int Mesh::get_width()
 {
-   ALLEGRO_TRANSFORM prev, transform;
-   al_copy_transform(&prev, al_get_current_transform());
-   al_identity_transform(&transform);
-   al_translate_transform(&transform, -camera_x, -camera_y);
-   al_use_transform(&transform);
+   return width;
+}
+
+
+int Mesh::get_height()
+{
+   return height;
+}
+
+
+int Mesh::infer_num_tiles()
+{
+   return width * height;
+}
+
+
+bool Mesh::set_tile(int tile_x, int tile_y, int tile_id)
+{
+   if (!atlas) throw std::runtime_error("[Tileo::Mesh] error: atlas must not be nullptr");
+   // if the tile index does not exist in the atlas, break out
+   if (tile_id >= (int)atlas->get_tile_index_size()) return false;
+
+   // if the tile_id is a negative number, use the number "0" instead
+   // I'm not sure how/why this is the preferred approach.  I think negative numbers
+   // should be allowed, any number should be allowed.  So this should be revisited
+   if (tile_id < 0) tile_id = 0;
+
+   // transfer the uv coordinates of the from the tile atlas bitmap to the mesh
+   // {
+      int u1, v1, u2, v2;
+      atlas->get_tile_uv(tile_id, &u1, &v1, &u2, &v2);
+      set_tile_uv(tile_x, tile_y, u1, v1, u2, v2);
+   // }
+
+   return true;
+}
+
+
+
+ //void Mesh::set_atlas_bitmap(ALLEGRO_BITMAP *atlas_bitmap)
+ //{
+ //   this->atlas_bitmap = atlas_bitmap;
+ //}
+
+
+
+void Mesh::render() //int camera_x, int camera_y)
+{
+   if (!atlas) throw std::runtime_error("[Tileo::Mesh] error: atlas must not be nullptr");
+   ALLEGRO_BITMAP *atlas_bitmap = atlas->get_bitmap();
+   //ALLEGRO_TRANSFORM prev, transform;
+   //al_copy_transform(&prev, al_get_current_transform());
+   //al_identity_transform(&transform);
+   ///al_translate_transform(&transform, -camera_x, -camera_y);
+   //al_use_transform(&transform);
 
    //al_draw_prim(&vertexes[0], NULL, atlas->bitmap, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
    al_draw_vertex_buffer(
@@ -210,7 +225,7 @@ void Mesh::render(int camera_x, int camera_y)
       al_get_vertex_buffer_size(vertex_buffer),
       ALLEGRO_PRIM_TRIANGLE_LIST);
 
-   al_use_transform(&prev);
+   //al_use_transform(&prev);
 }
 
 } // Tileo

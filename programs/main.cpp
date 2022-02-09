@@ -32,15 +32,15 @@ private:
    BitmapBin bitmaps;
    std::string medium_font;
    Tileo::Atlas atlas;
-   Tileo::Mesh tile_map_renderer;
+   Tileo::Mesh mesh;
 
 public:
    ProgramRunner()
       : fonts()
       , bitmaps()
       , medium_font("consolas.ttf 32")
-      , tile_atlas()
-      , tile_map_renderer()
+      , atlas()
+      , mesh(&atlas)
    {}
 
    void initialize()
@@ -53,8 +53,8 @@ public:
 
    void load_map()
    {
-      tile_atlas.load(bitmaps["tiles_dungeon_v1.1.png"], 16, 16);
-      tile_map_renderer.set_tile_atlas_bitmap(tile_atlas.get_bitmap());
+      atlas.load(bitmaps["tiles_dungeon_v1.1.png"], 16, 16);
+      //mesh.set_atlas_bitmap(atlas.get_bitmap());
    }
 
    ~ProgramRunner()
