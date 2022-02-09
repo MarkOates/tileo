@@ -10,55 +10,58 @@ namespace Tileo
 
 void Mesh::set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2)
 {
-   int id_start = (tile_x * 6) + tile_y * (width*6);
+   int id_start = (tile_x * 6) + tile_y * (num_columns*6);
    int &i = id_start;
 
-   ALLEGRO_VERTEX *vbuff =
-      (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, id_start, 6, ALLEGRO_LOCK_WRITEONLY);
-   if (!vbuff) std::cout << "could not lock vertex buffer" << std::endl;
+   //ALLEGRO_VERTEX *vbuff =
+   //   (ALLEGRO_VERTEX *)al_lock_vertex_buffer(vertex_buffer, id_start, 6, ALLEGRO_LOCK_WRITEONLY);
+   //if (!vbuff) std::cout << "could not lock vertex buffer" << std::endl;
 
    if (use_primitive) vertexes[i+0].u = u1;
    if (use_primitive) vertexes[i+0].v = v1;
-   vbuff[0].u = u1;
-   vbuff[0].v = v1;
+   //vbuff[0].u = u1;
+   //vbuff[0].v = v1;
 
    if (use_primitive) vertexes[i+1].u = u1;
    if (use_primitive) vertexes[i+1].v = v2;
-   vbuff[1].u = u1;
-   vbuff[1].v = v2;
+   //vbuff[1].u = u1;
+   //vbuff[1].v = v2;
 
    if (use_primitive) vertexes[i+2].u = u2;
    if (use_primitive) vertexes[i+2].v = v2;
-   vbuff[2].u = u2;
-   vbuff[2].v = v2;
+   //vbuff[2].u = u2;
+   //vbuff[2].v = v2;
 
    if (use_primitive) vertexes[i+3].u = u2;
    if (use_primitive) vertexes[i+3].v = v2;
-   vbuff[3].u = u2;
-   vbuff[3].v = v2;
+   //vbuff[3].u = u2;
+   //vbuff[3].v = v2;
 
    if (use_primitive) vertexes[i+4].u = u2;
    if (use_primitive) vertexes[i+4].v = v1;
-   vbuff[4].u = u2;
-   vbuff[4].v = v1;
+   //vbuff[4].u = u2;
+   //vbuff[4].v = v1;
 
    if (use_primitive) vertexes[i+5].u = u1;
    if (use_primitive) vertexes[i+5].v = v1;
-   vbuff[5].u = u1;
-   vbuff[5].v = v1;
+   //vbuff[5].u = u1;
+   //vbuff[5].v = v1;
 
-   al_unlock_vertex_buffer(vertex_buffer);
+   //al_unlock_vertex_buffer(vertex_buffer);
 }
 
 
-Mesh::Mesh(Tileo::Atlas *atlas) //ALLEGRO_BITMAP *atlas_bitmap)
+Mesh::Mesh(Tileo::Atlas *atlas, int num_columns, int num_rows, int tile_width, int tile_height)
    : atlas(atlas)
    , vertex_buffer(nullptr)
    , vertexes()
    //, atlas_bitmap(atlas_bitmap)
-   , width(0)
-   , height(0)
-   , use_primitive(false)
+   , num_columns(num_columns)
+   , num_rows(num_rows)
+   , tile_width(tile_width)
+   , tile_height(tile_height)
+   , use_primitive(true)
+   , initialized(false)
 {
 }
 
@@ -68,8 +71,17 @@ Mesh::~Mesh()
 }
 
 
-void Mesh::initialize(int w, int h, int tile_w, int tile_h)
+std::vector<ALLEGRO_VERTEX> &Mesh::get_vertexes_ref()
 {
+   return vertexes;
+}
+
+
+void Mesh::initialize()
+{
+   //num_columns = w;
+   //num_rows = h;
+
    if (initialized)
    {
       throw std::runtime_error("[Tileo::Mesh] error: initialized must be false");
@@ -78,11 +90,11 @@ void Mesh::initialize(int w, int h, int tile_w, int tile_h)
 
    // resize the vertexes vector
    vertexes.clear();
-   if (use_primitive) vertexes.resize(width*height*6);
+   if (use_primitive) vertexes.resize(num_columns*num_rows*6);
 
    // create a vertex_buffer
    if (vertex_buffer) al_destroy_vertex_buffer(vertex_buffer);
-   vertex_buffer = al_create_vertex_buffer(NULL, NULL, width*height*6, ALLEGRO_PRIM_BUFFER_STATIC);
+   vertex_buffer = al_create_vertex_buffer(NULL, NULL, num_columns*num_rows*6, ALLEGRO_PRIM_BUFFER_STATIC);
    if (!vertex_buffer) std::cout << "There was an error creating the vertex buffer" << std::endl;
 
    // lock the buffer before writing to it
@@ -94,13 +106,13 @@ void Mesh::initialize(int w, int h, int tile_w, int tile_h)
    // place the vertexes in the mesh
    ALLEGRO_VERTEX *vbuff = vbuff_begin;
    int v = 0;
-   int num_vertexes = width*height*6;
+   int num_vertexes = num_columns*num_rows*6;
    for (; v<num_vertexes; v+=6, vbuff+=6)
    {
       long tile_num = v / 6;
 
-      int x1 = (tile_num % width);
-      int y1 = (tile_num / width);
+      int x1 = (tile_num % num_columns);
+      int y1 = (tile_num / num_columns);
       int x2 = x1 + 1;
       int y2 = y1 + 1;
 
@@ -141,12 +153,12 @@ void Mesh::initialize(int w, int h, int tile_w, int tile_h)
    v = 0;
    for (; v<num_vertexes; v++, vbuff++)
    {
-      if (use_primitive) vertexes[v].x *= tile_w;
-      if (use_primitive) vertexes[v].y *= tile_h;
+      if (use_primitive) vertexes[v].x *= tile_width;
+      if (use_primitive) vertexes[v].y *= tile_height;
       if (use_primitive) vertexes[v].z = 0;
       if (use_primitive) vertexes[v].color = al_map_rgba_f(1, 1, 1, 1);
-      vbuff[0].x *= tile_w;
-      vbuff[0].y *= tile_h;
+      vbuff[0].x *= tile_width;
+      vbuff[0].y *= tile_height;
       vbuff[0].z = 0;
       vbuff[0].color = al_map_rgba_f(1, 1, 1, 1);//color::mix(color::white, random_color(), 0.5);
    }
@@ -159,21 +171,21 @@ void Mesh::initialize(int w, int h, int tile_w, int tile_h)
 }
 
 
-int Mesh::get_width()
+int Mesh::get_num_columns()
 {
-   return width;
+   return num_columns;
 }
 
 
-int Mesh::get_height()
+int Mesh::get_num_rows()
 {
-   return height;
+   return num_rows;
 }
 
 
 int Mesh::infer_num_tiles()
 {
-   return width * height;
+   return num_columns * num_rows;
 }
 
 
@@ -209,23 +221,35 @@ bool Mesh::set_tile(int tile_x, int tile_y, int tile_id)
 
 void Mesh::render() //int camera_x, int camera_y)
 {
+   if (!initialized) throw std::runtime_error("[Tileo::Mesh;:render] error: initialized can not be nullptr");
    if (!atlas) throw std::runtime_error("[Tileo::Mesh] error: atlas must not be nullptr");
-   ALLEGRO_BITMAP *atlas_bitmap = atlas->get_bitmap();
+
+
+   //return;
+
+   //std::vector<ALLEGRO_VERTEX> vertexes = {
+   //   ALLEGRO_VERTEX{ 0, 0, 0, ALLEGRO_COLOR{1, 0, 0, 1}, 0, 0 },
+   //};
+
+
+
+   al_draw_prim(&vertexes[0], NULL, atlas->get_bitmap(), 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+
+   //al_draw_prim(&vertexes[0], NULL, bmp, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+
    //ALLEGRO_TRANSFORM prev, transform;
-   //al_copy_transform(&prev, al_get_current_transform());
-   //al_identity_transform(&transform);
-   ///al_translate_transform(&transform, -camera_x, -camera_y);
-   //al_use_transform(&transform);
 
-   //al_draw_prim(&vertexes[0], NULL, atlas->bitmap, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
-   al_draw_vertex_buffer(
-      vertex_buffer,
-      atlas_bitmap,
-      0,
-      al_get_vertex_buffer_size(vertex_buffer),
-      ALLEGRO_PRIM_TRIANGLE_LIST);
+   //al_draw_vertex_buffer(
+   //   vertex_buffer,
+   //   atlas->get_bitmap(),
+   //   0,
+   //   al_get_vertex_buffer_size(vertex_buffer),
+   //   ALLEGRO_PRIM_TRIANGLE_LIST);
 
-   //al_use_transform(&prev);
+   // TODO: assuming a tile_width and a tile_height of 16
+   float tile_width = 16;
+   float tile_height = 16;
+   al_draw_rectangle(0, 0, num_columns * tile_width, num_rows * tile_height, ALLEGRO_COLOR{1, 0, 1, 1}, 2.0);
 }
 
 } // Tileo
