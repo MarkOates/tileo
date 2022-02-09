@@ -82,9 +82,9 @@ void Atlas::clear()
 
 
 // load will *copy* the bitmap that you pass into it.  You probably would want to al_destroy_bitmap after loading;
-void Atlas::duplicate_bitmap_and_load(ALLEGRO_BITMAP *tileset, int tile_width, int tile_height, int spacing)
+void Atlas::duplicate_bitmap_and_load(ALLEGRO_BITMAP *source_bitmap, int tile_width, int tile_height, int spacing)
 {
-   if (!tileset)
+   if (!source_bitmap)
    {
       std::cout << "[Atlas::load()] ERROR: the ALLEGRO_BITMAP provided is NULL" << std::endl;
    }
@@ -92,7 +92,7 @@ void Atlas::duplicate_bitmap_and_load(ALLEGRO_BITMAP *tileset, int tile_width, i
    // clear the existing contents of this tile atlas (if any)
    clear();
 
-   bitmap = al_clone_bitmap(tileset);
+   bitmap = al_clone_bitmap(source_bitmap);
 
    int tile_step_x = tile_width + spacing;
    int tile_step_y = tile_height + spacing;
