@@ -9,7 +9,7 @@
 #include <AllegroFlare/BitmapBin.hpp>
 
 #include <Tileo/TileAtlas.hpp>
-#include <Tileo/TileMapMeshRenderer.hpp>
+#include <Tileo/Mesh.hpp>
 
 #include <string>
 #include <vector>
@@ -32,7 +32,7 @@ private:
    BitmapBin bitmaps;
    std::string medium_font;
    TileAtlas tile_atlas;
-   TileMapMeshRenderer tile_map_renderer;
+   Tileo::Mesh tile_map_renderer;
 
 public:
    ProgramRunner()

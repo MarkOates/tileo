@@ -1,11 +1,14 @@
 
 
-#include <Tileo/TileMapMeshRenderer.hpp>
+#include <Tileo/Mesh.hpp>
 
 #include <iostream> // for set_tile_uv
 
 
-void TileMapMeshRenderer::set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2)
+namespace Tileo
+{
+
+void Mesh::set_tile_uv(int tile_x, int tile_y, int u1, int v1, int u2, int v2)
 {
    int id_start = (tile_x * 6) + tile_y * (width*6);
    int &i = id_start;
@@ -48,7 +51,7 @@ void TileMapMeshRenderer::set_tile_uv(int tile_x, int tile_y, int u1, int v1, in
 }
 
 
-TileMapMeshRenderer::TileMapMeshRenderer(ALLEGRO_BITMAP *tile_atlas_bitmap)
+Mesh::Mesh(ALLEGRO_BITMAP *tile_atlas_bitmap)
    : vertex_buffer(nullptr)
    , vertexes()
    , tile_atlas_bitmap(tile_atlas_bitmap)
@@ -59,30 +62,30 @@ TileMapMeshRenderer::TileMapMeshRenderer(ALLEGRO_BITMAP *tile_atlas_bitmap)
 }
 
 
-TileMapMeshRenderer::~TileMapMeshRenderer()
+Mesh::~Mesh()
 {
 }
 
 
-int TileMapMeshRenderer::get_width()
+int Mesh::get_width()
 {
    return width;
 }
 
 
-int TileMapMeshRenderer::get_height()
+int Mesh::get_height()
 {
    return height;
 }
 
 
-int TileMapMeshRenderer::infer_num_tiles()
+int Mesh::infer_num_tiles()
 {
    return width * height;
 }
 
 
-bool TileMapMeshRenderer::set_tile(Tileo::TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_id)
+bool Mesh::set_tile(Tileo::TileAtlas &tile_atlas, int tile_x, int tile_y, int tile_id)
 {
    // if the tile index does not exist in the tile_atlas, break out
    if (tile_id >= (int)tile_atlas.get_tile_index_size()) return false;
@@ -103,13 +106,13 @@ bool TileMapMeshRenderer::set_tile(Tileo::TileAtlas &tile_atlas, int tile_x, int
 }
 
 
-void TileMapMeshRenderer::set_tile_atlas_bitmap(ALLEGRO_BITMAP *tile_atlas_bitmap)
+void Mesh::set_tile_atlas_bitmap(ALLEGRO_BITMAP *tile_atlas_bitmap)
 {
    this->tile_atlas_bitmap = tile_atlas_bitmap;
 }
 
 
-void TileMapMeshRenderer::resize(int w, int h, int tile_w, int tile_h)
+void Mesh::resize(int w, int h, int tile_w, int tile_h)
 {
    // resize the vertexes vector
    vertexes.clear();
@@ -191,7 +194,7 @@ void TileMapMeshRenderer::resize(int w, int h, int tile_w, int tile_h)
 }
 
 
-void TileMapMeshRenderer::render(int camera_x, int camera_y)
+void Mesh::render(int camera_x, int camera_y)
 {
    ALLEGRO_TRANSFORM prev, transform;
    al_copy_transform(&prev, al_get_current_transform());
@@ -209,5 +212,7 @@ void TileMapMeshRenderer::render(int camera_x, int camera_y)
 
    al_use_transform(&prev);
 }
+
+} // Tileo
 
 
