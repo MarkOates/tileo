@@ -9,13 +9,22 @@
 
 namespace Tileo
 {
+   typedef struct
+   {
+      float x, y, z;
+      float u, v;
+      ALLEGRO_COLOR color;
+      //float nx, ny, nz;
+   } TILEO_VERTEX_WITH_NORMAL;
+
    class Mesh
    {
    private:
       Tileo::Atlas *atlas;
+      ALLEGRO_VERTEX_DECL *vertex_declaration;
+      std::vector<TILEO_VERTEX_WITH_NORMAL> vertexes;
+      //std::vector<ALLEGRO_VERTEX> vertexes;
       ALLEGRO_VERTEX_BUFFER *vertex_buffer;
-      std::vector<ALLEGRO_VERTEX> vertexes;
-      //ALLEGRO_BITMAP *atlas_bitmap;
       int num_columns;
       int num_rows;
       int tile_width;
@@ -31,7 +40,7 @@ namespace Tileo
 
       void initialize();
 
-      std::vector<ALLEGRO_VERTEX> &get_vertexes_ref();
+      std::vector<TILEO_VERTEX_WITH_NORMAL> &get_vertexes_ref();
 
       int get_num_columns();
       int get_num_rows();
