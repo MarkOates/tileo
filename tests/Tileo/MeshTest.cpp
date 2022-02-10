@@ -74,7 +74,7 @@ TEST_F(Tileo_MeshWithAllegroRenderingFixtureTest, render__will_render_the_mesh_a
       }
    }
 
-   al_clear_to_color(al_color_name("black"));
+   al_clear_to_color(al_color_name("orange"));
 
    // render the actual mesh
 
