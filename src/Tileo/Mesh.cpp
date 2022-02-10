@@ -219,7 +219,7 @@ bool Mesh::set_tile(int tile_x, int tile_y, int tile_id)
 
 
 
-void Mesh::render() //int camera_x, int camera_y)
+void Mesh::render(bool draw_frame) //int camera_x, int camera_y)
 {
    if (!initialized) throw std::runtime_error("[Tileo::Mesh;:render] error: initialized can not be nullptr");
    if (!atlas) throw std::runtime_error("[Tileo::Mesh] error: atlas must not be nullptr");
@@ -247,9 +247,12 @@ void Mesh::render() //int camera_x, int camera_y)
    //   ALLEGRO_PRIM_TRIANGLE_LIST);
 
    // TODO: assuming a tile_width and a tile_height of 16
-   float tile_width = 16;
-   float tile_height = 16;
-   al_draw_rectangle(0, 0, num_columns * tile_width, num_rows * tile_height, ALLEGRO_COLOR{1, 0, 1, 1}, 2.0);
+   //float tile_width = 16;
+   //float tile_height = 16;
+   if (draw_frame)
+   {
+      al_draw_rectangle(0, 0, num_columns * tile_width, num_rows * tile_height, ALLEGRO_COLOR{1, 0, 1, 1}, 2.0);
+   }
 }
 
 } // Tileo

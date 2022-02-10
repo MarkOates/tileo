@@ -64,9 +64,9 @@ TEST_F(Tileo_MeshWithAllegroRenderingFixtureTest, render__will_render_the_mesh_a
    mesh.initialize();
 
    AllegroFlare::Random random;
-   for (int y=0; y<20; y++)
+   for (int y=0; y<mesh.get_num_rows(); y++)
    {
-      for (int x=0; x<30; x++)
+      for (int x=0; x<mesh.get_num_columns(); x++)
       {
          int random_tile = random.get_random_int(0, atlas.get_tile_index_size());
          //int random_tile = 1;
