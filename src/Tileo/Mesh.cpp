@@ -216,7 +216,7 @@ bool Mesh::set_tile(int tile_x, int tile_y, int tile_id)
 }
 
 
-int Mesh::get_tile_id(int tile_x, int tile_y)
+const int Mesh::get_tile_id(int tile_x, int tile_y)
 {
    if (tile_x < 0) return 0;
    if (tile_x >= num_columns) return 0;
@@ -227,7 +227,7 @@ int Mesh::get_tile_id(int tile_x, int tile_y)
 }
 
 
-std::vector<int> Mesh::get_tile_ids()
+const std::vector<int> Mesh::get_tile_ids()
 {
    return tile_ids;
 }
