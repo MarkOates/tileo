@@ -174,13 +174,13 @@ void Mesh::initialize()
 }
 
 
-const int Mesh::get_num_columns()
+int Mesh::get_num_columns() const
 {
    return num_columns;
 }
 
 
-const int Mesh::get_num_rows()
+int Mesh::get_num_rows() const
 {
    return num_rows;
 }
@@ -216,7 +216,7 @@ bool Mesh::set_tile(int tile_x, int tile_y, int tile_id)
 }
 
 
-const int Mesh::get_tile_id(int tile_x, int tile_y)
+int Mesh::get_tile_id(int tile_x, int tile_y) const
 {
    if (tile_x < 0) return 0;
    if (tile_x >= num_columns) return 0;
@@ -227,7 +227,7 @@ const int Mesh::get_tile_id(int tile_x, int tile_y)
 }
 
 
-const std::vector<int> Mesh::get_tile_ids()
+std::vector<int> Mesh::get_tile_ids() const
 {
    return tile_ids;
 }

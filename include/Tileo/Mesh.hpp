@@ -34,13 +34,13 @@ namespace Tileo
 
       std::vector<ALLEGRO_VERTEX> &get_vertexes_ref();
 
-      const int get_num_columns();
-      const int get_num_rows();
+      int get_num_columns() const;
+      int get_num_rows() const;
       int infer_num_tiles();
 
       bool set_tile(int tile_x, int tile_y, int tile_id);
-      const int get_tile_id(int tile_x, int tile_y);
-      const std::vector<int> get_tile_ids();
+      int get_tile_id(int tile_x, int tile_y) const;
+      std::vector<int> get_tile_ids() const;
       //void set_atlas_bitmap(ALLEGRO_BITMAP *atlast_bitmap); // this should probably be removed
       //void initialize(int w, int h, int tile_w, int tile_h);
    
