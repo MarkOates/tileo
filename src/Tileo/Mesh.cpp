@@ -227,6 +227,12 @@ int Mesh::get_tile_id(int tile_x, int tile_y)
 }
 
 
+std::vector<int> Mesh::get_tile_ids()
+{
+   return tile_ids;
+}
+
+
  //void Mesh::set_atlas_bitmap(ALLEGRO_BITMAP *atlas_bitmap)
  //{
  //   this->atlas_bitmap = atlas_bitmap;
