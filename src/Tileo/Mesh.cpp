@@ -174,13 +174,13 @@ void Mesh::initialize()
 }
 
 
-int Mesh::get_num_columns()
+const int Mesh::get_num_columns()
 {
    return num_columns;
 }
 
 
-int Mesh::get_num_rows()
+const int Mesh::get_num_rows()
 {
    return num_rows;
 }

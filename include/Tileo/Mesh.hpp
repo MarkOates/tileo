@@ -34,8 +34,8 @@ namespace Tileo
 
       std::vector<ALLEGRO_VERTEX> &get_vertexes_ref();
 
-      int get_num_columns();
-      int get_num_rows();
+      const int get_num_columns();
+      const int get_num_rows();
       int infer_num_tiles();
 
       bool set_tile(int tile_x, int tile_y, int tile_id);
