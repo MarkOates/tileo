@@ -15,6 +15,7 @@ namespace Tileo
       Tileo::Atlas *atlas;
       ALLEGRO_VERTEX_BUFFER *vertex_buffer;
       std::vector<ALLEGRO_VERTEX> vertexes;
+      std::vector<int> tile_ids;
       //ALLEGRO_BITMAP *atlas_bitmap;
       int num_columns;
       int num_rows;
@@ -38,6 +39,7 @@ namespace Tileo
       int infer_num_tiles();
 
       bool set_tile(int tile_x, int tile_y, int tile_id);
+      int get_tile_id(int tile_x, int tile_y);
       //void set_atlas_bitmap(ALLEGRO_BITMAP *atlast_bitmap); // this should probably be removed
       //void initialize(int w, int h, int tile_w, int tile_h);
    

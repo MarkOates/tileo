@@ -55,6 +55,7 @@ Mesh::Mesh(Tileo::Atlas *atlas, int num_columns, int num_rows, int tile_width, i
    : atlas(atlas)
    , vertex_buffer(nullptr)
    , vertexes()
+   , tile_ids()
    //, atlas_bitmap(atlas_bitmap)
    , num_columns(num_columns)
    , num_rows(num_rows)
@@ -90,7 +91,9 @@ void Mesh::initialize()
 
    // resize the vertexes vector
    vertexes.clear();
+   tile_ids.clear();
    if (use_primitive) vertexes.resize(num_columns*num_rows*6);
+   tile_ids.resize(num_columns*num_rows);
 
    // create a vertex_buffer
    if (vertex_buffer) al_destroy_vertex_buffer(vertex_buffer);
@@ -207,9 +210,21 @@ bool Mesh::set_tile(int tile_x, int tile_y, int tile_id)
       set_tile_uv(tile_x, tile_y, u1, v1, u2, v2);
    // }
 
+   tile_ids[tile_x + tile_y * num_columns] = tile_id;
+   
    return true;
 }
 
+
+int Mesh::get_tile_id(int tile_x, int tile_y)
+{
+   if (tile_x < 0) return 0;
+   if (tile_x >= num_columns) return 0;
+   if (tile_y < 0) return 0;
+   if (tile_y >= num_rows) return 0;
+
+   return tile_ids[tile_x + tile_y * num_columns];
+}
 
 
  //void Mesh::set_atlas_bitmap(ALLEGRO_BITMAP *atlas_bitmap)
