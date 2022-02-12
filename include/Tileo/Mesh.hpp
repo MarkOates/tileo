@@ -32,6 +32,8 @@ namespace Tileo
 
       void initialize();
 
+      void resize(int num_columns=0, int num_rows=0);
+
       std::vector<ALLEGRO_VERTEX> &get_vertexes_ref();
 
       int get_num_columns() const;

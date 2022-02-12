@@ -80,14 +80,31 @@ std::vector<ALLEGRO_VERTEX> &Mesh::get_vertexes_ref()
 
 void Mesh::initialize()
 {
+   if (initialized)
+   {
+      throw std::runtime_error("[Tileo::Mesh::initialize()] error: initialized must be false");
+      //return false
+   }
+
+   resize(num_columns, num_rows);
+
+   // set as initialized
+   initialized = true;
+}
+
+
+void Mesh::resize(int num_columns, int num_rows)
+{
+   this->num_columns = num_columns;
+   this->num_rows = num_rows;
    //num_columns = w;
    //num_rows = h;
 
-   if (initialized)
-   {
-      throw std::runtime_error("[Tileo::Mesh] error: initialized must be false");
-      //return false
-   }
+   //if (initialized)
+   //{
+      //throw std::runtime_error("[Tileo::Mesh] error: initialized must be false");
+      ////return false
+   //}
 
    // resize the vertexes vector
    vertexes.clear();
@@ -170,7 +187,7 @@ void Mesh::initialize()
    al_unlock_vertex_buffer(vertex_buffer);
 
    // set as initialized
-   initialized = true;
+   //initialized = true;
 }
 
 
