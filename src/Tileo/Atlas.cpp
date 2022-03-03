@@ -41,6 +41,10 @@ namespace Tileo
 
 Atlas::Atlas()
    : bitmap(nullptr)
+   , bitmap_filename("unset-bitmap-filename.png")
+   , tile_width(1)
+   , tile_height(1)
+   , tile_spacing(0)
    , tile_index()
 {
 }
@@ -73,6 +77,22 @@ void Atlas::set_bitmap_filename(std::string bitmap_filename)
 }
 
 
+int Atlas::get_tile_width() const
+{
+   return tile_width;
+}
+
+
+int Atlas::get_tile_height() const
+{
+   return tile_height;
+}
+
+int Atlas::get_tile_spacing() const
+{
+   return tile_spacing;
+}
+
 
 int Atlas::get_tile_index_size()
 {
@@ -95,8 +115,12 @@ void Atlas::clear()
 
 
 // load will *copy* the bitmap that you pass into it.  You probably would want to al_destroy_bitmap after loading;
-void Atlas::duplicate_bitmap_and_load(ALLEGRO_BITMAP *source_bitmap, int tile_width, int tile_height, int spacing)
+void Atlas::duplicate_bitmap_and_load(ALLEGRO_BITMAP *source_bitmap, int tile_width, int tile_height, int tile_spacing)
 {
+   this->tile_width = tile_width;
+   this->tile_height = tile_height;
+   this->tile_spacing = tile_spacing;
+
    if (!source_bitmap)
    {
       std::cout << "[Atlas::load()] ERROR: the ALLEGRO_BITMAP provided is NULL" << std::endl;
@@ -107,8 +131,8 @@ void Atlas::duplicate_bitmap_and_load(ALLEGRO_BITMAP *source_bitmap, int tile_wi
 
    bitmap = al_clone_bitmap(source_bitmap);
 
-   int tile_step_x = tile_width + spacing;
-   int tile_step_y = tile_height + spacing;
+   int tile_step_x = tile_width + tile_spacing;
+   int tile_step_y = tile_height + tile_spacing;
 
    int num_columns = al_get_bitmap_width(bitmap) / tile_step_x;
    int num_rows = al_get_bitmap_height(bitmap) / tile_step_y;
@@ -116,8 +140,8 @@ void Atlas::duplicate_bitmap_and_load(ALLEGRO_BITMAP *source_bitmap, int tile_wi
 
    for (unsigned index_num=0; index_num<tile_index.size(); index_num++)
    {
-      int x1 = (index_num % num_columns) * tile_step_x + spacing;
-      int y1 = (index_num / num_columns) * tile_step_y + spacing;
+      int x1 = (index_num % num_columns) * tile_step_x + tile_spacing;
+      int y1 = (index_num / num_columns) * tile_step_y + tile_spacing;
       int x2 = x1 + tile_width;
       int y2 = y1 + tile_height;
 
