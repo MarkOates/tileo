@@ -227,12 +227,6 @@ int Mesh::get_real_height() const
 }
 
 
-int Mesh::infer_num_tiles()
-{
-   return num_columns * num_rows;
-}
-
-
 bool Mesh::set_tile(int tile_x, int tile_y, int tile_id)
 {
    std::cout
@@ -284,7 +278,7 @@ std::vector<int> Mesh::get_tile_ids() const
 }
 
 
-Tileo::Atlas *Mesh::get_atlas()
+Tileo::Atlas *Mesh::get_atlas() const
 {
    return atlas;
 }

@@ -33,8 +33,12 @@ namespace Tileo
       int get_tile_height() const;
       int get_tile_spacing() const;
 
-      ALLEGRO_BITMAP *get_bitmap();
       void set_bitmap_filename(std::string bitmap_filename="unset-bitmap-filename.png");
+      void set_tile_width(int tile_width); // TODO: important, the mesh needs to be refreshed if these are changed
+      void set_tile_height(int tile_height);
+      void set_tile_spacing(int tile_spacing);
+
+      ALLEGRO_BITMAP *get_bitmap();
       int get_tile_index_size();
 
       void draw_tile_to_atlas(ALLEGRO_BITMAP *tile, int tile_num, ALLEGRO_COLOR color=al_map_rgba_f(1, 1, 1, 1));

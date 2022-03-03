@@ -88,9 +88,31 @@ int Atlas::get_tile_height() const
    return tile_height;
 }
 
+
 int Atlas::get_tile_spacing() const
 {
    return tile_spacing;
+}
+
+
+void Atlas::set_tile_width(int tile_width)
+{
+   // TODO: important, the mesh needs to be refreshed if this value is changed
+   this->tile_width = tile_width;
+}
+
+
+void Atlas::set_tile_height(int tile_height)
+{
+   // TODO: important, the mesh needs to be refreshed if this value is changed
+   this->tile_height = tile_height;
+}
+
+
+ void Atlas::set_tile_spacing(int tile_spacing)
+{
+   // TODO: important, the mesh needs to be refreshed if this value is changed
+   this->tile_spacing = tile_spacing;
 }
 
 
