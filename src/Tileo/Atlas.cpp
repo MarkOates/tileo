@@ -61,7 +61,7 @@ ALLEGRO_BITMAP *Atlas::get_bitmap()
 }
 
 
-std::string Atlas::get_bitmap_filename()
+std::string Atlas::get_bitmap_filename() const
 {
    return bitmap_filename;
 }

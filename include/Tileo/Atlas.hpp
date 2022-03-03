@@ -26,7 +26,7 @@ namespace Tileo
       void duplicate_bitmap_and_load(ALLEGRO_BITMAP *source_bitmap, int tile_width, int tile_height, int spacing=0);
 
       ALLEGRO_BITMAP *get_bitmap();
-      std::string get_bitmap_filename();
+      std::string get_bitmap_filename() const;
       void set_bitmap_filename(std::string bitmap_filename="unset-bitmap-filename.png");
       int get_tile_index_size();
 
