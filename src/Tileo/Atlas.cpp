@@ -97,6 +97,8 @@ int Atlas::get_tile_spacing() const
 
 void Atlas::set_tile_width(int tile_width)
 {
+   std::cout << "[Atlas::set_tile_width()] WARNING: setting the tile width will invalidate the mesh, please review."
+             << std::endl;
    // TODO: important, the mesh needs to be refreshed if this value is changed
    this->tile_width = tile_width;
 }
@@ -104,6 +106,8 @@ void Atlas::set_tile_width(int tile_width)
 
 void Atlas::set_tile_height(int tile_height)
 {
+   std::cout << "[Atlas::set_tile_height()] WARNING: setting the tile height will invalidate the mesh, please review."
+             << std::endl;
    // TODO: important, the mesh needs to be refreshed if this value is changed
    this->tile_height = tile_height;
 }
@@ -111,6 +115,8 @@ void Atlas::set_tile_height(int tile_height)
 
  void Atlas::set_tile_spacing(int tile_spacing)
 {
+   std::cout << "[Atlas::set_tile_spacing()] WARNING: setting the tile spacing will invalidate the mesh, please review."
+             << std::endl;
    // TODO: important, the mesh needs to be refreshed if this value is changed
    this->tile_spacing = tile_spacing;
 }
