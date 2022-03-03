@@ -61,6 +61,19 @@ ALLEGRO_BITMAP *Atlas::get_bitmap()
 }
 
 
+std::string Atlas::get_bitmap_filename()
+{
+   return bitmap_filename;
+}
+
+
+void Atlas::set_bitmap_filename(std::string bitmap_filename)
+{
+   this->bitmap_filename = bitmap_filename;
+}
+
+
+
 int Atlas::get_tile_index_size()
 {
    return tile_index.size();
