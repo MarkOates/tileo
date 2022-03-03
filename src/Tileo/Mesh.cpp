@@ -235,6 +235,16 @@ int Mesh::infer_num_tiles()
 
 bool Mesh::set_tile(int tile_x, int tile_y, int tile_id)
 {
+   std::cout
+      << "[Tileo::Mesh:set_tile] DEPRECATION WARNING: "
+      << "set_tile() is deprecated. use set_tile_id instead, which is identical in signature and behavior."
+      << std::endl;
+   return set_tile_id(tile_x, tile_y, tile_id);
+}
+
+
+bool Mesh::set_tile_id(int tile_x, int tile_y, int tile_id)
+{
    if (!atlas) throw std::runtime_error("[Tileo::Mesh] error: atlas must not be nullptr");
    // if the tile index does not exist in the atlas, break out
    if (tile_id >= (int)atlas->get_tile_index_size()) return false;
