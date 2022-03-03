@@ -49,6 +49,7 @@ namespace Tileo
       bool set_tile_id(int tile_x, int tile_y, int tile_id);
       int get_tile_id(int tile_x, int tile_y) const;
       std::vector<int> get_tile_ids() const;
+      Tileo::Atlas *get_atlas();
       //void set_atlas_bitmap(ALLEGRO_BITMAP *atlast_bitmap); // this should probably be removed
       //void initialize(int w, int h, int tile_w, int tile_h);
    

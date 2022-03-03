@@ -284,6 +284,12 @@ std::vector<int> Mesh::get_tile_ids() const
 }
 
 
+Tileo::Atlas *Mesh::get_atlas()
+{
+   return atlas;
+}
+
+
  //void Mesh::set_atlas_bitmap(ALLEGRO_BITMAP *atlas_bitmap)
  //{
  //   this->atlas_bitmap = atlas_bitmap;
