@@ -203,6 +203,30 @@ int Mesh::get_num_rows() const
 }
 
 
+int Mesh::get_tile_width() const
+{
+   return tile_width;
+}
+
+
+int Mesh::get_tile_height() const
+{
+   return tile_height;
+}
+
+
+int Mesh::get_real_width() const
+{
+   return num_columns * tile_width;
+}
+
+
+int Mesh::get_real_height() const
+{
+   return num_rows * tile_height;
+}
+
+
 int Mesh::infer_num_tiles()
 {
    return num_columns * num_rows;

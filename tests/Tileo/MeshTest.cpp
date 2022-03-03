@@ -56,6 +56,19 @@ TEST_F(Tileo_MeshWithAllegroRenderingFixtureTest, initialize__will_set_the_numbe
 }
 
 
+TEST_F(Tileo_MeshWithAllegroRenderingFixtureTest,
+   get_real_width__will_return_the_real_world_horizontal_size_of_the_mesh)
+{
+   // TODO
+}
+
+
+TEST_F(Tileo_MeshWithAllegroRenderingFixtureTest, get_real_height__will_return_the_real_world_vertical_size_of_the_mesh)
+{
+   // TODO
+}
+
+
 TEST_F(Tileo_MeshWithAllegroRenderingFixtureTest, render__will_render_the_mesh_as_expected)
 {
    return;
