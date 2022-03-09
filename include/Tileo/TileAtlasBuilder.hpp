@@ -17,7 +17,7 @@ public:
    TileAtlasBuilder(int tile_w=0, int tile_h=0, std::vector<Tileo::TileIndexInfo> tile_index={});
    ~TileAtlasBuilder();
 
-   ALLEGRO_BITMAP *build();
+   ALLEGRO_BITMAP *build_extruded();
 };
 
 

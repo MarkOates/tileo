@@ -56,6 +56,7 @@ Atlas::~Atlas()
              << "reliant on it) that has not been properly freed. This destruction mechanism has not yet "
              << "been properly implemented."
              << std::endl;
+   //clear();
 }
 
 
@@ -245,6 +246,12 @@ ALLEGRO_BITMAP* Atlas::get_bitmap(int index_num)
    }
 
    return tile_index[index_num].get_sub_bitmap();
+}
+
+
+std::vector<Tileo::TileIndexInfo> Atlas::get_tile_index()
+{
+   return tile_index;
 }
 
 

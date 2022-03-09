@@ -16,13 +16,14 @@ TileAtlasBuilder::~TileAtlasBuilder()
 }
 
 
-ALLEGRO_BITMAP *TileAtlasBuilder::build()
+ALLEGRO_BITMAP *TileAtlasBuilder::build_extruded()
 {
    //al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR | ALLEGRO_MIPMAP);
 
    ALLEGRO_STATE prev;
    al_store_state(&prev, ALLEGRO_STATE_TARGET_BITMAP);
-   ALLEGRO_BITMAP *target = al_create_bitmap(1024, 1024);
+   //ALLEGRO_BITMAP *target = al_create_bitmap(1024, 1024);
+   ALLEGRO_BITMAP *target = al_create_bitmap(512, 512);
    al_set_target_bitmap(target);
 
    al_clear_to_color(al_map_rgba_f(0, 0, 0, 0));
