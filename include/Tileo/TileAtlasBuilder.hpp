@@ -18,6 +18,9 @@ public:
    ~TileAtlasBuilder();
 
    ALLEGRO_BITMAP *build_extruded();
+   static ALLEGRO_BITMAP *build_scaled_and_extruded(ALLEGRO_BITMAP *bitmap=nullptr, int scale=3);
+
+   static ALLEGRO_BITMAP *create_pixel_perfect_scaled_render(ALLEGRO_BITMAP *bitmap=nullptr, int scale=4);
 };
 
 

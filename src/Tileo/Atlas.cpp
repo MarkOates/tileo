@@ -160,8 +160,8 @@ void Atlas::duplicate_bitmap_and_load(ALLEGRO_BITMAP *source_bitmap, int tile_wi
 
    bitmap = al_clone_bitmap(source_bitmap);
 
-   int tile_step_x = tile_width + tile_spacing;
-   int tile_step_y = tile_height + tile_spacing;
+   int tile_step_x = tile_width + (tile_spacing*2);
+   int tile_step_y = tile_height + (tile_spacing*2);
 
    int num_columns = al_get_bitmap_width(bitmap) / tile_step_x;
    int num_rows = al_get_bitmap_height(bitmap) / tile_step_y;

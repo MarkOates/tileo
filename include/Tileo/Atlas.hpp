@@ -20,11 +20,11 @@ namespace Tileo
       int tile_spacing;
       std::vector<Tileo::TileIndexInfo> tile_index;
 
-      void clear();
-
    public:
       Atlas();
       ~Atlas();
+
+      void clear();
 
       void duplicate_bitmap_and_load(ALLEGRO_BITMAP *source_bitmap, int tile_width, int tile_height, int spacing=0);
 

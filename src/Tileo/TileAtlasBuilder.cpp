@@ -2,6 +2,9 @@
 
 #include <Tileo/TileAtlasBuilder.hpp>
 
+#include <allegro_flare/image_processing.h>
+
+
 
 TileAtlasBuilder::TileAtlasBuilder(int tile_w, int tile_h, std::vector<Tileo::TileIndexInfo> tile_index)
    : tile_w(tile_w)
@@ -22,9 +25,10 @@ ALLEGRO_BITMAP *TileAtlasBuilder::build_extruded()
 
    ALLEGRO_STATE prev;
    al_store_state(&prev, ALLEGRO_STATE_TARGET_BITMAP);
-   //ALLEGRO_BITMAP *target = al_create_bitmap(1024, 1024);
-   ALLEGRO_BITMAP *target = al_create_bitmap(512, 512);
+   ALLEGRO_BITMAP *target = al_create_bitmap(1024, 1024); // TODO: make this a little better
+   //ALLEGRO_BITMAP *target = al_create_bitmap(512, 512);
    al_set_target_bitmap(target);
+
 
    al_clear_to_color(al_map_rgba_f(0, 0, 0, 0));
 
@@ -120,6 +124,79 @@ ALLEGRO_BITMAP *TileAtlasBuilder::build_extruded()
 
 
    return target;
+}
+
+
+
+#include <Tileo/Atlas.hpp>
+
+ALLEGRO_BITMAP *TileAtlasBuilder::build_scaled_and_extruded(ALLEGRO_BITMAP *original_bitmap, int scale)
+{
+   //ALLEGRO_BITMAP *original_bitmap = al_load_bitmap(TEST_TILE_ATLAS_BITMAP_PATH);
+   // TODO: require al_init
+   // TODO: require al_init_image_addon
+   if (!al_is_system_installed()) throw std::runtime_error("AAAxixxA");// al_init();
+   //al_init_image_addon();
+   //al_init_color_addon();
+
+   //ALLEGRO_BITMAP* source_bitmap = original_bitmap; //al_load_bitmap(TEST_TILE_ATLAS_BITMAP_PATH);
+   //ASSERT_NE(nullptr, source_bitmap);
+
+   //Tileo::Atlas atlas;
+   //atlas.duplicate_bitmap_and_load(source_bitmap, 16, 16, 0);
+
+   //int scale=3;
+   ALLEGRO_BITMAP *scaled = TileAtlasBuilder::create_pixel_perfect_scaled_render(original_bitmap, scale);
+
+      Tileo::Atlas atlas;
+      atlas.duplicate_bitmap_and_load(scaled, 16*scale, 16*scale, 0);
+      al_destroy_bitmap(scaled);
+      std::vector<Tileo::TileIndexInfo> tile_index = atlas.get_tile_index();
+      TileAtlasBuilder tile_atlas_builder(16*scale, 16*scale, tile_index);
+      //atlas.clear();
+
+
+      ALLEGRO_BITMAP *result = tile_atlas_builder.build_extruded();
+   //al_save_bitmap(build_test_filename_png("buid__will_create_an_atlas").c_str(), result);
+
+   atlas.clear();
+
+   //al_destroy_bitmap(scaled);
+   //al_destroy_bitmap(result);
+   //atlas.clear();
+   //al_destroy_bitmap(source_bitmap);
+   //al_shutdown_image_addon();
+   //al_uninstall_system();
+
+   return result;
+}
+
+
+//ALLEGRO_BITMAP build_scaled_and_extruded(ALLEGRO_BITMAP *bitmap, int scale, Tileo::Atlas &atlas)
+ALLEGRO_BITMAP *TileAtlasBuilder::create_pixel_perfect_scaled_render(ALLEGRO_BITMAP *bitmap, int scale)
+{
+   if (!bitmap)
+   {
+      throw std::runtime_error("TileAtlasBuilder::create_pixel_perfect_scaled_render error: needs valid bitmap");
+   }
+   if (scale <= 0 || scale > 6)
+   {
+     throw std::runtime_error("TileAtlasBuilder::create_pixel_perfect_scaled_render error: needs valid scale value");
+   }
+
+
+   // scale up the original bitmap
+   ALLEGRO_BITMAP *scaled = allegro_flare::create_pixel_perfect_scaled_render(bitmap, scale);
+
+   return scaled;
+
+   // cut into an atlas
+
+   
+   // get the tile_index
+
+
+   // use build_extruded with original_tile_width * scale, original_tile_height * width
 }
 
 
