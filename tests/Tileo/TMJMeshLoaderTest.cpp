@@ -36,6 +36,8 @@ TEST_F(Tileo_TMJMeshLoaderTestWithAllegroRenderingFixture, create_mesh__returns_
    Tileo::TMJMeshLoader tmjmesh_loader(&bitmap_bin, &atlas, std::string(TMJ_FIXTURE_PATH) + TMJ_FIXTURE_FILENAME);
    Tileo::Mesh *mesh = tmjmesh_loader.create_mesh();
 
+   EXPECT_EQ(15, mesh->get_num_rows());
+
    mesh->render();
    al_flip_display();
    sleep(0.4);

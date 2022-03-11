@@ -45,8 +45,8 @@ Tileo::Mesh* TMJMeshLoader::create_mesh()
    nlohmann::json j;
    i >> j;
 
-   // get height
-   // get width
+   int tmx_height = j["height"];// get height
+   int tmx_width = j["width"];// get width
    // get first j["layers"] that is a ["type"] == "tilelayer"
    //   - get ["width"]
    //   - get ["height"]
@@ -82,8 +82,8 @@ Tileo::Mesh* TMJMeshLoader::create_mesh()
 
    // 3
    // create the mesh
-   int width = 0;
-   int height = 0;
+   int width = tmx_width;
+   int height = tmx_height;
    Tileo::Mesh* mesh = new Tileo::Mesh(tile_atlas, width, height, tile_width, tile_height);
    mesh->initialize();
 
