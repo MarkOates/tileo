@@ -111,18 +111,18 @@ Tileo::Mesh* TMJMeshLoader::create_mesh()
 
    // 3
    // create the mesh
-   int width = tmx_width;
-   int height = tmx_height;
-   Tileo::Mesh* mesh = new Tileo::Mesh(tile_atlas, width, height, tile_width*4.8, tile_height*4.5);
+   int num_columns = tmx_width;
+   int num_rows = tmx_height;
+   Tileo::Mesh* mesh = new Tileo::Mesh(tile_atlas, num_columns, num_rows, tile_width, tile_height);
    mesh->initialize();
 
    // 4
    // fill the data
-   for (int y=0; y<height; y++)
+   for (int y=0; y<num_rows; y++)
    {
-      for (int x=0; x<width; x++)
+      for (int x=0; x<num_columns; x++)
       {
-         int tile_id = tiles[y * width + x];
+         int tile_id = tiles[y * num_columns + x];
          mesh->set_tile_id(x, y, tile_id-1);
       }
    }
