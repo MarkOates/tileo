@@ -9,6 +9,12 @@
 #include <sstream>
 #include <stdexcept>
 #include <sstream>
+#include <stdexcept>
+#include <sstream>
+#include <stdexcept>
+#include <sstream>
+#include <stdexcept>
+#include <sstream>
 #include <sstream>
 #include <Blast/FileExistenceChecker.hpp>
 #include <lib/nlohmann/json.hpp>
@@ -37,24 +43,6 @@ TMJDataLoader::TMJDataLoader(std::string filename)
 
 TMJDataLoader::~TMJDataLoader()
 {
-}
-
-
-int TMJDataLoader::get_layer_num_columns()
-{
-   return layer_num_columns;
-}
-
-
-int TMJDataLoader::get_layer_num_rows()
-{
-   return layer_num_rows;
-}
-
-
-std::vector<int> TMJDataLoader::get_layer_tile_data()
-{
-   return layer_tile_data;
 }
 
 
@@ -106,6 +94,39 @@ int TMJDataLoader::get_tile_height()
          throw std::runtime_error(error_message.str());
       }
    return tile_height;
+}
+
+int TMJDataLoader::get_layer_num_columns()
+{
+   if (!(loaded))
+      {
+         std::stringstream error_message;
+         error_message << "TMJDataLoader" << "::" << "get_layer_num_columns" << ": error: " << "guard \"loaded\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   return layer_num_columns;
+}
+
+int TMJDataLoader::get_layer_num_rows()
+{
+   if (!(loaded))
+      {
+         std::stringstream error_message;
+         error_message << "TMJDataLoader" << "::" << "get_layer_num_rows" << ": error: " << "guard \"loaded\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   return layer_num_rows;
+}
+
+std::vector<int> TMJDataLoader::get_layer_tile_data()
+{
+   if (!(loaded))
+      {
+         std::stringstream error_message;
+         error_message << "TMJDataLoader" << "::" << "get_layer_tile_data" << ": error: " << "guard \"loaded\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   return layer_tile_data;
 }
 
 bool TMJDataLoader::load()

@@ -156,3 +156,27 @@ TEST(Tileo_TMJDataLoaderTest, get_tile_height__before_load_has_been_called__will
 }
 
 
+TEST(Tileo_TMJDataLoaderTest, get_layer_num_columns__before_load_has_been_called__will_throw_an_error)
+{
+   Tileo::TMJDataLoader loader;
+   std::string expected_error_message = "TMJDataLoader::get_layer_num_columns: error: guard \"loaded\" not met";
+   ASSERT_THROW_WITH_MESSAGE(loader.get_layer_num_columns(), std::runtime_error, expected_error_message);
+}
+
+
+TEST(Tileo_TMJDataLoaderTest, get_layer_num_rows__before_load_has_been_called__will_throw_an_error)
+{
+   Tileo::TMJDataLoader loader;
+   std::string expected_error_message = "TMJDataLoader::get_layer_num_rows: error: guard \"loaded\" not met";
+   ASSERT_THROW_WITH_MESSAGE(loader.get_layer_num_rows(), std::runtime_error, expected_error_message);
+}
+
+
+TEST(Tileo_TMJDataLoaderTest, get_layer_tile_data__before_load_has_been_called__will_throw_an_error)
+{
+   Tileo::TMJDataLoader loader;
+   std::string expected_error_message = "TMJDataLoader::get_layer_tile_data: error: guard \"loaded\" not met";
+   ASSERT_THROW_WITH_MESSAGE(loader.get_layer_tile_data(), std::runtime_error, expected_error_message);
+}
+
+
