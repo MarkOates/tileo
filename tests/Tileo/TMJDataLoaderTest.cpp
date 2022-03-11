@@ -95,6 +95,8 @@ TEST(Tileo_TMJDataLoaderTest, load__will_set_the_expected_values)
 
    ASSERT_EQ(25, loader.get_num_columns());
    ASSERT_EQ(15, loader.get_num_rows());
+   ASSERT_EQ(25, loader.get_layer_num_columns());
+   ASSERT_EQ(15, loader.get_layer_num_rows());
 }
 
 

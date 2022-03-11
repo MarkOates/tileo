@@ -15,8 +15,8 @@ namespace Tileo
       int num_rows;
       int tmx_tilewidth;
       int tmx_tileheight;
-      int tilelayer_width;
-      int tilelayer_height;
+      int layer_num_columns;
+      int layer_num_rows;
       std::vector<int> tiles;
       bool loaded;
 
@@ -28,8 +28,8 @@ namespace Tileo
       int get_num_rows();
       int get_tmx_tilewidth();
       int get_tmx_tileheight();
-      int get_tilelayer_width();
-      int get_tilelayer_height();
+      int get_layer_num_columns();
+      int get_layer_num_rows();
       std::vector<int> get_tiles();
       bool get_loaded();
       bool load();

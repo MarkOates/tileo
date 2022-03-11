@@ -19,8 +19,8 @@ TMJDataLoader::TMJDataLoader(std::string filename)
    , num_rows(0)
    , tmx_tilewidth(0)
    , tmx_tileheight(0)
-   , tilelayer_width(0)
-   , tilelayer_height(0)
+   , layer_num_columns(0)
+   , layer_num_rows(0)
    , tiles({})
    , loaded(false)
 {
@@ -56,15 +56,15 @@ int TMJDataLoader::get_tmx_tileheight()
 }
 
 
-int TMJDataLoader::get_tilelayer_width()
+int TMJDataLoader::get_layer_num_columns()
 {
-   return tilelayer_width;
+   return layer_num_columns;
 }
 
 
-int TMJDataLoader::get_tilelayer_height()
+int TMJDataLoader::get_layer_num_rows()
 {
-   return tilelayer_height;
+   return layer_num_rows;
 }
 
 
@@ -132,8 +132,8 @@ bool TMJDataLoader::load()
    }
    if (!tilelayer_type_found) throw std::runtime_error("TMJMeshLoader: error: tilelayer type not found.");
 
-   tilelayer_width = tilelayer["width"];
-   tilelayer_height = tilelayer["height"];
+   layer_num_columns = tilelayer["width"];
+   layer_num_rows = tilelayer["height"];
    tiles = tilelayer["data"].get<std::vector<int>>();
 
    loaded = true;

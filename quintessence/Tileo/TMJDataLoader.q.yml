@@ -26,12 +26,12 @@ properties:
     init_with: 0
     getter: true
 
-  - name: tilelayer_width
+  - name: layer_num_columns
     type: int
     init_with: 0
     getter: true
 
-  - name: tilelayer_height
+  - name: layer_num_rows
     type: int
     init_with: 0
     getter: true
@@ -98,8 +98,8 @@ functions:
       }
       if (!tilelayer_type_found) throw std::runtime_error("TMJMeshLoader: error: tilelayer type not found.");
       
-      tilelayer_width = tilelayer["width"];
-      tilelayer_height = tilelayer["height"];
+      layer_num_columns = tilelayer["width"];
+      layer_num_rows = tilelayer["height"];
       tiles = tilelayer["data"].get<std::vector<int>>();
 
       loaded = true;
