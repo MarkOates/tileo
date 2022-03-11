@@ -86,7 +86,7 @@ TEST(Tileo_TMJDataLoaderTest, load__if_load_has_already_been_called__throws_an_e
 }
 
 
-TEST(Tileo_TMJDataLoaderTest, load__will_set_the_expected_values)
+TEST(Tileo_TMJDataLoaderTest, load__will_set_the_properties_to_the_expected_values)
 {
    std::string filename = TMJ_FIXTURE_PATH_AND_FILENAME;
    Tileo::TMJDataLoader loader(filename);
@@ -97,12 +97,62 @@ TEST(Tileo_TMJDataLoaderTest, load__will_set_the_expected_values)
    ASSERT_EQ(15, loader.get_num_rows());
    ASSERT_EQ(25, loader.get_layer_num_columns());
    ASSERT_EQ(15, loader.get_layer_num_rows());
+   ASSERT_EQ(16, loader.get_tile_width());
+   ASSERT_EQ(16, loader.get_tile_height());
+
+   std::vector<int> expected_tile_layer_data = {
+      81, 102, 123, 123, 103, 82, 104, 114, 131, 131, 131, 131, 131, 131, 131, 131, 131, 131, 131, 131,
+      131, 113, 103, 104, 122, 82, 103, 103, 82, 83, 82, 124, 132, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84,
+      84, 84, 84, 130, 113, 123, 101, 84, 84, 84, 84, 84, 102, 123, 84, 84, 84, 84, 84, 84, 84, 84, 84,
+      84, 84, 84, 84, 84, 84, 130, 131, 131, 84, 84, 84, 84, 84, 104, 102, 84, 84, 84, 84, 84, 84, 84, 84,
+      84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 121, 83, 84, 84, 84, 84, 84, 84, 84, 84,
+      84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 122, 123, 84, 84, 84, 84, 84, 84, 84,
+      84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 81, 101, 84, 84, 84, 84, 84, 84, 84,
+      84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 81, 124, 84, 84, 84, 84, 84, 84, 84,
+      84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 84, 81, 104, 84, 84, 84, 181, 84, 84,
+      84, 84, 84, 84, 84, 84, 84, 90, 91, 91, 91, 91, 84, 84, 84, 84, 84, 103, 121, 84, 84, 84, 201, 84,
+      84, 84, 161, 161, 84, 84, 84, 90, 93, 447, 91, 407, 427, 84, 84, 84, 84, 84, 124, 123, 84, 84, 84,
+      201, 84, 84, 162, 163, 163, 164, 84, 90, 93, 408, 427, 447, 408, 427, 121, 123, 103, 101, 102, 124,
+      122, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 91, 93, 408, 446, 427, 446, 408, 446, 124, 124, 101,
+      104, 103, 81, 121, 122, 102, 124, 123, 101, 101, 101, 122, 101, 121, 427, 81, 427, 408, 407, 407,
+      447, 408, 82, 123, 101, 123, 103, 121, 124, 103, 121, 101, 124, 121, 103, 123, 104, 82, 406, 428,
+      447, 406, 447, 447, 81, 426, 81, 81, 121, 103, 101, 101, 104, 104, 101, 104, 124, 122, 122, 104,
+      102, 104, 408, 408, 81, 447, 408, 427, 408, 447, 446, 408
+   };
+
+   ASSERT_EQ(expected_tile_layer_data, loader.get_layer_tile_data());
 }
 
 
-TEST(Tileo_TMJDataLoaderTest, getters__before_load_has_been_called__will_throw_an_error)
+TEST(Tileo_TMJDataLoaderTest, get_num_columns__before_load_has_been_called__will_throw_an_error)
 {
-   // TODO
+   Tileo::TMJDataLoader loader;
+   std::string expected_error_message = "TMJDataLoader::get_num_columns: error: guard \"loaded\" not met";
+   ASSERT_THROW_WITH_MESSAGE(loader.get_num_columns(), std::runtime_error, expected_error_message);
+}
+
+
+TEST(Tileo_TMJDataLoaderTest, get_num_rows__before_load_has_been_called__will_throw_an_error)
+{
+   Tileo::TMJDataLoader loader;
+   std::string expected_error_message = "TMJDataLoader::get_num_rows: error: guard \"loaded\" not met";
+   ASSERT_THROW_WITH_MESSAGE(loader.get_num_rows(), std::runtime_error, expected_error_message);
+}
+
+
+TEST(Tileo_TMJDataLoaderTest, get_tile_width__before_load_has_been_called__will_throw_an_error)
+{
+   Tileo::TMJDataLoader loader;
+   std::string expected_error_message = "TMJDataLoader::get_tile_width: error: guard \"loaded\" not met";
+   ASSERT_THROW_WITH_MESSAGE(loader.get_tile_width(), std::runtime_error, expected_error_message);
+}
+
+
+TEST(Tileo_TMJDataLoaderTest, get_tile_height__before_load_has_been_called__will_throw_an_error)
+{
+   Tileo::TMJDataLoader loader;
+   std::string expected_error_message = "TMJDataLoader::get_tile_height: error: guard \"loaded\" not met";
+   ASSERT_THROW_WITH_MESSAGE(loader.get_tile_height(), std::runtime_error, expected_error_message);
 }
 
 

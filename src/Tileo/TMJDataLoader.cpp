@@ -1,6 +1,14 @@
 
 
 #include <Tileo/TMJDataLoader.hpp>
+#include <stdexcept>
+#include <sstream>
+#include <stdexcept>
+#include <sstream>
+#include <stdexcept>
+#include <sstream>
+#include <stdexcept>
+#include <sstream>
 #include <sstream>
 #include <Blast/FileExistenceChecker.hpp>
 #include <lib/nlohmann/json.hpp>
@@ -17,11 +25,11 @@ TMJDataLoader::TMJDataLoader(std::string filename)
    : filename(filename)
    , num_columns(0)
    , num_rows(0)
-   , tmx_tilewidth(0)
-   , tmx_tileheight(0)
+   , tile_width(0)
+   , tile_height(0)
    , layer_num_columns(0)
    , layer_num_rows(0)
-   , tiles({})
+   , layer_tile_data({})
    , loaded(false)
 {
 }
@@ -29,30 +37,6 @@ TMJDataLoader::TMJDataLoader(std::string filename)
 
 TMJDataLoader::~TMJDataLoader()
 {
-}
-
-
-int TMJDataLoader::get_num_columns()
-{
-   return num_columns;
-}
-
-
-int TMJDataLoader::get_num_rows()
-{
-   return num_rows;
-}
-
-
-int TMJDataLoader::get_tmx_tilewidth()
-{
-   return tmx_tilewidth;
-}
-
-
-int TMJDataLoader::get_tmx_tileheight()
-{
-   return tmx_tileheight;
 }
 
 
@@ -68,9 +52,9 @@ int TMJDataLoader::get_layer_num_rows()
 }
 
 
-std::vector<int> TMJDataLoader::get_tiles()
+std::vector<int> TMJDataLoader::get_layer_tile_data()
 {
-   return tiles;
+   return layer_tile_data;
 }
 
 
@@ -79,6 +63,50 @@ bool TMJDataLoader::get_loaded()
    return loaded;
 }
 
+
+int TMJDataLoader::get_num_columns()
+{
+   if (!(loaded))
+      {
+         std::stringstream error_message;
+         error_message << "TMJDataLoader" << "::" << "get_num_columns" << ": error: " << "guard \"loaded\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   return num_columns;
+}
+
+int TMJDataLoader::get_num_rows()
+{
+   if (!(loaded))
+      {
+         std::stringstream error_message;
+         error_message << "TMJDataLoader" << "::" << "get_num_rows" << ": error: " << "guard \"loaded\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   return num_rows;
+}
+
+int TMJDataLoader::get_tile_width()
+{
+   if (!(loaded))
+      {
+         std::stringstream error_message;
+         error_message << "TMJDataLoader" << "::" << "get_tile_width" << ": error: " << "guard \"loaded\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   return tile_width;
+}
+
+int TMJDataLoader::get_tile_height()
+{
+   if (!(loaded))
+      {
+         std::stringstream error_message;
+         error_message << "TMJDataLoader" << "::" << "get_tile_height" << ": error: " << "guard \"loaded\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   return tile_height;
+}
 
 bool TMJDataLoader::load()
 {
@@ -115,8 +143,8 @@ bool TMJDataLoader::load()
 
    num_columns = j["width"]; // get width
    num_rows = j["height"]; // get height
-   tmx_tilewidth = j["tilewidth"]; // get width
-   tmx_tileheight = j["tileheight"]; // get height
+   tile_width = j["tilewidth"]; // get width
+   tile_height = j["tileheight"]; // get height
 
    // get first j["layers"] that is a ["type"] == "tilelayer"
    bool tilelayer_type_found = false;
@@ -134,7 +162,7 @@ bool TMJDataLoader::load()
 
    layer_num_columns = tilelayer["width"];
    layer_num_rows = tilelayer["height"];
-   tiles = tilelayer["data"].get<std::vector<int>>();
+   layer_tile_data = tilelayer["data"].get<std::vector<int>>();
 
    loaded = true;
 
