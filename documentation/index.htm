@@ -49,9 +49,48 @@ table td
 <body>
 <h1>TOC</h1>
 <ul>
+  <li><a href="#quintessence/Tileo/TMJMeshLoader.q.yml">quintessence/Tileo/TMJMeshLoader.q.yml</a></li>
   <li><a href="#quintessence/Tileo/TileIndexInfo.q.yml">quintessence/Tileo/TileIndexInfo.q.yml</a></li>
 </ul>
 <h1>Components</h1>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Tileo/TMJMeshLoader.q.yml">quintessence/Tileo/TMJMeshLoader.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">bitmap_bin</td>
+  <td class="property">AllegroFlare::BitmapBin*</td>
+</tr>
+<tr>
+  <td class="property">tile_atlas</td>
+  <td class="property">Tileo::Atlas*</td>
+</tr>
+<tr>
+  <td class="property">filename</td>
+  <td class="property">std::string</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">create_mesh()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::BitmapBin*&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/BitmapBin.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Tileo::Atlas*&quot;, &quot;headers&quot;=&gt;[&quot;Tileo/Atlas.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Tileo::Mesh*&quot;, &quot;headers&quot;=&gt;[&quot;Tileo/Mesh.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Tileo::TileAtlasBuilder&quot;, &quot;headers&quot;=&gt;[&quot;Tileo/TileAtlasBuilder.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
 <ul>
   <div class="component">
     <h3 id="quintessence/Tileo/TileIndexInfo.q.yml">quintessence/Tileo/TileIndexInfo.q.yml</h3>
@@ -97,6 +136,18 @@ table td
 <h1>Dependents</h1>
 <pre>
 {
+  "AllegroFlare/BitmapBin": [
+    "Tileo/TMJMeshLoader"
+  ],
+  "Tileo/Atlas": [
+    "Tileo/TMJMeshLoader"
+  ],
+  "Tileo/Mesh": [
+    "Tileo/TMJMeshLoader"
+  ],
+  "Tileo/TileAtlasBuilder": [
+    "Tileo/TMJMeshLoader"
+  ],
   "ALLEGRO_BITMAP": [
     "Tileo/TileIndexInfo"
   ]

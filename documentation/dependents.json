@@ -1,4 +1,16 @@
 {
+  "AllegroFlare/BitmapBin": [
+    "Tileo/TMJMeshLoader"
+  ],
+  "Tileo/Atlas": [
+    "Tileo/TMJMeshLoader"
+  ],
+  "Tileo/Mesh": [
+    "Tileo/TMJMeshLoader"
+  ],
+  "Tileo/TileAtlasBuilder": [
+    "Tileo/TMJMeshLoader"
+  ],
   "ALLEGRO_BITMAP": [
     "Tileo/TileIndexInfo"
   ]
