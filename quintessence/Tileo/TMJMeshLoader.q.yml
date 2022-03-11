@@ -67,6 +67,10 @@ functions:
       {
          throw std::runtime_error("TMJMeshLoader: error: tmx tileheight and tilewidth other than 16 not supported.");
       }
+      if (tiles.size() != tmx_width * tmx_height)
+      {
+         throw std::runtime_error("TMJMeshLoader: error: num tiles (in \"data\" field) does not match width*height.");
+      }
 
       // 2
       // create the atlas
@@ -100,6 +104,14 @@ functions:
 
       // 4
       // fill the data
+      for (int y=0; y<height; y++)
+      {
+         for (int x=0; x<width; x++)
+         {
+            int tile_id = tiles[y * width + x];
+            mesh->set_tile_id(x, y, tile_id);
+         }
+      }
 
       // 5
       // return the mesh

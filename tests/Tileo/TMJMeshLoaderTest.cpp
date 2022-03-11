@@ -40,7 +40,7 @@ TEST_F(Tileo_TMJMeshLoaderTestWithAllegroRenderingFixture, create_mesh__returns_
 
    mesh->render();
    al_flip_display();
-   sleep(0.4);
+   sleep(2);
 
    delete mesh;
 }
