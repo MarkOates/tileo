@@ -47,15 +47,41 @@ Tileo::Mesh* TMJMeshLoader::create_mesh()
 
    int tmx_height = j["height"];// get height
    int tmx_width = j["width"];// get width
-   // get first j["layers"] that is a ["type"] == "tilelayer"
-   //   - get ["width"]
-   //   - get ["height"]
-   //   - get ["data"]
-   // validate widths and heights match
+   int tmx_tileheight = j["tileheight"]; // get height
+   int tmx_tilewidth = j["tilewidth"]; // get width
 
-   // get tilewidth
-   // get tileheight
-   // validate tileheight and tilewidth == 16
+   // get first j["layers"] that is a ["type"] == "tilelayer"
+   bool tilelayer_type_found = false;
+   nlohmann::json tilelayer;
+   for (auto &layer : j["layers"].items())
+   {
+      if (layer.value()["type"] == "tilelayer")
+      {
+         std::cout << "AAAAAAAAA" << std::endl;
+         tilelayer = layer.value();
+         tilelayer_type_found = true;
+         break;
+      }
+   }
+   if (!tilelayer_type_found) throw std::runtime_error("TMJMeshLoader: error: tilelayer type not found.");
+
+   int tilelayer_width = tilelayer["width"];
+   int tilelayer_height = tilelayer["height"];
+   std::vector<int> tiles = tilelayer["data"].get<std::vector<int>>();
+
+   // validate widths and heights match
+   if (tilelayer_width != tmx_width)
+   {
+      throw std::runtime_error("TMJMeshLoader: error: tilelayer width does not match tmx_width.");
+   }
+   if (tilelayer_height != tmx_height)
+   {
+      throw std::runtime_error("TMJMeshLoader: error: tilelayer height does not match tmx_height.");
+   }
+   if (tmx_tileheight != 16 || tmx_tilewidth != 16)
+   {
+      throw std::runtime_error("TMJMeshLoader: error: tmx tileheight and tilewidth other than 16 not supported.");
+   }
 
    // 2
    // create the atlas
@@ -88,6 +114,9 @@ Tileo::Mesh* TMJMeshLoader::create_mesh()
    mesh->initialize();
 
    // 4
+   // fill the data
+
+   // 5
    // return the mesh
    return mesh;
 }
