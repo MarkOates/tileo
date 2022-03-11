@@ -10,10 +10,10 @@ namespace Tileo
 {
 
 
-TMJMeshLoader::TMJMeshLoader(AllegroFlare::BitmapBin* bitmap_bin, Tileo::Atlas* tile_atlas)
+TMJMeshLoader::TMJMeshLoader(AllegroFlare::BitmapBin* bitmap_bin, Tileo::Atlas* tile_atlas, std::string filename)
    : bitmap_bin(bitmap_bin)
    , tile_atlas(tile_atlas)
-   , filename("filename-not-set.tmj")
+   , filename(filename)
 {
 }
 

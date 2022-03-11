@@ -17,7 +17,7 @@ namespace Tileo
       std::string filename;
 
    public:
-      TMJMeshLoader(AllegroFlare::BitmapBin* bitmap_bin=nullptr, Tileo::Atlas* tile_atlas=nullptr);
+      TMJMeshLoader(AllegroFlare::BitmapBin* bitmap_bin=nullptr, Tileo::Atlas* tile_atlas=nullptr, std::string filename="filename-not-set.tmj");
       ~TMJMeshLoader();
 
       Tileo::Mesh* create_mesh();
