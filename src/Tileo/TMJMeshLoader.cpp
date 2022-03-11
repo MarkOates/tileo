@@ -58,7 +58,6 @@ Tileo::Mesh* TMJMeshLoader::create_mesh()
    {
       if (layer.value()["type"] == "tilelayer")
       {
-         std::cout << "AAAAAAAAA" << std::endl;
          tilelayer = layer.value();
          tilelayer_type_found = true;
          break;
