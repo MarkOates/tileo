@@ -114,7 +114,7 @@ Tileo::Mesh* TMJMeshLoader::create_mesh()
    // create the mesh
    int width = tmx_width;
    int height = tmx_height;
-   Tileo::Mesh* mesh = new Tileo::Mesh(tile_atlas, width, height, tile_width, tile_height);
+   Tileo::Mesh* mesh = new Tileo::Mesh(tile_atlas, width, height, tile_width*4.8, tile_height*4.5);
    mesh->initialize();
 
    // 4
