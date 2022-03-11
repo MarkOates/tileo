@@ -93,8 +93,8 @@ TEST(Tileo_TMJDataLoaderTest, load__will_set_the_expected_values)
 
    loader.load();
 
-   ASSERT_EQ(25, loader.get_tmx_width());
-   ASSERT_EQ(15, loader.get_tmx_height());
+   ASSERT_EQ(25, loader.get_num_columns());
+   ASSERT_EQ(15, loader.get_num_rows());
 }
 
 

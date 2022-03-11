@@ -6,12 +6,12 @@ properties:
     init_with: '"filename-not-set.tmj"'
     constructor_arg: true
 
-  - name: tmx_width
+  - name: num_columns
     type: int
     init_with: 0
     getter: true
 
-  - name: tmx_height
+  - name: num_rows
     type: int
     init_with: 0
     getter: true
@@ -79,8 +79,8 @@ functions:
          throw std::runtime_error(error_message.str());
       }
 
-      tmx_width = j["width"]; // get width
-      tmx_height = j["height"]; // get height
+      num_columns = j["width"]; // get width
+      num_rows = j["height"]; // get height
       tmx_tilewidth = j["tilewidth"]; // get width
       tmx_tileheight = j["tileheight"]; // get height
 

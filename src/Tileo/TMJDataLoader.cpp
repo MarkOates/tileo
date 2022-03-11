@@ -15,8 +15,8 @@ namespace Tileo
 
 TMJDataLoader::TMJDataLoader(std::string filename)
    : filename(filename)
-   , tmx_width(0)
-   , tmx_height(0)
+   , num_columns(0)
+   , num_rows(0)
    , tmx_tilewidth(0)
    , tmx_tileheight(0)
    , tilelayer_width(0)
@@ -32,15 +32,15 @@ TMJDataLoader::~TMJDataLoader()
 }
 
 
-int TMJDataLoader::get_tmx_width()
+int TMJDataLoader::get_num_columns()
 {
-   return tmx_width;
+   return num_columns;
 }
 
 
-int TMJDataLoader::get_tmx_height()
+int TMJDataLoader::get_num_rows()
 {
-   return tmx_height;
+   return num_rows;
 }
 
 
@@ -113,8 +113,8 @@ bool TMJDataLoader::load()
       throw std::runtime_error(error_message.str());
    }
 
-   tmx_width = j["width"]; // get width
-   tmx_height = j["height"]; // get height
+   num_columns = j["width"]; // get width
+   num_rows = j["height"]; // get height
    tmx_tilewidth = j["tilewidth"]; // get width
    tmx_tileheight = j["tileheight"]; // get height
 
