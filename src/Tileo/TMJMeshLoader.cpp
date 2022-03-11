@@ -124,7 +124,7 @@ Tileo::Mesh* TMJMeshLoader::create_mesh()
       for (int x=0; x<width; x++)
       {
          int tile_id = tiles[y * width + x];
-         mesh->set_tile_id(x, y, tile_id);
+         mesh->set_tile_id(x, y, tile_id-1);
       }
    }
 

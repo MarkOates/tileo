@@ -25,7 +25,7 @@ ALLEGRO_BITMAP *TileAtlasBuilder::build_extruded()
 
    ALLEGRO_STATE prev;
    al_store_state(&prev, ALLEGRO_STATE_TARGET_BITMAP);
-   ALLEGRO_BITMAP *target = al_create_bitmap(1024, 1024); // TODO: make this a little better
+   ALLEGRO_BITMAP *target = al_create_bitmap(1536, 1536); // TODO: make this a little better
    //ALLEGRO_BITMAP *target = al_create_bitmap(512, 512);
    al_set_target_bitmap(target);
 
