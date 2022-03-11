@@ -1,4 +1,131 @@
-functions:
-  - name: run
+properties:
+
+
+  - name: filename
     type: std::string
-    body: return "Hello World!";
+    init_with: '"filename-not-set.tmj"'
+    constructor_arg: true
+
+  - name: tmx_width
+    type: int
+    init_with: 0
+    getter: true
+
+  - name: tmx_height
+    type: int
+    init_with: 0
+    getter: true
+
+  - name: tmx_tilewidth
+    type: int
+    init_with: 0
+    getter: true
+
+  - name: tmx_tileheight
+    type: int
+    init_with: 0
+    getter: true
+
+  - name: tilelayer_width
+    type: int
+    init_with: 0
+    getter: true
+
+  - name: tilelayer_height
+    type: int
+    init_with: 0
+    getter: true
+
+  - name: tiles
+    type: std::vector<int>
+    init_with: '{}'
+    getter: true
+
+  - name: loaded
+    type: bool
+    init_with: false
+    getter: true
+
+
+functions:
+
+
+  - name: load
+    type: bool
+    guards: [ (!loaded) ]
+    body: |
+      Blast::FileExistenceChecker file_existence_checker(filename);
+      if (!file_existence_checker.exists())
+      {
+         std::stringstream error_message;
+         error_message << "[Tileo/TMJDataLoader] load() error: the file \"" << filename << "\" does not exist.";
+         throw std::runtime_error(error_message.str());
+      }
+
+      // load and validate the json data to variables
+      std::ifstream i(filename);
+      nlohmann::json j;
+      try
+      {
+         i >> j;
+      }
+      catch (const std::exception& e)
+      {
+         i.close();
+         std::stringstream error_message;
+         error_message << "[Tileo/TMJDataLoader] load() error: the file \"" << filename << "\" appears to have"
+                       << " malformed JSON. The following error was thrown by nlohmann::json: \""
+                       << e.what() << "\"";
+         throw std::runtime_error(error_message.str());
+      }
+
+      tmx_width = j["width"]; // get width
+      tmx_height = j["height"]; // get height
+      tmx_tilewidth = j["tilewidth"]; // get width
+      tmx_tileheight = j["tileheight"]; // get height
+
+      // get first j["layers"] that is a ["type"] == "tilelayer"
+      bool tilelayer_type_found = false;
+      nlohmann::json tilelayer;
+      for (auto &layer : j["layers"].items())
+      {
+         if (layer.value()["type"] == "tilelayer")
+         {
+            tilelayer = layer.value();
+            tilelayer_type_found = true;
+            break;
+         }
+      }
+      if (!tilelayer_type_found) throw std::runtime_error("TMJMeshLoader: error: tilelayer type not found.");
+      
+      tilelayer_width = tilelayer["width"];
+      tilelayer_height = tilelayer["height"];
+      tiles = tilelayer["data"].get<std::vector<int>>();
+
+      loaded = true;
+
+      i.close();
+
+      return true;
+    body_dependency_symbols:
+      - std::stringstream
+      - Blast::FileExistenceChecker
+      - nlohmann::json
+      - std::ifstream
+
+
+dependencies:
+
+
+  - symbol: Blast::FileExistenceChecker
+    headers: [ Blast/FileExistenceChecker.hpp ]
+  - symbol: std::stringstream
+    headers: [ sstream ]
+  - symbol: std::ifstream
+    headers: [ fstream ]
+  - symbol: nlohmann::json
+    headers: [ lib/nlohmann/json.hpp ]
+  - symbol: std::vector<int>
+    headers: [ vector ]
+
+

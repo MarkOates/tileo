@@ -49,10 +49,76 @@ table td
 <body>
 <h1>TOC</h1>
 <ul>
+  <li><a href="#quintessence/Tileo/TMJDataLoader.q.yml">quintessence/Tileo/TMJDataLoader.q.yml</a></li>
   <li><a href="#quintessence/Tileo/TMJMeshLoader.q.yml">quintessence/Tileo/TMJMeshLoader.q.yml</a></li>
   <li><a href="#quintessence/Tileo/TileIndexInfo.q.yml">quintessence/Tileo/TileIndexInfo.q.yml</a></li>
 </ul>
 <h1>Components</h1>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Tileo/TMJDataLoader.q.yml">quintessence/Tileo/TMJDataLoader.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">filename</td>
+  <td class="property">std::string</td>
+</tr>
+<tr>
+  <td class="property">tmx_width</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">tmx_height</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">tmx_tilewidth</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">tmx_tileheight</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">tilelayer_width</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">tilelayer_height</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">tiles</td>
+  <td class="property">std::vector&lt;int&gt;</td>
+</tr>
+<tr>
+  <td class="property">loaded</td>
+  <td class="property">bool</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">load()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Blast::FileExistenceChecker&quot;, &quot;headers&quot;=&gt;[&quot;Blast/FileExistenceChecker.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::stringstream&quot;, &quot;headers&quot;=&gt;[&quot;sstream&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::ifstream&quot;, &quot;headers&quot;=&gt;[&quot;fstream&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;nlohmann::json&quot;, &quot;headers&quot;=&gt;[&quot;lib/nlohmann/json.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&lt;int&gt;&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
 <ul>
   <div class="component">
     <h3 id="quintessence/Tileo/TMJMeshLoader.q.yml">quintessence/Tileo/TMJMeshLoader.q.yml</h3>
@@ -146,10 +212,23 @@ table td
 <h1>Dependents</h1>
 <pre>
 {
-  "ifstream": [
-    "Tileo/TMJMeshLoader"
+  "Blast/FileExistenceChecker": [
+    "Tileo/TMJDataLoader"
+  ],
+  "std/stringstream": [
+    "Tileo/TMJDataLoader"
+  ],
+  "std/ifstream": [
+    "Tileo/TMJDataLoader"
   ],
   "nlohmann/json": [
+    "Tileo/TMJDataLoader",
+    "Tileo/TMJMeshLoader"
+  ],
+  "std/vector<int>": [
+    "Tileo/TMJDataLoader"
+  ],
+  "ifstream": [
     "Tileo/TMJMeshLoader"
   ],
   "AllegroFlare/BitmapBin": [

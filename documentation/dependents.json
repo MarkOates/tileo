@@ -1,8 +1,21 @@
 {
-  "ifstream": [
-    "Tileo/TMJMeshLoader"
+  "Blast/FileExistenceChecker": [
+    "Tileo/TMJDataLoader"
+  ],
+  "std/stringstream": [
+    "Tileo/TMJDataLoader"
+  ],
+  "std/ifstream": [
+    "Tileo/TMJDataLoader"
   ],
   "nlohmann/json": [
+    "Tileo/TMJDataLoader",
+    "Tileo/TMJMeshLoader"
+  ],
+  "std/vector<int>": [
+    "Tileo/TMJDataLoader"
+  ],
+  "ifstream": [
     "Tileo/TMJMeshLoader"
   ],
   "AllegroFlare/BitmapBin": [
