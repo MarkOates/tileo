@@ -1,4 +1,10 @@
 {
+  "ifstream": [
+    "Tileo/TMJMeshLoader"
+  ],
+  "nlohmann/json": [
+    "Tileo/TMJMeshLoader"
+  ],
   "AllegroFlare/BitmapBin": [
     "Tileo/TMJMeshLoader"
   ],

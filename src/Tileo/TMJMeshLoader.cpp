@@ -2,6 +2,8 @@
 
 #include <Tileo/TMJMeshLoader.hpp>
 #include <Tileo/TileAtlasBuilder.hpp>
+#include <lib/nlohmann/json.hpp>
+#include <fstream>
 #include <stdexcept>
 #include <sstream>
 
@@ -37,6 +39,12 @@ Tileo::Mesh* TMJMeshLoader::create_mesh()
          error_message << "TMJMeshLoader" << "::" << "create_mesh" << ": error: " << "guard \"tile_atlas\" not met";
          throw std::runtime_error(error_message.str());
       }
+   // 1
+   // load and validate the json data to variables
+   std::ifstream i(filename);
+   nlohmann::json j;
+   i >> j;
+
    // get height
    // get width
    // get first j["layers"] that is a ["type"] == "tilelayer"
@@ -49,6 +57,7 @@ Tileo::Mesh* TMJMeshLoader::create_mesh()
    // get tileheight
    // validate tileheight and tilewidth == 16
 
+   // 2
    // create the atlas
    int tile_width = 16;
    int tile_height = 16;
@@ -71,12 +80,14 @@ Tileo::Mesh* TMJMeshLoader::create_mesh()
       tile_atlas->duplicate_bitmap_and_load(tile_map_bitmap, tile_width, tile_height);
    }
 
+   // 3
    // create the mesh
    int width = 0;
    int height = 0;
    Tileo::Mesh* mesh = new Tileo::Mesh(tile_atlas, width, height, tile_width, tile_height);
    mesh->initialize();
 
+   // 4
    // return the mesh
    return mesh;
 }

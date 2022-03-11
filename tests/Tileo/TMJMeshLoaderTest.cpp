@@ -19,6 +19,8 @@ class Tileo_TMJMeshLoaderTestWithAllegroRenderingFixture : public AllegroFlare::
 
 #define TMJ_FIXTURE_PATH "/Users/markoates/Repos/tileo/tests/fixtures/"
 #define TMJ_FIXTURE_FILENAME "map1.tmj"
+#define TILE_ATLAS_FILENAME "tiles_dungeon_v1.1.png"
+
 
 
 TEST_F(Tileo_TMJMeshLoaderTest, can_be_created_without_blowing_up)
@@ -31,7 +33,7 @@ TEST_F(Tileo_TMJMeshLoaderTestWithAllegroRenderingFixture, create_mesh__returns_
    AllegroFlare::BitmapBin &bitmap_bin = get_bitmap_bin_ref();
    bitmap_bin.set_full_path(TMJ_FIXTURE_PATH);
    Tileo::Atlas atlas;
-   Tileo::TMJMeshLoader tmjmesh_loader(&bitmap_bin, &atlas, TMJ_FIXTURE_FILENAME);
+   Tileo::TMJMeshLoader tmjmesh_loader(&bitmap_bin, &atlas, std::string(TMJ_FIXTURE_PATH) + TMJ_FIXTURE_FILENAME);
    Tileo::Mesh *mesh = tmjmesh_loader.create_mesh();
 
    mesh->render();
