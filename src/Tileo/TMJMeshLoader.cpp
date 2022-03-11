@@ -12,10 +12,11 @@ namespace Tileo
 {
 
 
-TMJMeshLoader::TMJMeshLoader(AllegroFlare::BitmapBin* bitmap_bin, Tileo::Atlas* tile_atlas, std::string filename)
+TMJMeshLoader::TMJMeshLoader(AllegroFlare::BitmapBin* bitmap_bin, Tileo::Atlas* tile_atlas, std::string filename, std::string bitmap_atlas_filename)
    : bitmap_bin(bitmap_bin)
    , tile_atlas(tile_atlas)
    , filename(filename)
+   , bitmap_atlas_filename(bitmap_atlas_filename)
 {
 }
 
@@ -92,9 +93,8 @@ Tileo::Mesh* TMJMeshLoader::create_mesh()
    int tile_width = 16;
    int tile_height = 16;
 
-   std::string bitmap_filename = "tiles_dungeon_v1.1.png";
-   ALLEGRO_BITMAP *tile_map_bitmap = bitmap_bin->operator[](bitmap_filename);
-   tile_atlas->set_bitmap_filename(bitmap_filename);
+   ALLEGRO_BITMAP *tile_map_bitmap = bitmap_bin->operator[](bitmap_atlas_filename);
+   tile_atlas->set_bitmap_filename(bitmap_atlas_filename);
 
    bool scaled_and_extruded = true;
    if (scaled_and_extruded)
