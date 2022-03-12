@@ -1,9 +1,6 @@
 #pragma once
 
 
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_image.h>
-#include <allegro5/allegro_primitives.h>
 #include <vector>
 
 
@@ -15,14 +12,20 @@ namespace Tileo
       int width;
       int height;
       std::vector<int> tiles;
+      bool initialized;
 
    public:
 
-      TileMap();
+      TileMap(int num_columns=0, int num_rows=0);
       ~TileMap();
+
+      void initialize();
 
       int get_width();
       int get_height();
+      int get_num_columns();
+      int get_num_rows();
+
       int infer_num_tiles();
       bool is_dimensionless();
 
