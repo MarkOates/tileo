@@ -15,6 +15,7 @@ TileMap::TileMap(int num_columns, int num_rows)
    : width(num_columns)
    , height(num_rows)
    , tiles()
+   , initialized(false)
 {}
 
 

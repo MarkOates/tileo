@@ -27,6 +27,9 @@
   "Tileo/Mesh": [
     "Tileo/TMJMeshLoader"
   ],
+  "Tileo/TileMap": [
+    "Tileo/TMJMeshLoader"
+  ],
   "Tileo/TileAtlasBuilder": [
     "Tileo/TMJMeshLoader"
   ],

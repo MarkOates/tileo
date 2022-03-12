@@ -91,6 +91,18 @@ table td
   <td class="property">std::vector&lt;int&gt;</td>
 </tr>
 <tr>
+  <td class="property">collision_layer_num_columns</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">collision_layer_num_rows</td>
+  <td class="property">int</td>
+</tr>
+<tr>
+  <td class="property">collision_layer_tile_data</td>
+  <td class="property">std::vector&lt;int&gt;</td>
+</tr>
+<tr>
   <td class="property">loaded</td>
   <td class="property">bool</td>
 </tr>
@@ -116,6 +128,15 @@ table td
 </tr>
 <tr>
   <td class="method">get_layer_tile_data()</td>
+</tr>
+<tr>
+  <td class="method">get_collision_layer_num_columns()</td>
+</tr>
+<tr>
+  <td class="method">get_collision_layer_num_rows()</td>
+</tr>
+<tr>
+  <td class="method">get_collision_layer_tile_data()</td>
 </tr>
 <tr>
   <td class="method">load()</td>
@@ -160,10 +181,28 @@ table td
   <td class="property">bitmap_atlas_filename</td>
   <td class="property">std::string</td>
 </tr>
+<tr>
+  <td class="property">mesh</td>
+  <td class="property">Tileo::Mesh*</td>
+</tr>
+<tr>
+  <td class="property">collision_tile_map</td>
+  <td class="property">Tileo::TileMap*</td>
+</tr>
+<tr>
+  <td class="property">loaded</td>
+  <td class="property">bool</td>
+</tr>
     </table>
      <table>
 <tr>
-  <td class="method">create_mesh()</td>
+  <td class="method">get_mesh()</td>
+</tr>
+<tr>
+  <td class="method">get_collision_tile_map()</td>
+</tr>
+<tr>
+  <td class="method">load()</td>
 </tr>
     </table>
      <table>
@@ -181,6 +220,9 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Tileo::Mesh*&quot;, &quot;headers&quot;=&gt;[&quot;Tileo/Mesh.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Tileo::TileMap*&quot;, &quot;headers&quot;=&gt;[&quot;Tileo/TileMap.hpp&quot;]}</td>
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Tileo::TileAtlasBuilder&quot;, &quot;headers&quot;=&gt;[&quot;Tileo/TileAtlasBuilder.hpp&quot;]}</td>
@@ -259,6 +301,9 @@ table td
     "Tileo/TMJMeshLoader"
   ],
   "Tileo/Mesh": [
+    "Tileo/TMJMeshLoader"
+  ],
+  "Tileo/TileMap": [
     "Tileo/TMJMeshLoader"
   ],
   "Tileo/TileAtlasBuilder": [

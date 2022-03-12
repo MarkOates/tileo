@@ -41,6 +41,21 @@ properties:
     init_with: '{}'
     getter: explicit
 
+  - name: collision_layer_num_columns
+    type: int
+    init_with: 0
+    getter: explicit
+
+  - name: collision_layer_num_rows
+    type: int
+    init_with: 0
+    getter: explicit
+
+  - name: collision_layer_tile_data
+    type: std::vector<int>
+    init_with: '{}'
+    getter: explicit
+
   - name: loaded
     type: bool
     init_with: false
@@ -92,6 +107,24 @@ functions:
     body: return layer_tile_data;
 
 
+  - name: get_collision_layer_num_columns
+    type: int
+    guards: [ loaded ]
+    body: return collision_layer_num_columns;
+
+
+  - name: get_collision_layer_num_rows
+    type: int
+    guards: [ loaded ]
+    body: return collision_layer_num_rows;
+
+
+  - name: get_collision_layer_tile_data
+    type: std::vector<int>
+    guards: [ loaded ]
+    body: return collision_layer_tile_data;
+
+
   - name: load
     type: bool
     guards: [ (!loaded) ]
@@ -131,7 +164,7 @@ functions:
       nlohmann::json tilelayer;
       for (auto &layer : j["layers"].items())
       {
-         if (layer.value()["type"] == "tilelayer")
+         if (layer.value()["type"] == "tilelayer" && layer.value()["name"] != "collision")
          {
             tilelayer = layer.value();
             tilelayer_type_found = true;
@@ -143,6 +176,43 @@ functions:
       layer_num_columns = tilelayer["width"];
       layer_num_rows = tilelayer["height"];
       layer_tile_data = tilelayer["data"].get<std::vector<int>>();
+
+
+
+      // get first j["layers"] that is a ["type"] == "tilelayer"
+      bool collision_tilelayer_type_found = false;
+      nlohmann::json collision_tilelayer;
+      for (auto &layer : j["layers"].items())
+      {
+         if (layer.value()["type"] == "tilelayer" && layer.value()["name"] == "collision")
+         {
+            collision_tilelayer = layer.value();
+            collision_tilelayer_type_found = true;
+            break;
+         }
+      }
+      if (!collision_tilelayer_type_found)
+      {
+         std::stringstream error_message;
+         error_message << "TMJMeshLoader: error: collision_tilelayer type not found. Expecting a layer of type "
+                       << "\"tilelayer\" that also has a \"name\" property of \"collision\". Note that only "
+                       << "the following layers present: \"" << std::endl;
+         int layer_num = 0;
+         for (auto &layer : j["layers"].items())
+         {
+            layer_num++;
+            error_message << "  - layer " << layer_num << ":" << std::endl;
+            error_message << "    - type: \"" << layer.value()["type"] << "\"" << std::endl;
+            error_message << "    - name: \"" << layer.value()["name"] << "\"" << std::endl;
+         }
+         throw std::runtime_error(error_message.str());
+      }
+      
+      layer_num_columns = tilelayer["width"];
+      layer_num_rows = tilelayer["height"];
+      layer_tile_data = tilelayer["data"].get<std::vector<int>>();
+
+
 
       loaded = true;
 

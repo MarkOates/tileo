@@ -1,6 +1,10 @@
 
 
 #include <Tileo/TMJMeshLoader.hpp>
+#include <stdexcept>
+#include <sstream>
+#include <stdexcept>
+#include <sstream>
 #include <Tileo/TileAtlasBuilder.hpp>
 #include <lib/nlohmann/json.hpp>
 #include <fstream>
@@ -17,6 +21,9 @@ TMJMeshLoader::TMJMeshLoader(AllegroFlare::BitmapBin* bitmap_bin, Tileo::Atlas* 
    , tile_atlas(tile_atlas)
    , filename(filename)
    , bitmap_atlas_filename(bitmap_atlas_filename)
+   , mesh(nullptr)
+   , collision_tile_map(nullptr)
+   , loaded(false)
 {
 }
 
@@ -26,18 +33,46 @@ TMJMeshLoader::~TMJMeshLoader()
 }
 
 
-Tileo::Mesh* TMJMeshLoader::create_mesh()
+Tileo::Mesh* TMJMeshLoader::get_mesh()
+{
+   if (!(loaded))
+      {
+         std::stringstream error_message;
+         error_message << "TMJMeshLoader" << "::" << "get_mesh" << ": error: " << "guard \"loaded\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   return mesh;
+}
+
+Tileo::TileMap* TMJMeshLoader::get_collision_tile_map()
+{
+   if (!(loaded))
+      {
+         std::stringstream error_message;
+         error_message << "TMJMeshLoader" << "::" << "get_collision_tile_map" << ": error: " << "guard \"loaded\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   return collision_tile_map;
+}
+
+bool TMJMeshLoader::load()
 {
    if (!(bitmap_bin))
       {
          std::stringstream error_message;
-         error_message << "TMJMeshLoader" << "::" << "create_mesh" << ": error: " << "guard \"bitmap_bin\" not met";
+         error_message << "TMJMeshLoader" << "::" << "load" << ": error: " << "guard \"bitmap_bin\" not met";
          throw std::runtime_error(error_message.str());
       }
    if (!(tile_atlas))
       {
          std::stringstream error_message;
-         error_message << "TMJMeshLoader" << "::" << "create_mesh" << ": error: " << "guard \"tile_atlas\" not met";
+         error_message << "TMJMeshLoader" << "::" << "load" << ": error: " << "guard \"tile_atlas\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   if (!((!loaded)))
+      {
+         std::stringstream error_message;
+         error_message << "TMJMeshLoader" << "::" << "load" << ": error: " << "guard \"(!loaded)\" not met";
          throw std::runtime_error(error_message.str());
       }
    // 1
@@ -87,7 +122,8 @@ Tileo::Mesh* TMJMeshLoader::create_mesh()
       throw std::runtime_error("TMJMeshLoader: error: num tiles (in \"data\" field) does not match width*height.");
    }
 
-   // 2
+
+   // ##
    // create the atlas
    int tile_width = 16;
    int tile_height = 16;
@@ -109,27 +145,52 @@ Tileo::Mesh* TMJMeshLoader::create_mesh()
       tile_atlas->duplicate_bitmap_and_load(tile_map_bitmap, tile_width, tile_height);
    }
 
-   // 3
+
+   // ##
    // create the mesh
    int num_columns = tmx_width;
    int num_rows = tmx_height;
-   Tileo::Mesh* mesh = new Tileo::Mesh(tile_atlas, num_columns, num_rows, tile_width, tile_height);
-   mesh->initialize();
+   Tileo::Mesh* created_mesh = new Tileo::Mesh(tile_atlas, num_columns, num_rows, tile_width, tile_height);
+   created_mesh->initialize();
 
-   // 4
-   // fill the data
+
+   // ##
+   // fill the data on the mesh
    for (int y=0; y<num_rows; y++)
    {
       for (int x=0; x<num_columns; x++)
       {
          int tile_id = tiles[y * num_columns + x];
-         mesh->set_tile_id(x, y, tile_id-1);
+         created_mesh->set_tile_id(x, y, tile_id-1);
       }
    }
 
-   // 5
-   // return the mesh
-   return mesh;
+
+   // ##
+   // create the collision tile map
+   Tileo::TileMap* created_collision_tile_map = new Tileo::TileMap(num_columns, num_rows);
+   created_collision_tile_map->initialize();
+
+
+   // ##
+   // fill the data on the collision tile map
+   for (int y=0; y<num_rows; y++)
+   {
+      for (int x=0; x<num_columns; x++)
+      {
+         // TODO
+         //int tile_id = tiles[y * num_columns + x];
+         //created_mesh->set_tile_id(x, y, tile_id-1);
+      }
+   }
+
+   // ##
+   // assign the created objects to the class
+   this->mesh = created_mesh;
+   this->collision_tile_map = created_collision_tile_map;
+   loaded = true;
+
+   return true;
 }
 } // namespace Tileo
 
