@@ -258,10 +258,9 @@ bool TMJDataLoader::load()
       throw std::runtime_error(error_message.str());
    }
 
-   layer_num_columns = tilelayer["width"];
-   layer_num_rows = tilelayer["height"];
-   layer_tile_data = tilelayer["data"].get<std::vector<int>>();
-
+   collision_layer_num_columns = collision_tilelayer["width"];
+   collision_layer_num_rows = collision_tilelayer["height"];
+   collision_layer_tile_data = collision_tilelayer["data"].get<std::vector<int>>();
 
 
    loaded = true;
