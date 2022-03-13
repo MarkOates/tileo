@@ -85,6 +85,7 @@ bool TMJMeshLoader::load()
    tmj_data_loader.load();
 
 
+   // TODO: remove dead code for manual loading (now using only the tmj_data_loader data yay!)
    std::ifstream i(filename);
    nlohmann::json j;
    i >> j;
