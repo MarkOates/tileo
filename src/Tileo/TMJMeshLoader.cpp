@@ -5,6 +5,8 @@
 #include <sstream>
 #include <stdexcept>
 #include <sstream>
+#include <stdexcept>
+#include <sstream>
 #include <Tileo/TMJDataLoader.hpp>
 #include <Tileo/TileAtlasBuilder.hpp>
 #include <lib/nlohmann/json.hpp>
@@ -17,11 +19,13 @@ namespace Tileo
 {
 
 
-TMJMeshLoader::TMJMeshLoader(AllegroFlare::BitmapBin* bitmap_bin, Tileo::Atlas* tile_atlas, std::string filename, std::string bitmap_atlas_filename)
+std::string TMJMeshLoader::BITMAP_ATLAS_FILENAME = "tiles_dungeon_v1.1.png";
+
+
+TMJMeshLoader::TMJMeshLoader(AllegroFlare::BitmapBin* bitmap_bin, std::string tmj_filename)
    : bitmap_bin(bitmap_bin)
-   , tile_atlas(tile_atlas)
-   , filename(filename)
-   , bitmap_atlas_filename(bitmap_atlas_filename)
+   , tmj_filename(tmj_filename)
+   , tile_atlas(nullptr)
    , mesh(nullptr)
    , collision_tile_map(nullptr)
    , loaded(false)
@@ -33,6 +37,17 @@ TMJMeshLoader::~TMJMeshLoader()
 {
 }
 
+
+Tileo::Atlas* TMJMeshLoader::get_tile_atlas()
+{
+   if (!(loaded))
+      {
+         std::stringstream error_message;
+         error_message << "TMJMeshLoader" << "::" << "get_tile_atlas" << ": error: " << "guard \"loaded\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   return tile_atlas;
+}
 
 Tileo::Mesh* TMJMeshLoader::get_mesh()
 {
@@ -64,12 +79,6 @@ bool TMJMeshLoader::load()
          error_message << "TMJMeshLoader" << "::" << "load" << ": error: " << "guard \"bitmap_bin\" not met";
          throw std::runtime_error(error_message.str());
       }
-   if (!(tile_atlas))
-      {
-         std::stringstream error_message;
-         error_message << "TMJMeshLoader" << "::" << "load" << ": error: " << "guard \"tile_atlas\" not met";
-         throw std::runtime_error(error_message.str());
-      }
    if (!((!loaded)))
       {
          std::stringstream error_message;
@@ -80,34 +89,33 @@ bool TMJMeshLoader::load()
    // load and validate the json data to variables
    // TODO: replace this with the TMJDataLoader
 
-
-   Tileo::TMJDataLoader tmj_data_loader(filename);
+   Tileo::TMJDataLoader tmj_data_loader(tmj_filename);
    tmj_data_loader.load();
 
 
-   // TODO: remove dead code for manual loading (now using only the tmj_data_loader data yay!)
-   std::ifstream i(filename);
-   nlohmann::json j;
-   i >> j;
+   //// TODO: remove dead code for manual loading (now using only the tmj_data_loader data yay!)
+   //std::ifstream i(tmj_filename);
+   //nlohmann::json j;
+   //i >> j;
 
    int tmx_height = tmj_data_loader.get_num_rows(); //j["height"];// get height
    int tmx_width = tmj_data_loader.get_num_columns(); //j["width"];// get width
    int tmx_tileheight = tmj_data_loader.get_tile_height(); //j["tileheight"]; // get height
    int tmx_tilewidth = tmj_data_loader.get_tile_width(); //j["tilewidth"]; // get width
 
-   // get first j["layers"] that is a ["type"] == "tilelayer"
-   bool tilelayer_type_found = false;
-   nlohmann::json tilelayer;
-   for (auto &layer : j["layers"].items())
-   {
-      if (layer.value()["type"] == "tilelayer")
-      {
-         tilelayer = layer.value();
-         tilelayer_type_found = true;
-         break;
-      }
-   }
-   if (!tilelayer_type_found) throw std::runtime_error("TMJMeshLoader: error: tilelayer type not found.");
+   //// get first j["layers"] that is a ["type"] == "tilelayer"
+   //bool tilelayer_type_found = false;
+   //nlohmann::json tilelayer;
+   //for (auto &layer : j["layers"].items())
+   //{
+      //if (layer.value()["type"] == "tilelayer")
+      //{
+         //tilelayer = layer.value();
+         //tilelayer_type_found = true;
+         //break;
+      //}
+   //{}
+   //if (!tilelayer_type_found) throw std::runtime_error("TMJMeshLoader: error: tilelayer type not found.");
 
    int tilelayer_width = tmj_data_loader.get_layer_num_columns(); //tilelayer["width"];
    int tilelayer_height = tmj_data_loader.get_layer_num_rows(); //tilelayer["height"];
@@ -157,8 +165,9 @@ bool TMJMeshLoader::load()
    int tile_width = 16;
    int tile_height = 16;
 
-   ALLEGRO_BITMAP *tile_map_bitmap = bitmap_bin->operator[](bitmap_atlas_filename);
-   tile_atlas->set_bitmap_filename(bitmap_atlas_filename);
+   Tileo::Atlas *created_tile_atlas = new Tileo::Atlas;
+   ALLEGRO_BITMAP *tile_map_bitmap = bitmap_bin->operator[](BITMAP_ATLAS_FILENAME);
+   created_tile_atlas->set_bitmap_filename(BITMAP_ATLAS_FILENAME);
 
    bool scaled_and_extruded = true;
    if (scaled_and_extruded)
@@ -166,12 +175,13 @@ bool TMJMeshLoader::load()
       int scale = 3;
       ALLEGRO_BITMAP *scaled_extruded_tile_map_bitmap =
          TileAtlasBuilder::build_scaled_and_extruded(tile_map_bitmap, scale);
-      al_save_bitmap("/Users/markoates/Desktop/whatever.png", scaled_extruded_tile_map_bitmap);
-      tile_atlas->duplicate_bitmap_and_load(scaled_extruded_tile_map_bitmap, tile_width*scale, tile_height*scale, 1);
+      created_tile_atlas->duplicate_bitmap_and_load(
+         scaled_extruded_tile_map_bitmap, tile_width*scale, tile_height*scale, 1
+      );
    }
    else
    {
-      tile_atlas->duplicate_bitmap_and_load(tile_map_bitmap, tile_width, tile_height);
+      created_tile_atlas->duplicate_bitmap_and_load(tile_map_bitmap, tile_width, tile_height);
    }
 
 
@@ -179,7 +189,7 @@ bool TMJMeshLoader::load()
    // create the mesh
    int num_columns = tmx_width;
    int num_rows = tmx_height;
-   Tileo::Mesh* created_mesh = new Tileo::Mesh(tile_atlas, num_columns, num_rows, tile_width, tile_height);
+   Tileo::Mesh* created_mesh = new Tileo::Mesh(created_tile_atlas, num_columns, num_rows, tile_width, tile_height);
    created_mesh->initialize();
 
 
@@ -217,6 +227,7 @@ bool TMJMeshLoader::load()
 
    // ##
    // assign the created objects to the class
+   this->tile_atlas = created_tile_atlas;
    this->mesh = created_mesh;
    this->collision_tile_map = created_collision_tile_map;
    loaded = true;

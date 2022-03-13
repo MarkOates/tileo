@@ -13,18 +13,19 @@ namespace Tileo
    class TMJMeshLoader
    {
    private:
+      static std::string BITMAP_ATLAS_FILENAME;
       AllegroFlare::BitmapBin* bitmap_bin;
+      std::string tmj_filename;
       Tileo::Atlas* tile_atlas;
-      std::string filename;
-      std::string bitmap_atlas_filename;
       Tileo::Mesh* mesh;
       Tileo::TileMap* collision_tile_map;
       bool loaded;
 
    public:
-      TMJMeshLoader(AllegroFlare::BitmapBin* bitmap_bin=nullptr, Tileo::Atlas* tile_atlas=nullptr, std::string filename="filename-not-set.tmj", std::string bitmap_atlas_filename="tiles_dungeon_v1.1.png");
+      TMJMeshLoader(AllegroFlare::BitmapBin* bitmap_bin=nullptr, std::string tmj_filename="filename-not-set.tmj");
       ~TMJMeshLoader();
 
+      Tileo::Atlas* get_tile_atlas();
       Tileo::Mesh* get_mesh();
       Tileo::TileMap* get_collision_tile_map();
       bool load();
