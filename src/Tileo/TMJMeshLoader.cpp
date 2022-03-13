@@ -5,6 +5,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <sstream>
+#include <Tileo/TMJDataLoader.hpp>
 #include <Tileo/TileAtlasBuilder.hpp>
 #include <lib/nlohmann/json.hpp>
 #include <fstream>
@@ -77,14 +78,21 @@ bool TMJMeshLoader::load()
       }
    // 1
    // load and validate the json data to variables
+   // TODO: replace this with the TMJDataLoader
+
+
+   Tileo::TMJDataLoader tmj_data_loader(filename);
+   tmj_data_loader.load();
+
+
    std::ifstream i(filename);
    nlohmann::json j;
    i >> j;
 
-   int tmx_height = j["height"];// get height
-   int tmx_width = j["width"];// get width
-   int tmx_tileheight = j["tileheight"]; // get height
-   int tmx_tilewidth = j["tilewidth"]; // get width
+   int tmx_height = tmj_data_loader.get_num_rows(); //j["height"];// get height
+   int tmx_width = tmj_data_loader.get_num_columns(); //j["width"];// get width
+   int tmx_tileheight = tmj_data_loader.get_tile_height(); //j["tileheight"]; // get height
+   int tmx_tilewidth = tmj_data_loader.get_tile_width(); //j["tilewidth"]; // get width
 
    // get first j["layers"] that is a ["type"] == "tilelayer"
    bool tilelayer_type_found = false;
@@ -100,9 +108,15 @@ bool TMJMeshLoader::load()
    }
    if (!tilelayer_type_found) throw std::runtime_error("TMJMeshLoader: error: tilelayer type not found.");
 
-   int tilelayer_width = tilelayer["width"];
-   int tilelayer_height = tilelayer["height"];
-   std::vector<int> tiles = tilelayer["data"].get<std::vector<int>>();
+   int tilelayer_width = tmj_data_loader.get_layer_num_columns(); //tilelayer["width"];
+   int tilelayer_height = tmj_data_loader.get_layer_num_rows(); //tilelayer["height"];
+   std::vector<int> tiles = tmj_data_loader.get_layer_tile_data(); //tilelayer["data"].get<std::vector<int>>();
+
+   int collision_layer_num_columns = tmj_data_loader.get_collision_layer_num_columns();
+   int collision_layer_num_rows = tmj_data_loader.get_collision_layer_num_rows();
+   std::vector<int> collision_layer_tiles = tmj_data_loader.get_collision_layer_tile_data();
+
+
 
    // validate widths and heights match
    if (tilelayer_width != tmx_width)
@@ -120,6 +134,20 @@ bool TMJMeshLoader::load()
    if (tiles.size() != tmx_width * tmx_height)
    {
       throw std::runtime_error("TMJMeshLoader: error: num tiles (in \"data\" field) does not match width*height.");
+   }
+   if (tilelayer_width != collision_layer_num_columns)
+   {
+      // TODO: validate collision mesh dimentions, tile_width, and tile_height match the other values
+   }
+   if (tilelayer_height != collision_layer_num_rows)
+   {
+      // TODO: validate collision mesh dimentions, tile_width, and tile_height match the other values
+   }
+   if (collision_layer_tiles.size() != tmx_width * tmx_height)
+   {
+      // TODO: add test for this
+      throw std::runtime_error("TMJMeshLoader: error: num tiles (in \"data\" field) for collision_layer "
+                               "does not match width*height.");
    }
 
 
@@ -168,7 +196,9 @@ bool TMJMeshLoader::load()
 
    // ##
    // create the collision tile map
-   Tileo::TileMap* created_collision_tile_map = new Tileo::TileMap(num_columns, num_rows);
+   Tileo::TileMap* created_collision_tile_map = new Tileo::TileMap(
+      collision_layer_num_columns,
+      collision_layer_num_rows);
    created_collision_tile_map->initialize();
 
 
@@ -179,8 +209,8 @@ bool TMJMeshLoader::load()
       for (int x=0; x<num_columns; x++)
       {
          // TODO
-         //int tile_id = tiles[y * num_columns + x];
-         //created_mesh->set_tile_id(x, y, tile_id-1);
+         int tile_id = collision_layer_tiles[y * num_columns + x];
+         created_collision_tile_map->set_tile(x, y, tile_id);
       }
    }
 

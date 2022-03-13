@@ -33,6 +33,9 @@
   "Tileo/TileAtlasBuilder": [
     "Tileo/TMJMeshLoader"
   ],
+  "Tileo/TMJDataLoader": [
+    "Tileo/TMJMeshLoader"
+  ],
   "ALLEGRO_BITMAP": [
     "Tileo/TileIndexInfo"
   ]
