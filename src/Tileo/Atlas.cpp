@@ -167,6 +167,8 @@ void Atlas::duplicate_bitmap_and_load(ALLEGRO_BITMAP *source_bitmap, int tile_wi
    int num_rows = al_get_bitmap_height(bitmap) / tile_step_y;
    tile_index.resize(num_columns * num_rows);
 
+   // TODO: add one empty spot for "0"
+
    for (unsigned index_num=0; index_num<tile_index.size(); index_num++)
    {
       int x1 = (index_num % num_columns) * tile_step_x + tile_spacing;
