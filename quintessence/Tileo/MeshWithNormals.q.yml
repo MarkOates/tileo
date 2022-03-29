@@ -48,6 +48,7 @@ functions:
   - name: initialize
     guards: [ (num_columns > 0), (num_rows > 0) ]
     body: |
+      // TODO: !initialized guard
       // you were here:
 
       tileo_tile_vertex_allegro_vertex_declaration.initialize(); // < TODO

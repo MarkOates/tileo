@@ -44,6 +44,7 @@ void MeshWithNormals::initialize()
          error_message << "MeshWithNormals" << "::" << "initialize" << ": error: " << "guard \"(num_rows > 0)\" not met";
          throw std::runtime_error(error_message.str());
       }
+   // TODO: !initialized guard
    // you were here:
 
    tileo_tile_vertex_allegro_vertex_declaration.initialize(); // < TODO
