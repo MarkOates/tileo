@@ -113,3 +113,47 @@ TEST(Tileo_TileoTileVertexAllegroVertexDeclarationTest, initialize__works_withou
 }
 
 
+TEST(Tileo_TileoTileVertexAllegroVertexDeclarationTest, initialize__if_called_more_than_once__will_throw_an_error)
+{
+   al_init();
+   al_init_primitives_addon();
+   al_set_new_display_flags(ALLEGRO_PROGRAMMABLE_PIPELINE);
+   ALLEGRO_DISPLAY *d = al_create_display(800, 600);
+   Tileo::TileoTileVertexAllegroVertexDeclaration declaration;
+   declaration.initialize();
+
+   EXPECT_THROW_WITH_MESSAGE(declaration.initialize(), std::runtime_error, BUILD_GUARD_ERROR_MESSAGE(
+         TileoTileVertexAllegroVertexDeclaration,
+         initialize,
+         (!initialized)
+      )
+   );
+
+   declaration.destroy();
+   al_shutdown_primitives_addon();
+   al_uninstall_system();
+}
+
+
+TEST(Tileo_TileoTileVertexAllegroVertexDeclarationTest, destroy__if_called_more_than_once__will_throw_an_error)
+{
+   al_init();
+   al_init_primitives_addon();
+   al_set_new_display_flags(ALLEGRO_PROGRAMMABLE_PIPELINE);
+   ALLEGRO_DISPLAY *d = al_create_display(800, 600);
+   Tileo::TileoTileVertexAllegroVertexDeclaration declaration;
+   declaration.initialize();
+   declaration.destroy();
+
+   EXPECT_THROW_WITH_MESSAGE(declaration.destroy(), std::runtime_error, BUILD_GUARD_ERROR_MESSAGE(
+         TileoTileVertexAllegroVertexDeclaration,
+         destroy,
+         (!destroyed)
+      )
+   );
+
+   al_shutdown_primitives_addon();
+   al_uninstall_system();
+}
+
+

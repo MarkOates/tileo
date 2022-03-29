@@ -19,7 +19,7 @@ namespace Tileo
 TileoTileVertexAllegroVertexDeclaration::TileoTileVertexAllegroVertexDeclaration()
    : vertex_declaration(nullptr)
    , initialized(false)
-   , destructed(false)
+   , destroyed(false)
 {
 }
 
@@ -35,9 +35,9 @@ bool TileoTileVertexAllegroVertexDeclaration::get_initialized()
 }
 
 
-bool TileoTileVertexAllegroVertexDeclaration::get_destructed()
+bool TileoTileVertexAllegroVertexDeclaration::get_destroyed()
 {
-   return destructed;
+   return destroyed;
 }
 
 
@@ -49,10 +49,10 @@ ALLEGRO_VERTEX_DECL* TileoTileVertexAllegroVertexDeclaration::get_vertex_declara
          error_message << "TileoTileVertexAllegroVertexDeclaration" << "::" << "get_vertex_declaration" << ": error: " << "guard \"initialized\" not met";
          throw std::runtime_error(error_message.str());
       }
-   if (!((!destructed)))
+   if (!((!destroyed)))
       {
          std::stringstream error_message;
-         error_message << "TileoTileVertexAllegroVertexDeclaration" << "::" << "get_vertex_declaration" << ": error: " << "guard \"(!destructed)\" not met";
+         error_message << "TileoTileVertexAllegroVertexDeclaration" << "::" << "get_vertex_declaration" << ": error: " << "guard \"(!destroyed)\" not met";
          throw std::runtime_error(error_message.str());
       }
    return vertex_declaration;
@@ -116,21 +116,23 @@ void TileoTileVertexAllegroVertexDeclaration::initialize()
 
    vertex_declaration = al_create_vertex_decl(elems, sizeof(TILEO_TILE_VERTEX));
 
+   initialized = true;
+
    return;
 }
 
 void TileoTileVertexAllegroVertexDeclaration::destroy()
 {
-   if (!((!initialized)))
+   if (!(initialized))
       {
          std::stringstream error_message;
-         error_message << "TileoTileVertexAllegroVertexDeclaration" << "::" << "destroy" << ": error: " << "guard \"(!initialized)\" not met";
+         error_message << "TileoTileVertexAllegroVertexDeclaration" << "::" << "destroy" << ": error: " << "guard \"initialized\" not met";
          throw std::runtime_error(error_message.str());
       }
-   if (!((!destructed)))
+   if (!((!destroyed)))
       {
          std::stringstream error_message;
-         error_message << "TileoTileVertexAllegroVertexDeclaration" << "::" << "destroy" << ": error: " << "guard \"(!destructed)\" not met";
+         error_message << "TileoTileVertexAllegroVertexDeclaration" << "::" << "destroy" << ": error: " << "guard \"(!destroyed)\" not met";
          throw std::runtime_error(error_message.str());
       }
    if (!vertex_declaration)
@@ -138,7 +140,7 @@ void TileoTileVertexAllegroVertexDeclaration::destroy()
       throw std::runtime_error("there was an error destroying the TileoTileVertexWithNormal declaration.");
    }
    al_destroy_vertex_decl(vertex_declaration);
-   destructed = true;
+   destroyed = true;
    return;
 }
 } // namespace Tileo

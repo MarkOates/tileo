@@ -11,7 +11,7 @@ properties:
     init_with: false
     getter: true
 
-  - name: destructed
+  - name: destroyed
     type: bool
     init_with: false
     getter: true
@@ -22,7 +22,7 @@ functions:
 
   - name: get_vertex_declaration
     type: ALLEGRO_VERTEX_DECL*
-    guards: [ initialized, (!destructed) ]
+    guards: [ initialized, (!destroyed) ]
     body: |
       return vertex_declaration;
 
@@ -61,6 +61,8 @@ functions:
 
       vertex_declaration = al_create_vertex_decl(elems, sizeof(TILEO_TILE_VERTEX));
 
+      initialized = true;
+
       return;
     body_dependency_symbols:
       - TILEO_TILE_VERTEX
@@ -69,14 +71,14 @@ functions:
 
 
   - name: destroy
-    guards: [ (!initialized), (!destructed) ]
+    guards: [ initialized, (!destroyed) ]
     body: |
       if (!vertex_declaration)
       {
          throw std::runtime_error("there was an error destroying the TileoTileVertexWithNormal declaration.");
       }
       al_destroy_vertex_decl(vertex_declaration);
-      destructed = true;
+      destroyed = true;
       return;
 
 
