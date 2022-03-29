@@ -12,7 +12,8 @@ namespace Tileo
 
 
 MeshWithNormals::MeshWithNormals(int num_columns, int num_rows, float tile_width, float tile_height)
-   : num_columns(num_columns)
+   : tileo_tile_vertex_allegro_vertex_declaration()
+   , num_columns(num_columns)
    , num_rows(num_rows)
    , tile_width(tile_width)
    , tile_height(tile_height)
@@ -43,6 +44,10 @@ void MeshWithNormals::initialize()
          error_message << "MeshWithNormals" << "::" << "initialize" << ": error: " << "guard \"(num_rows > 0)\" not met";
          throw std::runtime_error(error_message.str());
       }
+   // you were here:
+
+   tileo_tile_vertex_allegro_vertex_declaration.initialize(); // < TODO
+
    clear_and_reserve();
    // TODO
    initialized = true;

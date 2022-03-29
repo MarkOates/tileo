@@ -1,4 +1,7 @@
 {
+  "Tileo/TileoTileVertexAllegroVertexDeclaration": [
+    "Tileo/MeshWithNormals"
+  ],
   "std/vector<TILEO_TILE_VERTEX>": [
     "Tileo/MeshWithNormals"
   ],

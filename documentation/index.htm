@@ -61,6 +61,10 @@ table td
     <h3 id="quintessence/Tileo/MeshWithNormals.q.yml">quintessence/Tileo/MeshWithNormals.q.yml</h3>
      <table>
 <tr>
+  <td class="property">tileo_tile_vertex_allegro_vertex_declaration</td>
+  <td class="property">Tileo::TileoTileVertexAllegroVertexDeclaration</td>
+</tr>
+<tr>
   <td class="property">num_columns</td>
   <td class="property">int</td>
 </tr>
@@ -105,6 +109,9 @@ table td
 </tr>
     </table>
      <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Tileo::TileoTileVertexAllegroVertexDeclaration&quot;, &quot;headers&quot;=&gt;[&quot;Tileo/TileoTileVertexAllegroVertexDeclaration.hpp&quot;]}</td>
+</tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&lt;TILEO_TILE_VERTEX&gt;&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;, &quot;Tileo/TileoTileVertex.hpp&quot;]}</td>
 </tr>
@@ -382,6 +389,9 @@ table td
 <h1>Dependents</h1>
 <pre>
 {
+  "Tileo/TileoTileVertexAllegroVertexDeclaration": [
+    "Tileo/MeshWithNormals"
+  ],
   "std/vector<TILEO_TILE_VERTEX>": [
     "Tileo/MeshWithNormals"
   ],

@@ -2,6 +2,7 @@
 
 
 #include <Tileo/TileoTileVertex.hpp>
+#include <Tileo/TileoTileVertexAllegroVertexDeclaration.hpp>
 #include <vector>
 
 
@@ -10,6 +11,7 @@ namespace Tileo
    class MeshWithNormals
    {
    private:
+      Tileo::TileoTileVertexAllegroVertexDeclaration tileo_tile_vertex_allegro_vertex_declaration;
       int num_columns;
       int num_rows;
       float tile_width;
