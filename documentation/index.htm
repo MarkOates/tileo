@@ -52,6 +52,7 @@ table td
   <li><a href="#quintessence/Tileo/TMJDataLoader.q.yml">quintessence/Tileo/TMJDataLoader.q.yml</a></li>
   <li><a href="#quintessence/Tileo/TMJMeshLoader.q.yml">quintessence/Tileo/TMJMeshLoader.q.yml</a></li>
   <li><a href="#quintessence/Tileo/TileIndexInfo.q.yml">quintessence/Tileo/TileIndexInfo.q.yml</a></li>
+  <li><a href="#quintessence/Tileo/TileoTileVertexAllegroVertexDeclaration.q.yml">quintessence/Tileo/TileoTileVertexAllegroVertexDeclaration.q.yml</a></li>
 </ul>
 <h1>Components</h1>
 <ul>
@@ -278,6 +279,50 @@ table td
     </table>
   </div>
 </ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Tileo/TileoTileVertexAllegroVertexDeclaration.q.yml">quintessence/Tileo/TileoTileVertexAllegroVertexDeclaration.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">vertex_declaration</td>
+  <td class="property">ALLEGRO_VERTEX_DECL*</td>
+</tr>
+<tr>
+  <td class="property">initialized</td>
+  <td class="property">bool</td>
+</tr>
+<tr>
+  <td class="property">destructed</td>
+  <td class="property">bool</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">get_vertex_declaration()</td>
+</tr>
+<tr>
+  <td class="method">initialize()</td>
+</tr>
+<tr>
+  <td class="method">destroy()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_VERTEX_DECL*&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro_primitives.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;al_is_system_installed&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;al_is_primitives_addon_initialized&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro_primitives.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;TILEO_TILE_VERTEX&quot;, &quot;headers&quot;=&gt;[&quot;Tileo/TileoTileVertex.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
 <h1>Dependents</h1>
 <pre>
 {
@@ -320,6 +365,18 @@ table td
   ],
   "ALLEGRO_BITMAP": [
     "Tileo/TileIndexInfo"
+  ],
+  "ALLEGRO_VERTEX_DECL": [
+    "Tileo/TileoTileVertexAllegroVertexDeclaration"
+  ],
+  "al_is_system_installed": [
+    "Tileo/TileoTileVertexAllegroVertexDeclaration"
+  ],
+  "al_is_primitives_addon_initialized": [
+    "Tileo/TileoTileVertexAllegroVertexDeclaration"
+  ],
+  "TILEO_TILE_VERTEX": [
+    "Tileo/TileoTileVertexAllegroVertexDeclaration"
   ]
 }
 </pre>

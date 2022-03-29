@@ -38,5 +38,17 @@
   ],
   "ALLEGRO_BITMAP": [
     "Tileo/TileIndexInfo"
+  ],
+  "ALLEGRO_VERTEX_DECL": [
+    "Tileo/TileoTileVertexAllegroVertexDeclaration"
+  ],
+  "al_is_system_installed": [
+    "Tileo/TileoTileVertexAllegroVertexDeclaration"
+  ],
+  "al_is_primitives_addon_initialized": [
+    "Tileo/TileoTileVertexAllegroVertexDeclaration"
+  ],
+  "TILEO_TILE_VERTEX": [
+    "Tileo/TileoTileVertexAllegroVertexDeclaration"
   ]
 }

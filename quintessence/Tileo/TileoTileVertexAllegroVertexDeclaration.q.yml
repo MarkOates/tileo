@@ -1,0 +1,76 @@
+properties:
+
+
+  - name: vertex_declaration
+    type: ALLEGRO_VERTEX_DECL*
+    init_with: nullptr
+    getter: explicit
+
+  - name: initialized
+    type: bool
+    init_with: false
+    getter: true
+
+  - name: destructed
+    type: bool
+    init_with: false
+    getter: true
+ 
+
+functions:
+
+
+  - name: get_vertex_declaration
+    type: ALLEGRO_VERTEX_DECL*
+    guards: [ initialized, (!destructed) ]
+    body: |
+      return vertex_declaration;
+
+
+  - name: initialize
+    guards: [ (!initialized), al_is_system_installed(), al_is_primitives_addon_initialized() ]
+    body: |
+      ALLEGRO_VERTEX_ELEMENT elems[] = {
+         {ALLEGRO_PRIM_POSITION, ALLEGRO_PRIM_FLOAT_3, offsetof(TILEO_TILE_VERTEX, x)},
+         {ALLEGRO_PRIM_TEX_COORD, ALLEGRO_PRIM_FLOAT_2, offsetof(TILEO_TILE_VERTEX, texture_u)},
+         {ALLEGRO_PRIM_USER_ATTR, ALLEGRO_PRIM_FLOAT_2, offsetof(TILEO_TILE_VERTEX, normal_u)},
+         {ALLEGRO_PRIM_USER_ATTR, ALLEGRO_PRIM_FLOAT_2, offsetof(TILEO_TILE_VERTEX, height_u)},
+         {ALLEGRO_PRIM_USER_ATTR, ALLEGRO_PRIM_FLOAT_1, offsetof(TILEO_TILE_VERTEX, height)},
+         {ALLEGRO_PRIM_COLOR_ATTR, 0, offsetof(TILEO_TILE_VERTEX, color)},
+      };
+
+      vertex_declaration = al_create_vertex_decl(elems, sizeof(TILEO_TILE_VERTEX));
+
+      return;
+    body_dependency_symbols:
+      - TILEO_TILE_VERTEX
+      - al_is_system_installed
+      - al_is_primitives_addon_initialized
+
+
+  - name: destroy
+    guards: [ initialized, (!destructed) ]
+    body: |
+      if (!vertex_declaration)
+      {
+         throw std::runtime_error("there was an error destroying the TileoTileVertexWithNormal declaration.");
+      }
+      al_destroy_vertex_decl(vertex_declaration);
+      destructed = true;
+      return;
+
+
+dependencies:
+
+
+  - symbol: ALLEGRO_VERTEX_DECL*
+    headers: [ allegro5/allegro_primitives.h ]
+  - symbol: al_is_system_installed
+    headers: [ allegro5/allegro.h ]
+  - symbol: al_is_primitives_addon_initialized
+    headers: [ allegro5/allegro_primitives.h ]
+  - symbol: TILEO_TILE_VERTEX
+    headers: [ Tileo/TileoTileVertex.hpp ]
+    
+
+
