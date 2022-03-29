@@ -1,4 +1,7 @@
 {
+  "std/vector<TILEO_TILE_VERTEX>": [
+    "Tileo/MeshWithNormals"
+  ],
   "Blast/FileExistenceChecker": [
     "Tileo/TMJDataLoader"
   ],

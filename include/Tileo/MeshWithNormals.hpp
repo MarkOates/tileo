@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include <Tileo/TileoTileVertex.hpp>
 #include <vector>
 
 
@@ -15,6 +16,7 @@ namespace Tileo
       float tile_height;
       std::vector<int> tile_ids;
       std::vector<int> normal_tile_ids;
+      std::vector<TILEO_TILE_VERTEX> vertexes;
       bool initialized;
 
    public:
@@ -23,6 +25,7 @@ namespace Tileo
 
       void initialize();
       void resize(int num_columns=1, int num_rows=1);
+      void clear_and_reserve();
    };
 }
 

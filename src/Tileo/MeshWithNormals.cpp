@@ -18,6 +18,7 @@ MeshWithNormals::MeshWithNormals(int num_columns, int num_rows, float tile_width
    , tile_height(tile_height)
    , tile_ids()
    , normal_tile_ids()
+   , vertexes()
    , initialized(false)
 {
 }
@@ -42,6 +43,7 @@ void MeshWithNormals::initialize()
          error_message << "MeshWithNormals" << "::" << "initialize" << ": error: " << "guard \"(num_rows > 0)\" not met";
          throw std::runtime_error(error_message.str());
       }
+   clear_and_reserve();
    // TODO
    initialized = true;
    return;
@@ -61,6 +63,17 @@ void MeshWithNormals::resize(int num_columns, int num_rows)
          error_message << "MeshWithNormals" << "::" << "resize" << ": error: " << "guard \"(num_rows > 0)\" not met";
          throw std::runtime_error(error_message.str());
       }
+   this->num_columns = num_columns;
+   this->num_rows = num_rows;
+
+   clear_and_reserve();
+
+   // TODO
+   return;
+}
+
+void MeshWithNormals::clear_and_reserve()
+{
    // TODO
    return;
 }

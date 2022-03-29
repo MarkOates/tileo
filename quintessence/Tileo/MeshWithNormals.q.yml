@@ -28,6 +28,10 @@ properties:
     type: std::vector<int>
     init_with: ''
 
+  - name: vertexes
+    type: std::vector<TILEO_TILE_VERTEX>
+    init_with: ''
+
   - name: initialized
     type: bool
     init_with: false
@@ -39,6 +43,7 @@ functions:
   - name: initialize
     guards: [ (num_columns > 0), (num_rows > 0) ]
     body: |
+      clear_and_reserve();
       // TODO
       initialized = true;
       return;
@@ -54,7 +59,25 @@ functions:
         default_argument: 1
     guards: [ (num_columns > 0), (num_rows > 0) ]
     body: |
+      this->num_columns = num_columns;
+      this->num_rows = num_rows;
+
+      clear_and_reserve();
+
       // TODO
       return;
+
+
+  - name: clear_and_reserve
+    body: |
+      // TODO
+      return;
+
+
+dependencies:
+
+
+  - symbol: std::vector<TILEO_TILE_VERTEX>
+    headers: [ vector, Tileo/TileoTileVertex.hpp ]
 
 

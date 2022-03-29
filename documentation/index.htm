@@ -85,6 +85,10 @@ table td
   <td class="property">std::vector&lt;int&gt;</td>
 </tr>
 <tr>
+  <td class="property">vertexes</td>
+  <td class="property">std::vector&lt;TILEO_TILE_VERTEX&gt;</td>
+</tr>
+<tr>
   <td class="property">initialized</td>
   <td class="property">bool</td>
 </tr>
@@ -96,8 +100,14 @@ table td
 <tr>
   <td class="method">resize(2)</td>
 </tr>
+<tr>
+  <td class="method">clear_and_reserve()</td>
+</tr>
     </table>
      <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&lt;TILEO_TILE_VERTEX&gt;&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;, &quot;Tileo/TileoTileVertex.hpp&quot;]}</td>
+</tr>
     </table>
   </div>
 </ul>
@@ -372,6 +382,9 @@ table td
 <h1>Dependents</h1>
 <pre>
 {
+  "std/vector<TILEO_TILE_VERTEX>": [
+    "Tileo/MeshWithNormals"
+  ],
   "Blast/FileExistenceChecker": [
     "Tileo/TMJDataLoader"
   ],
