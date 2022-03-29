@@ -140,6 +140,7 @@ void TileoTileVertexAllegroVertexDeclaration::destroy()
       throw std::runtime_error("there was an error destroying the TileoTileVertexWithNormal declaration.");
    }
    al_destroy_vertex_decl(vertex_declaration);
+   vertex_declaration = nullptr;
    destroyed = true;
    return;
 }

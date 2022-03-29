@@ -19,17 +19,6 @@ TEST(Tileo_TileoTileVertexAllegroVertexDeclarationTest, can_be_created_without_b
 }
 
 
-TEST(Tileo_TileoTileVertexAllegroVertexDeclarationTest,
-   get_vertex_declaration__without_initialization__will_throw_an_error)
-{
-   Tileo::TileoTileVertexAllegroVertexDeclaration declaration;
-   std::string expected_error_message =
-      "TileoTileVertexAllegroVertexDeclaration::get_vertex_declaration: error: guard \"initialized\" not met";
-
-   EXPECT_THROW_WITH_MESSAGE(declaration.get_vertex_declaration(), std::runtime_error, expected_error_message);
-}
-
-
 TEST(Tileo_TileoTileVertexAllegroVertexDeclarationTest, initialize__without_allegro_initialized__will_throw_an_error)
 {
    Tileo::TileoTileVertexAllegroVertexDeclaration declaration;
@@ -152,6 +141,60 @@ TEST(Tileo_TileoTileVertexAllegroVertexDeclarationTest, destroy__if_called_more_
       )
    );
 
+   al_shutdown_primitives_addon();
+   al_uninstall_system();
+}
+
+
+TEST(Tileo_TileoTileVertexAllegroVertexDeclarationTest,
+   get_vertex_declaration__without_initialization__will_throw_an_error)
+{
+   Tileo::TileoTileVertexAllegroVertexDeclaration declaration;
+
+   EXPECT_THROW_WITH_MESSAGE(declaration.get_vertex_declaration(), std::runtime_error, BUILD_GUARD_ERROR_MESSAGE(
+         TileoTileVertexAllegroVertexDeclaration,
+         get_vertex_declaration,
+         initialized
+      )
+   );
+}
+
+
+TEST(Tileo_TileoTileVertexAllegroVertexDeclarationTest,
+   get_vertex_declaration__after_detroying__will_throw_an_error)
+{
+   al_init();
+   al_init_primitives_addon();
+   al_set_new_display_flags(ALLEGRO_PROGRAMMABLE_PIPELINE);
+   ALLEGRO_DISPLAY *d = al_create_display(800, 600);
+   Tileo::TileoTileVertexAllegroVertexDeclaration declaration;
+   declaration.initialize();
+   declaration.destroy();
+
+   EXPECT_THROW_WITH_MESSAGE(declaration.get_vertex_declaration(), std::runtime_error, BUILD_GUARD_ERROR_MESSAGE(
+         TileoTileVertexAllegroVertexDeclaration,
+         get_vertex_declaration,
+         (!destroyed)
+      )
+   );
+
+   al_shutdown_primitives_addon();
+   al_uninstall_system();
+}
+
+
+TEST(Tileo_TileoTileVertexAllegroVertexDeclarationTest, get_vertex_declaration__returns_the_expected_vertex_declaration)
+{
+   al_init();
+   al_init_primitives_addon();
+   al_set_new_display_flags(ALLEGRO_PROGRAMMABLE_PIPELINE);
+   ALLEGRO_DISPLAY *d = al_create_display(800, 600);
+   Tileo::TileoTileVertexAllegroVertexDeclaration declaration;
+   declaration.initialize();
+
+   EXPECT_NE(nullptr, declaration.get_vertex_declaration());
+
+   declaration.destroy();
    al_shutdown_primitives_addon();
    al_uninstall_system();
 }
