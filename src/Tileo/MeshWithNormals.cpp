@@ -11,6 +11,8 @@
 #include <sstream>
 #include <stdexcept>
 #include <sstream>
+#include <stdexcept>
+#include <sstream>
 
 
 namespace Tileo
@@ -36,6 +38,12 @@ MeshWithNormals::MeshWithNormals(int num_columns, int num_rows, float tile_width
 
 MeshWithNormals::~MeshWithNormals()
 {
+}
+
+
+std::vector<TILEO_TILE_VERTEX> &MeshWithNormals::get_vertexes_ref()
+{
+   return vertexes;
 }
 
 
@@ -71,6 +79,11 @@ void MeshWithNormals::destroy()
    tileo_tile_vertex_allegro_vertex_declaration.destroy();
    destroyed = true;
    return;
+}
+
+ALLEGRO_VERTEX_DECL* MeshWithNormals::obtain_vertex_declaration()
+{
+   return tileo_tile_vertex_allegro_vertex_declaration.get_vertex_declaration();
 }
 
 void MeshWithNormals::resize(int num_columns, int num_rows)
@@ -124,6 +137,34 @@ bool MeshWithNormals::set_tile(int tile_x, int tile_y, int tile_index_num)
    return true;
 }
 
+bool MeshWithNormals::set_normal_tile(int tile_x, int tile_y, int tile_index_num)
+{
+   if (!(initialized))
+      {
+         std::stringstream error_message;
+         error_message << "MeshWithNormals" << "::" << "set_normal_tile" << ": error: " << "guard \"initialized\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   if (!(normal_atlas))
+      {
+         std::stringstream error_message;
+         error_message << "MeshWithNormals" << "::" << "set_normal_tile" << ": error: " << "guard \"normal_atlas\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   if (tile_x < 0) return false;
+   if (tile_x >= num_columns) return false;
+   if (tile_y < 0) return false;
+   if (tile_y >= num_rows) return false;
+
+   normal_tile_ids[tile_x + tile_y * num_columns] = tile_index_num;
+
+   float u1, v1, u2, v2 = 0;
+   if (!normal_atlas->get_tile_uv(tile_index_num, &u1, &v1, &u2, &v2)) return false;
+   if (!set_normal_tile_uv(tile_x, tile_y, u1, v1, u2, v2)) return false;
+
+   return true;
+}
+
 bool MeshWithNormals::set_tile_uv(int tile_x, int tile_y, float u1, int v1, float u2, int v2)
 {
    if (!(initialized))
@@ -138,6 +179,12 @@ bool MeshWithNormals::set_tile_uv(int tile_x, int tile_y, float u1, int v1, floa
    if (tile_y >= num_rows) return false;
 
    int id_start = (tile_x * 6) + tile_y * (num_columns*6);
+
+   if (id_start >= vertexes.size())
+   {
+      throw std::runtime_error("MeshWithNormals:set_tile_uv: unexpected assignment error");
+   }
+
    int &i = id_start;
    vertexes[i+0].texture_u = u1;
    vertexes[i+0].texture_v = v1;
@@ -168,6 +215,12 @@ bool MeshWithNormals::set_normal_tile_uv(int tile_x, int tile_y, float u1, int v
    if (tile_y >= num_rows) return false;
 
    int id_start = (tile_x * 6) + tile_y * (num_columns*6);
+
+   if (id_start >= vertexes.size())
+   {
+      throw std::runtime_error("MeshWithNormals:set_normal_tile_uv: unexpected assignment error");
+   }
+
    int &i = id_start;
    vertexes[i+0].normal_u = u1;
    vertexes[i+0].normal_v = v1;

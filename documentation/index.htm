@@ -117,10 +117,16 @@ table td
   <td class="method">destroy()</td>
 </tr>
 <tr>
+  <td class="method">obtain_vertex_declaration()</td>
+</tr>
+<tr>
   <td class="method">resize(2)</td>
 </tr>
 <tr>
   <td class="method">set_tile(3)</td>
+</tr>
+<tr>
+  <td class="method">set_normal_tile(3)</td>
 </tr>
 <tr>
   <td class="private_method">set_tile_uv(6)</td>
@@ -141,6 +147,9 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Tileo::TileoTileVertexAllegroVertexDeclaration&quot;, &quot;headers&quot;=&gt;[&quot;Tileo/TileoTileVertexAllegroVertexDeclaration.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_VERTEX_DECL*&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro_primitives.h&quot;]}</td>
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&lt;TILEO_TILE_VERTEX&gt;&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;, &quot;Tileo/TileoTileVertex.hpp&quot;]}</td>
@@ -429,6 +438,10 @@ table td
   "Tileo/TileoTileVertexAllegroVertexDeclaration": [
     "Tileo/MeshWithNormals"
   ],
+  "ALLEGRO_VERTEX_DECL": [
+    "Tileo/MeshWithNormals",
+    "Tileo/TileoTileVertexAllegroVertexDeclaration"
+  ],
   "std/vector<TILEO_TILE_VERTEX>": [
     "Tileo/MeshWithNormals"
   ],
@@ -468,9 +481,6 @@ table td
   ],
   "ALLEGRO_BITMAP": [
     "Tileo/TileIndexInfo"
-  ],
-  "ALLEGRO_VERTEX_DECL": [
-    "Tileo/TileoTileVertexAllegroVertexDeclaration"
   ],
   "al_is_system_installed": [
     "Tileo/TileoTileVertexAllegroVertexDeclaration"

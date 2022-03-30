@@ -6,6 +6,10 @@
   "Tileo/TileoTileVertexAllegroVertexDeclaration": [
     "Tileo/MeshWithNormals"
   ],
+  "ALLEGRO_VERTEX_DECL": [
+    "Tileo/MeshWithNormals",
+    "Tileo/TileoTileVertexAllegroVertexDeclaration"
+  ],
   "std/vector<TILEO_TILE_VERTEX>": [
     "Tileo/MeshWithNormals"
   ],
@@ -45,9 +49,6 @@
   ],
   "ALLEGRO_BITMAP": [
     "Tileo/TileIndexInfo"
-  ],
-  "ALLEGRO_VERTEX_DECL": [
-    "Tileo/TileoTileVertexAllegroVertexDeclaration"
   ],
   "al_is_system_installed": [
     "Tileo/TileoTileVertexAllegroVertexDeclaration"
