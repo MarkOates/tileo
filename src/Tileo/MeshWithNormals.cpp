@@ -9,6 +9,8 @@
 #include <sstream>
 #include <stdexcept>
 #include <sstream>
+#include <stdexcept>
+#include <sstream>
 
 
 namespace Tileo
@@ -94,7 +96,35 @@ void MeshWithNormals::resize(int num_columns, int num_rows)
    return;
 }
 
-void MeshWithNormals::set_tile_uv(int tile_x, int tile_y, float u1, int v1, float u2, int v2)
+bool MeshWithNormals::set_tile(int tile_x, int tile_y, int tile_index_num)
+{
+   if (!(initialized))
+      {
+         std::stringstream error_message;
+         error_message << "MeshWithNormals" << "::" << "set_tile" << ": error: " << "guard \"initialized\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   if (!(atlas))
+      {
+         std::stringstream error_message;
+         error_message << "MeshWithNormals" << "::" << "set_tile" << ": error: " << "guard \"atlas\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   if (tile_x < 0) return false;
+   if (tile_x >= num_columns) return false;
+   if (tile_y < 0) return false;
+   if (tile_y >= num_rows) return false;
+
+   tile_ids[tile_x + tile_y * num_columns] = tile_index_num;
+
+   float u1, v1, u2, v2 = 0;
+   if (!atlas->get_tile_uv(tile_index_num, &u1, &v1, &u2, &v2)) return false;
+   if (!set_tile_uv(tile_x, tile_y, u1, v1, u2, v2)) return false;
+
+   return true;
+}
+
+bool MeshWithNormals::set_tile_uv(int tile_x, int tile_y, float u1, int v1, float u2, int v2)
 {
    if (!(initialized))
       {
@@ -102,6 +132,11 @@ void MeshWithNormals::set_tile_uv(int tile_x, int tile_y, float u1, int v1, floa
          error_message << "MeshWithNormals" << "::" << "set_tile_uv" << ": error: " << "guard \"initialized\" not met";
          throw std::runtime_error(error_message.str());
       }
+   if (tile_x < 0) return false;
+   if (tile_x >= num_columns) return false;
+   if (tile_y < 0) return false;
+   if (tile_y >= num_rows) return false;
+
    int id_start = (tile_x * 6) + tile_y * (num_columns*6);
    int &i = id_start;
    vertexes[i+0].texture_u = u1;
@@ -116,10 +151,10 @@ void MeshWithNormals::set_tile_uv(int tile_x, int tile_y, float u1, int v1, floa
    vertexes[i+4].texture_v = v1;
    vertexes[i+5].texture_u = u1;
    vertexes[i+5].texture_v = v1;
-   return;
+   return true;
 }
 
-void MeshWithNormals::set_normal_tile_uv(int tile_x, int tile_y, float u1, int v1, float u2, int v2)
+bool MeshWithNormals::set_normal_tile_uv(int tile_x, int tile_y, float u1, int v1, float u2, int v2)
 {
    if (!(initialized))
       {
@@ -127,6 +162,11 @@ void MeshWithNormals::set_normal_tile_uv(int tile_x, int tile_y, float u1, int v
          error_message << "MeshWithNormals" << "::" << "set_normal_tile_uv" << ": error: " << "guard \"initialized\" not met";
          throw std::runtime_error(error_message.str());
       }
+   if (tile_x < 0) return false;
+   if (tile_x >= num_columns) return false;
+   if (tile_y < 0) return false;
+   if (tile_y >= num_rows) return false;
+
    int id_start = (tile_x * 6) + tile_y * (num_columns*6);
    int &i = id_start;
    vertexes[i+0].normal_u = u1;
@@ -141,7 +181,7 @@ void MeshWithNormals::set_normal_tile_uv(int tile_x, int tile_y, float u1, int v
    vertexes[i+4].normal_v = v1;
    vertexes[i+5].normal_u = u1;
    vertexes[i+5].normal_v = v1;
-   return;
+   return true;
 }
 
 void MeshWithNormals::place_vertexes_into_tile_mesh_shape()

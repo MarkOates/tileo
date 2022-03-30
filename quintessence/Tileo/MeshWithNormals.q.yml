@@ -95,7 +95,37 @@ functions:
       return;
 
 
+  - name: set_tile
+    type: bool
+    parameters:
+      - name: tile_x
+        type: int
+        default_argument: 0
+      - name: tile_y
+        type: int
+        default_argument: 0
+      - name: tile_index_num
+        type: int
+        default_argument: 0
+    guards: [ initialized, atlas ]
+    body: |
+      if (tile_x < 0) return false;
+      if (tile_x >= num_columns) return false;
+      if (tile_y < 0) return false;
+      if (tile_y >= num_rows) return false;
+
+      tile_ids[tile_x + tile_y * num_columns] = tile_index_num;
+
+      float u1, v1, u2, v2 = 0;
+      if (!atlas->get_tile_uv(tile_index_num, &u1, &v1, &u2, &v2)) return false;
+      if (!set_tile_uv(tile_x, tile_y, u1, v1, u2, v2)) return false;
+
+      return true;
+    
+
   - name: set_tile_uv
+    type: bool
+    private: true
     guards: [ initialized ]
     parameters:
       - name: tile_x
@@ -117,6 +147,11 @@ functions:
         type: int
         default_argument: 0.0f
     body: |
+      if (tile_x < 0) return false;
+      if (tile_x >= num_columns) return false;
+      if (tile_y < 0) return false;
+      if (tile_y >= num_rows) return false;
+
       int id_start = (tile_x * 6) + tile_y * (num_columns*6);
       int &i = id_start;
       vertexes[i+0].texture_u = u1;
@@ -131,10 +166,12 @@ functions:
       vertexes[i+4].texture_v = v1;
       vertexes[i+5].texture_u = u1;
       vertexes[i+5].texture_v = v1;
-      return;
+      return true;
 
 
   - name: set_normal_tile_uv
+    type: bool
+    private: true
     guards: [ initialized ]
     parameters:
       - name: tile_x
@@ -156,6 +193,11 @@ functions:
         type: int
         default_argument: 0.0f
     body: |
+      if (tile_x < 0) return false;
+      if (tile_x >= num_columns) return false;
+      if (tile_y < 0) return false;
+      if (tile_y >= num_rows) return false;
+
       int id_start = (tile_x * 6) + tile_y * (num_columns*6);
       int &i = id_start;
       vertexes[i+0].normal_u = u1;
@@ -170,7 +212,7 @@ functions:
       vertexes[i+4].normal_v = v1;
       vertexes[i+5].normal_u = u1;
       vertexes[i+5].normal_v = v1;
-      return;
+      return true;
  
 
   - name: place_vertexes_into_tile_mesh_shape

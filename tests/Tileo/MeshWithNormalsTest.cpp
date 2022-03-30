@@ -79,3 +79,27 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, initialize__if_called_more_tha
 }
 
 
+TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, set_tile__if_called_before_initialization__throws_an_error)
+{
+   // TODO
+}
+
+
+TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, set_tile__without_an_atlas__throws_an_error)
+{
+   // TODO
+}
+
+
+TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, set_tile__with_a_tile_x_that_is_out_of_bounds__does_nothing)
+{
+   // TODO
+}
+
+
+TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, set_tile__with_a_tile_y_that_is_out_of_bounds__does_nothing)
+{
+   // TODO
+}
+
+
