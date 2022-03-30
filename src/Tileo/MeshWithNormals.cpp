@@ -126,7 +126,7 @@ void MeshWithNormals::place_vertexes_into_tile_mesh_shape()
       vertexes[v].x *= tile_width;
       vertexes[v].y *= tile_height;
       vertexes[v].z = 0;
-      vertexes[v].color = al_map_rgba_f(1, 1, 1, 1);
+      vertexes[v].color = ALLEGRO_COLOR{1, 1, 1, 1};
    }
 
    return;
