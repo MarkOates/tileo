@@ -78,9 +78,56 @@ functions:
     body: |
       this->num_columns = num_columns;
       this->num_rows = num_rows;
+
       clear_and_reserve();
+      place_vertexes_into_tile_mesh_shape();
+
       return;
 
+
+  - name: place_vertexes_into_tile_mesh_shape
+    private: true
+    body: |
+      // place the vertexes to create a mesh of boxes for tiles
+      int num_vertexes = num_columns*num_rows*6;
+      for (int v=0; v<num_vertexes; v+=6)
+      {
+         long tile_num = v / 6;
+
+         int x1 = (tile_num % num_columns);
+         int y1 = (tile_num / num_columns);
+         int x2 = x1 + 1;
+         int y2 = y1 + 1;
+
+         vertexes[v+0].x = x1;
+         vertexes[v+0].y = y1;
+
+         vertexes[v+1].x = x1;
+         vertexes[v+1].y = y2;
+
+         vertexes[v+2].x = x2;
+         vertexes[v+2].y = y2;
+
+         vertexes[v+3].x = x2;
+         vertexes[v+3].y = y2;
+
+         vertexes[v+4].x = x2;
+         vertexes[v+4].y = y1;
+
+         vertexes[v+5].x = x1;
+         vertexes[v+5].y = y1;
+      }
+
+      // "scale" the vertexes to tile_width and tile_height, and set other default values
+      for (int v=0; v<num_vertexes; v++)
+      {
+         vertexes[v].x *= tile_width;
+         vertexes[v].y *= tile_height;
+         vertexes[v].z = 0;
+         vertexes[v].color = al_map_rgba_f(1, 1, 1, 1);
+      }
+
+      return;
 
   - name: clear_and_reserve
     private: true

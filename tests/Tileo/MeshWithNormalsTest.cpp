@@ -15,6 +15,10 @@ private:
    ALLEGRO_DISPLAY *display;
 
 public:
+   Tileo_MeshWithNormalsRenderingFixtureTest()
+     : display(nullptr)
+   {}
+
    virtual void SetUp() override
    {
       ASSERT_EQ(false, al_is_system_installed());
@@ -26,13 +30,9 @@ public:
 
    virtual void TearDown() override
    {
-      std::cout << "AAAAAAAA" << std::endl;
-      al_destroy_display(display);
-      std::cout << "BBBBBBBB" << std::endl;
+      if (display) al_destroy_display(display);
       al_shutdown_primitives_addon();
-      std::cout << "CCCCCCCC" << std::endl;
       al_uninstall_system();
-      std::cout << "DDDDDDDD" << std::endl;
    }
 };
 

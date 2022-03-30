@@ -102,6 +102,9 @@ void TileoTileVertexAllegroVertexDeclaration::initialize()
          error_message << "TileoTileVertexAllegroVertexDeclaration" << "::" << "initialize" << ": error: " << "guard \"(al_get_display_flags(al_get_current_display()) & ALLEGRO_PROGRAMMABLE_PIPELINE)\" not met";
          throw std::runtime_error(error_message.str());
       }
+   // TODO: guard a display created with ALLEGRO_OPENGL flag.  OPENGL will be expected, specifically
+   // for using a GLSL shader when rendering
+
    // note that al_get_current_display() is required.  This is not noted in the allegro documentation, but a display
    // is expected when making calls to al_create_vertex_decl(), and can be seen by viewing the source code here:
    // https://github.com/liballeg/allegro5/blob/e8457df9492158f2c5f41676e70f0b98c7f5deeb/addons/primitives/primitives.c#L170

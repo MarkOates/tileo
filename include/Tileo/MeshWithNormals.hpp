@@ -29,6 +29,7 @@ namespace Tileo
       void initialize();
       void destroy();
       void resize(int num_columns=1, int num_rows=1);
+      void place_vertexes_into_tile_mesh_shape();
       void clear_and_reserve();
    };
 }
