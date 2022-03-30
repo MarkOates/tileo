@@ -21,6 +21,7 @@ MeshWithNormals::MeshWithNormals(int num_columns, int num_rows, float tile_width
    , normal_tile_ids()
    , vertexes()
    , initialized(false)
+   , destroyed(false)
 {
 }
 
@@ -32,6 +33,12 @@ MeshWithNormals::~MeshWithNormals()
 
 void MeshWithNormals::initialize()
 {
+   if (!((!initialized)))
+      {
+         std::stringstream error_message;
+         error_message << "MeshWithNormals" << "::" << "initialize" << ": error: " << "guard \"(!initialized)\" not met";
+         throw std::runtime_error(error_message.str());
+      }
    if (!((num_columns >= 0)))
       {
          std::stringstream error_message;
@@ -44,14 +51,17 @@ void MeshWithNormals::initialize()
          error_message << "MeshWithNormals" << "::" << "initialize" << ": error: " << "guard \"(num_rows >= 0)\" not met";
          throw std::runtime_error(error_message.str());
       }
-   // TODO: !initialized guard
-   // you were here:
-
-   tileo_tile_vertex_allegro_vertex_declaration.initialize(); // < TODO
-
+   tileo_tile_vertex_allegro_vertex_declaration.initialize();
    clear_and_reserve();
-   // TODO
    initialized = true;
+   return;
+}
+
+void MeshWithNormals::destroy()
+{
+   // TODO: guards
+   tileo_tile_vertex_allegro_vertex_declaration.destroy();
+   destroyed = true;
    return;
 }
 
@@ -71,9 +81,7 @@ void MeshWithNormals::resize(int num_columns, int num_rows)
       }
    this->num_columns = num_columns;
    this->num_rows = num_rows;
-
    clear_and_reserve();
-
    return;
 }
 

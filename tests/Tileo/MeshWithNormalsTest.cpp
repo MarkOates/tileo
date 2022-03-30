@@ -17,17 +17,22 @@ private:
 public:
    virtual void SetUp() override
    {
-      al_init();
+      ASSERT_EQ(false, al_is_system_installed());
+      ASSERT_EQ(true, al_init());
       al_init_primitives_addon();
-      al_set_new_display_flags(ALLEGRO_PROGRAMMABLE_PIPELINE);
-      ALLEGRO_DISPLAY *display = al_create_display(800, 600);
+      al_set_new_display_flags(ALLEGRO_PROGRAMMABLE_PIPELINE | ALLEGRO_OPENGL);
+      ALLEGRO_DISPLAY *display = al_create_display(1920, 1080);
    }
 
    virtual void TearDown() override
    {
+      std::cout << "AAAAAAAA" << std::endl;
       al_destroy_display(display);
+      std::cout << "BBBBBBBB" << std::endl;
       al_shutdown_primitives_addon();
+      std::cout << "CCCCCCCC" << std::endl;
       al_uninstall_system();
+      std::cout << "DDDDDDDD" << std::endl;
    }
 };
 
@@ -44,6 +49,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, initialize__works_without_blow
 {
    Tileo::MeshWithNormals mesh_with_normals(6, 4, 16, 16);
    mesh_with_normals.initialize();
+   mesh_with_normals.destroy();
 }
 
 
@@ -60,6 +66,16 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, initialize__with_num_rows_less
    Tileo::MeshWithNormals mesh_with_normals(6, -1, 16, 16);
    std::string expected_error_message = "MeshWithNormals::initialize: error: guard \"(num_rows >= 0)\" not met";
    EXPECT_THROW_WITH_MESSAGE(mesh_with_normals.initialize(), std::runtime_error, expected_error_message);
+}
+
+
+TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, initialize__if_called_more_than_once__throws_an_error)
+{
+   Tileo::MeshWithNormals mesh_with_normals(6, 4, 16, 16);
+   mesh_with_normals.initialize();
+   std::string expected_error_message = "MeshWithNormals::initialize: error: guard \"(!initialized)\" not met";
+   EXPECT_THROW_WITH_MESSAGE(mesh_with_normals.initialize(), std::runtime_error, expected_error_message);
+   mesh_with_normals.destroy();
 }
 
 

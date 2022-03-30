@@ -41,21 +41,28 @@ properties:
     type: bool
     init_with: false
 
+  - name: destroyed
+    type: bool
+    init_with: false
+
 
 functions:
 
 
   - name: initialize
-    guards: [ (num_columns >= 0), (num_rows >= 0) ]
+    guards: [ (!initialized), (num_columns >= 0), (num_rows >= 0) ]
     body: |
-      // TODO: !initialized guard
-      // you were here:
-
-      tileo_tile_vertex_allegro_vertex_declaration.initialize(); // < TODO
-
+      tileo_tile_vertex_allegro_vertex_declaration.initialize();
       clear_and_reserve();
-      // TODO
       initialized = true;
+      return;
+
+
+  - name: destroy
+    body: |
+      // TODO: guards
+      tileo_tile_vertex_allegro_vertex_declaration.destroy();
+      destroyed = true;
       return;
 
 
@@ -71,9 +78,7 @@ functions:
     body: |
       this->num_columns = num_columns;
       this->num_rows = num_rows;
-
       clear_and_reserve();
-
       return;
 
 

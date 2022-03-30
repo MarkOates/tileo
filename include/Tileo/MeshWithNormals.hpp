@@ -20,12 +20,14 @@ namespace Tileo
       std::vector<int> normal_tile_ids;
       std::vector<TILEO_TILE_VERTEX> vertexes;
       bool initialized;
+      bool destroyed;
 
    public:
       MeshWithNormals(int num_columns=0, int num_rows=0, float tile_width=1.0f, float tile_height=1.0f);
       ~MeshWithNormals();
 
       void initialize();
+      void destroy();
       void resize(int num_columns=1, int num_rows=1);
       void clear_and_reserve();
    };
