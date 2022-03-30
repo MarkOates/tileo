@@ -15,12 +15,14 @@ namespace Tileo
 {
 
 
-MeshWithNormals::MeshWithNormals(int num_columns, int num_rows, float tile_width, float tile_height)
+MeshWithNormals::MeshWithNormals(int num_columns, int num_rows, float tile_width, float tile_height, Tileo::Atlas* atlas, Tileo::Atlas* normal_atlas)
    : tileo_tile_vertex_allegro_vertex_declaration()
    , num_columns(num_columns)
    , num_rows(num_rows)
    , tile_width(tile_width)
    , tile_height(tile_height)
+   , atlas(atlas)
+   , normal_atlas(normal_atlas)
    , tile_ids()
    , normal_tile_ids()
    , vertexes()

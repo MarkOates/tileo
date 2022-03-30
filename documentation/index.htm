@@ -81,6 +81,14 @@ table td
   <td class="property">float</td>
 </tr>
 <tr>
+  <td class="property">atlas</td>
+  <td class="property">Tileo::Atlas*</td>
+</tr>
+<tr>
+  <td class="property">normal_atlas</td>
+  <td class="property">Tileo::Atlas*</td>
+</tr>
+<tr>
   <td class="property">tile_ids</td>
   <td class="property">std::vector&lt;int&gt;</td>
 </tr>
@@ -125,6 +133,9 @@ table td
 </tr>
     </table>
      <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Tileo::Atlas*&quot;, &quot;headers&quot;=&gt;[&quot;Tileo/Atlas.hpp&quot;]}</td>
+</tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Tileo::TileoTileVertexAllegroVertexDeclaration&quot;, &quot;headers&quot;=&gt;[&quot;Tileo/TileoTileVertexAllegroVertexDeclaration.hpp&quot;]}</td>
 </tr>
@@ -408,6 +419,10 @@ table td
 <h1>Dependents</h1>
 <pre>
 {
+  "Tileo/Atlas": [
+    "Tileo/MeshWithNormals",
+    "Tileo/TMJMeshLoader"
+  ],
   "Tileo/TileoTileVertexAllegroVertexDeclaration": [
     "Tileo/MeshWithNormals"
   ],
@@ -434,9 +449,6 @@ table td
     "Tileo/TMJMeshLoader"
   ],
   "AllegroFlare/BitmapBin": [
-    "Tileo/TMJMeshLoader"
-  ],
-  "Tileo/Atlas": [
     "Tileo/TMJMeshLoader"
   ],
   "Tileo/Mesh": [

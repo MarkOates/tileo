@@ -1,4 +1,8 @@
 {
+  "Tileo/Atlas": [
+    "Tileo/MeshWithNormals",
+    "Tileo/TMJMeshLoader"
+  ],
   "Tileo/TileoTileVertexAllegroVertexDeclaration": [
     "Tileo/MeshWithNormals"
   ],
@@ -25,9 +29,6 @@
     "Tileo/TMJMeshLoader"
   ],
   "AllegroFlare/BitmapBin": [
-    "Tileo/TMJMeshLoader"
-  ],
-  "Tileo/Atlas": [
     "Tileo/TMJMeshLoader"
   ],
   "Tileo/Mesh": [

@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include <Tileo/Atlas.hpp>
 #include <Tileo/TileoTileVertex.hpp>
 #include <Tileo/TileoTileVertexAllegroVertexDeclaration.hpp>
 #include <vector>
@@ -16,6 +17,8 @@ namespace Tileo
       int num_rows;
       float tile_width;
       float tile_height;
+      Tileo::Atlas* atlas;
+      Tileo::Atlas* normal_atlas;
       std::vector<int> tile_ids;
       std::vector<int> normal_tile_ids;
       std::vector<TILEO_TILE_VERTEX> vertexes;
@@ -23,7 +26,7 @@ namespace Tileo
       bool destroyed;
 
    public:
-      MeshWithNormals(int num_columns=0, int num_rows=0, float tile_width=1.0f, float tile_height=1.0f);
+      MeshWithNormals(int num_columns=0, int num_rows=0, float tile_width=1.0f, float tile_height=1.0f, Tileo::Atlas* atlas=nullptr, Tileo::Atlas* normal_atlas=nullptr);
       ~MeshWithNormals();
 
       void initialize();

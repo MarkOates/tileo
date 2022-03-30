@@ -25,6 +25,16 @@ properties:
     init_with: 1.0f
     constructor_arg: true
 
+  - name: atlas
+    type: Tileo::Atlas*
+    init_with: nullptr
+    constructor_arg: true
+
+  - name: normal_atlas
+    type: Tileo::Atlas*
+    init_with: nullptr
+    constructor_arg: true
+
   - name: tile_ids
     type: std::vector<int>
     init_with: ''
@@ -224,6 +234,8 @@ functions:
 dependencies:
 
 
+  - symbol: Tileo::Atlas*
+    headers: [ Tileo/Atlas.hpp ]
   - symbol: Tileo::TileoTileVertexAllegroVertexDeclaration
     headers: [ Tileo/TileoTileVertexAllegroVertexDeclaration.hpp ]
   - symbol: std::vector<TILEO_TILE_VERTEX>
