@@ -5,6 +5,8 @@
 #include <sstream>
 #include <stdexcept>
 #include <sstream>
+#include <stdexcept>
+#include <sstream>
 
 
 namespace Tileo
@@ -88,14 +90,42 @@ void MeshWithNormals::resize(int num_columns, int num_rows)
    return;
 }
 
+void MeshWithNormals::set_tile_uv(int tile_x, int tile_y, float u1, int v1, float u2, int v2)
+{
+   if (!(initialized))
+      {
+         std::stringstream error_message;
+         error_message << "MeshWithNormals" << "::" << "set_tile_uv" << ": error: " << "guard \"initialized\" not met";
+         throw std::runtime_error(error_message.str());
+      }
+   int id_start = (tile_x * 6) + tile_y * (num_columns*6);
+   int &i = id_start;
+
+   vertexes[i+0].texture_u = u1;
+   vertexes[i+0].texture_v = v1;
+   vertexes[i+1].texture_u = u1;
+   vertexes[i+1].texture_v = v2;
+   vertexes[i+2].texture_u = u2;
+   vertexes[i+2].texture_v = v2;
+   vertexes[i+3].texture_u = u2;
+   vertexes[i+3].texture_v = v2;
+   vertexes[i+4].texture_u = u2;
+   vertexes[i+4].texture_v = v1;
+   vertexes[i+5].texture_u = u1;
+   vertexes[i+5].texture_v = v1;
+
+   return;
+}
+
 void MeshWithNormals::place_vertexes_into_tile_mesh_shape()
 {
+   // TODO: add test
+
    // place the vertexes to create a mesh of boxes for tiles
    int num_vertexes = num_columns*num_rows*6;
    for (int v=0; v<num_vertexes; v+=6)
    {
       long tile_num = v / 6;
-
       int x1 = (tile_num % num_columns);
       int y1 = (tile_num / num_columns);
       int x2 = x1 + 1;
@@ -103,19 +133,14 @@ void MeshWithNormals::place_vertexes_into_tile_mesh_shape()
 
       vertexes[v+0].x = x1;
       vertexes[v+0].y = y1;
-
       vertexes[v+1].x = x1;
       vertexes[v+1].y = y2;
-
       vertexes[v+2].x = x2;
       vertexes[v+2].y = y2;
-
       vertexes[v+3].x = x2;
       vertexes[v+3].y = y2;
-
       vertexes[v+4].x = x2;
       vertexes[v+4].y = y1;
-
       vertexes[v+5].x = x1;
       vertexes[v+5].y = y1;
    }
