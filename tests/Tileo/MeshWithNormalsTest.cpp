@@ -8,6 +8,7 @@
 
 #include <Tileo/MeshWithNormals.hpp>
 
+#include <AllegroFlare/BitmapBin.hpp>
 
 class Tileo_MeshWithNormalsRenderingFixtureTest : public ::testing::Test
 {
@@ -100,6 +101,45 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, set_tile__with_a_tile_x_that_i
 TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, set_tile__with_a_tile_y_that_is_out_of_bounds__does_nothing)
 {
    // TODO
+}
+
+
+TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, vertexes_will_render_as_expected)
+{
+   Tileo::MeshWithNormals mesh_with_normals(6, 4, 16, 16);
+   mesh_with_normals.initialize();
+
+   std::vector<TILEO_TILE_VERTEX> vertexes = mesh_with_normals.get_vertexes_ref();
+   ALLEGRO_VERTEX_DECL* vertex_declaration = mesh_with_normals.obtain_vertex_declaration();
+   ALLEGRO_BITMAP* texture = nullptr;
+
+   al_draw_prim(&vertexes, vertex_declaration, texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+
+   mesh_with_normals.destroy();
+}
+
+
+TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_render_as_expected)
+{
+   al_init_image_addon();
+   Tileo::MeshWithNormals mesh_with_normals(6, 4, 16, 16);
+   mesh_with_normals.initialize();
+   AllegroFlare::BitmapBin bitmap_bin;
+   bitmap_bin.set_full_path("/Users/markoates/Repos/tileo/bin/programs/data/bitmaps/");
+
+   // HERE:
+   //set_tile(...)
+
+   std::vector<TILEO_TILE_VERTEX> vertexes = mesh_with_normals.get_vertexes_ref();
+   ALLEGRO_VERTEX_DECL* vertex_declaration = mesh_with_normals.obtain_vertex_declaration();
+   ALLEGRO_BITMAP* texture = bitmap_bin["tiles_dungeon_v1.1.png"];
+
+   al_draw_prim(&vertexes, vertex_declaration, texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+
+   sleep(2);
+
+   mesh_with_normals.destroy();
+   al_shutdown_image_addon();
 }
 
 
