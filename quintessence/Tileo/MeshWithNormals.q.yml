@@ -109,7 +109,6 @@ functions:
     body: |
       int id_start = (tile_x * 6) + tile_y * (num_columns*6);
       int &i = id_start;
-
       vertexes[i+0].texture_u = u1;
       vertexes[i+0].texture_v = v1;
       vertexes[i+1].texture_u = u1;
@@ -122,7 +121,6 @@ functions:
       vertexes[i+4].texture_v = v1;
       vertexes[i+5].texture_u = u1;
       vertexes[i+5].texture_v = v1;
-
       return;
 
 
@@ -150,7 +148,6 @@ functions:
     body: |
       int id_start = (tile_x * 6) + tile_y * (num_columns*6);
       int &i = id_start;
-
       vertexes[i+0].normal_u = u1;
       vertexes[i+0].normal_v = v1;
       vertexes[i+1].normal_u = u1;
@@ -163,7 +160,6 @@ functions:
       vertexes[i+4].normal_v = v1;
       vertexes[i+5].normal_u = u1;
       vertexes[i+5].normal_v = v1;
-
       return;
  
 

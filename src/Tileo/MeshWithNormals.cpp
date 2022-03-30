@@ -102,7 +102,6 @@ void MeshWithNormals::set_tile_uv(int tile_x, int tile_y, float u1, int v1, floa
       }
    int id_start = (tile_x * 6) + tile_y * (num_columns*6);
    int &i = id_start;
-
    vertexes[i+0].texture_u = u1;
    vertexes[i+0].texture_v = v1;
    vertexes[i+1].texture_u = u1;
@@ -115,7 +114,6 @@ void MeshWithNormals::set_tile_uv(int tile_x, int tile_y, float u1, int v1, floa
    vertexes[i+4].texture_v = v1;
    vertexes[i+5].texture_u = u1;
    vertexes[i+5].texture_v = v1;
-
    return;
 }
 
@@ -129,7 +127,6 @@ void MeshWithNormals::set_normal_tile_uv(int tile_x, int tile_y, float u1, int v
       }
    int id_start = (tile_x * 6) + tile_y * (num_columns*6);
    int &i = id_start;
-
    vertexes[i+0].normal_u = u1;
    vertexes[i+0].normal_v = v1;
    vertexes[i+1].normal_u = u1;
@@ -142,7 +139,6 @@ void MeshWithNormals::set_normal_tile_uv(int tile_x, int tile_y, float u1, int v
    vertexes[i+4].normal_v = v1;
    vertexes[i+5].normal_u = u1;
    vertexes[i+5].normal_v = v1;
-
    return;
 }
 
