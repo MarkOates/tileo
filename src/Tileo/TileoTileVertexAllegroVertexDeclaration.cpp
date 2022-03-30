@@ -58,6 +58,18 @@ ALLEGRO_VERTEX_DECL* TileoTileVertexAllegroVertexDeclaration::get_vertex_declara
    return vertex_declaration;
 }
 
+TILEO_TILE_VERTEX TileoTileVertexAllegroVertexDeclaration::build_empty_vertex()
+{
+   TILEO_TILE_VERTEX v;
+   v.x = v.y = v.z = 0;
+   v.texture_u = v.texture_v = 0;
+   v.normal_u = v.normal_v = 0;
+   v.height_u = v.height_v = 0;
+   v.height = 0;
+   v.color = ALLEGRO_COLOR{1.0f, 1.0f, 1.0f, 1.0f};
+   return v;
+}
+
 void TileoTileVertexAllegroVertexDeclaration::initialize()
 {
    if (!((!initialized)))

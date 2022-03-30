@@ -32,16 +32,16 @@ MeshWithNormals::~MeshWithNormals()
 
 void MeshWithNormals::initialize()
 {
-   if (!((num_columns > 0)))
+   if (!((num_columns >= 0)))
       {
          std::stringstream error_message;
-         error_message << "MeshWithNormals" << "::" << "initialize" << ": error: " << "guard \"(num_columns > 0)\" not met";
+         error_message << "MeshWithNormals" << "::" << "initialize" << ": error: " << "guard \"(num_columns >= 0)\" not met";
          throw std::runtime_error(error_message.str());
       }
-   if (!((num_rows > 0)))
+   if (!((num_rows >= 0)))
       {
          std::stringstream error_message;
-         error_message << "MeshWithNormals" << "::" << "initialize" << ": error: " << "guard \"(num_rows > 0)\" not met";
+         error_message << "MeshWithNormals" << "::" << "initialize" << ": error: " << "guard \"(num_rows >= 0)\" not met";
          throw std::runtime_error(error_message.str());
       }
    // TODO: !initialized guard
@@ -57,16 +57,16 @@ void MeshWithNormals::initialize()
 
 void MeshWithNormals::resize(int num_columns, int num_rows)
 {
-   if (!((num_columns > 0)))
+   if (!((num_columns >= 0)))
       {
          std::stringstream error_message;
-         error_message << "MeshWithNormals" << "::" << "resize" << ": error: " << "guard \"(num_columns > 0)\" not met";
+         error_message << "MeshWithNormals" << "::" << "resize" << ": error: " << "guard \"(num_columns >= 0)\" not met";
          throw std::runtime_error(error_message.str());
       }
-   if (!((num_rows > 0)))
+   if (!((num_rows >= 0)))
       {
          std::stringstream error_message;
-         error_message << "MeshWithNormals" << "::" << "resize" << ": error: " << "guard \"(num_rows > 0)\" not met";
+         error_message << "MeshWithNormals" << "::" << "resize" << ": error: " << "guard \"(num_rows >= 0)\" not met";
          throw std::runtime_error(error_message.str());
       }
    this->num_columns = num_columns;
@@ -74,13 +74,23 @@ void MeshWithNormals::resize(int num_columns, int num_rows)
 
    clear_and_reserve();
 
-   // TODO
    return;
 }
 
 void MeshWithNormals::clear_and_reserve()
 {
-   // TODO
+   int num_elements = num_rows * num_columns;
+
+   tile_ids.clear();
+   normal_tile_ids.clear();
+   vertexes.clear();
+
+   TILEO_TILE_VERTEX empty_vertex = Tileo::TileoTileVertexAllegroVertexDeclaration::build_empty_vertex();
+
+   tile_ids.resize(num_elements, 0);
+   normal_tile_ids.resize(num_elements, 0);
+   vertexes.resize(num_elements*6, empty_vertex);
+
    return;
 }
 } // namespace Tileo

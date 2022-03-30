@@ -46,7 +46,7 @@ functions:
 
 
   - name: initialize
-    guards: [ (num_columns > 0), (num_rows > 0) ]
+    guards: [ (num_columns >= 0), (num_rows >= 0) ]
     body: |
       // TODO: !initialized guard
       // you were here:
@@ -67,20 +67,31 @@ functions:
       - name: num_rows
         type: int
         default_argument: 1
-    guards: [ (num_columns > 0), (num_rows > 0) ]
+    guards: [ (num_columns >= 0), (num_rows >= 0) ]
     body: |
       this->num_columns = num_columns;
       this->num_rows = num_rows;
 
       clear_and_reserve();
 
-      // TODO
       return;
 
 
   - name: clear_and_reserve
+    private: true
     body: |
-      // TODO
+      int num_elements = num_rows * num_columns;
+
+      tile_ids.clear();
+      normal_tile_ids.clear();
+      vertexes.clear();
+
+      TILEO_TILE_VERTEX empty_vertex = Tileo::TileoTileVertexAllegroVertexDeclaration::build_empty_vertex();
+
+      tile_ids.resize(num_elements, 0);
+      normal_tile_ids.resize(num_elements, 0);
+      vertexes.resize(num_elements*6, empty_vertex);
+
       return;
 
 
