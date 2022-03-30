@@ -80,12 +80,11 @@ void MeshWithNormals::resize(int num_columns, int num_rows)
 void MeshWithNormals::clear_and_reserve()
 {
    int num_elements = num_rows * num_columns;
+   TILEO_TILE_VERTEX empty_vertex = Tileo::TileoTileVertexAllegroVertexDeclaration::build_empty_vertex();
 
    tile_ids.clear();
    normal_tile_ids.clear();
    vertexes.clear();
-
-   TILEO_TILE_VERTEX empty_vertex = Tileo::TileoTileVertexAllegroVertexDeclaration::build_empty_vertex();
 
    tile_ids.resize(num_elements, 0);
    normal_tile_ids.resize(num_elements, 0);

@@ -81,12 +81,11 @@ functions:
     private: true
     body: |
       int num_elements = num_rows * num_columns;
+      TILEO_TILE_VERTEX empty_vertex = Tileo::TileoTileVertexAllegroVertexDeclaration::build_empty_vertex();
 
       tile_ids.clear();
       normal_tile_ids.clear();
       vertexes.clear();
-
-      TILEO_TILE_VERTEX empty_vertex = Tileo::TileoTileVertexAllegroVertexDeclaration::build_empty_vertex();
 
       tile_ids.resize(num_elements, 0);
       normal_tile_ids.resize(num_elements, 0);
