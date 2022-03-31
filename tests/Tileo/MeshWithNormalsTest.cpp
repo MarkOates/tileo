@@ -119,6 +119,8 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, vertexes_will_render_as_expect
 }
 
 
+#include <Tileo/Shaders/MeshWithNormals.hpp>
+
 TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_render_as_expected)
 {
    al_init_image_addon();
@@ -129,6 +131,8 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    atlas.duplicate_bitmap_and_load(tile_map_texture, 16, 16);
    Tileo::MeshWithNormals mesh_with_normals(25, 20, 16*4, 16*4, &atlas);
    mesh_with_normals.initialize();
+   Tileo::Shaders::MeshWithNormals shader;
+   shader.initialize();
 
    // HERE...
    for (int y=0; y<mesh_with_normals.get_num_rows(); y++)
@@ -136,6 +140,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
       {
          int tile_num_to_set = (x + y * mesh_with_normals.get_num_columns());
          tile_num_to_set = tile_num_to_set % 32;
+         //int tile_num_to_set = 6;
          mesh_with_normals.set_tile(x, y, tile_num_to_set);
       }
 
@@ -143,8 +148,13 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    ALLEGRO_VERTEX_DECL* vertex_declaration = mesh_with_normals.obtain_vertex_declaration();
    ALLEGRO_BITMAP* texture = atlas.get_bitmap();
 
+   //shader.set_flat_color(ALLEGRO_COLOR{0, 1, 1, 1});
+   //shader.activate();
+
    // ...AND HERE:
-   al_draw_prim(&vertexes[0], vertex_declaration, texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+   //al_draw_prim(&vertexes[0], vertex_declaration, texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+   al_draw_prim(&vertexes[0], vertex_declaration, texture, 0, 18*3, ALLEGRO_PRIM_TRIANGLE_LIST);
+   //al_draw_prim(&vertexes[0], vertex_declaration, texture, 0, vertexes.size(), ALLEGRO_PRIM_LINE_LIST);
 
    al_draw_bitmap(texture, 1920/2, 1080/2, 0);
 

@@ -13,6 +13,8 @@
 #include <sstream>
 #include <stdexcept>
 #include <sstream>
+#include <iostream>
+#include <AllegroFlare/Random.hpp>
 
 
 namespace Tileo
@@ -80,7 +82,7 @@ void MeshWithNormals::initialize()
          throw std::runtime_error(error_message.str());
       }
    tileo_tile_vertex_allegro_vertex_declaration.initialize();
-   clear_and_reserve();
+   resize(num_columns, num_rows);
    initialized = true;
    return;
 }
@@ -116,7 +118,6 @@ void MeshWithNormals::resize(int num_columns, int num_rows)
    this->num_rows = num_rows;
 
    clear_and_reserve();
-
    place_vertexes_into_tile_mesh_shape();
 
    return;
@@ -145,7 +146,8 @@ bool MeshWithNormals::set_tile(int tile_x, int tile_y, int tile_index_num)
 
    float u1, v1, u2, v2 = 0;
    if (!atlas->get_tile_uv(tile_index_num, &u1, &v1, &u2, &v2)) return false;
-   if (!set_tile_uv(tile_x, tile_y, u1, v1, u2, v2)) return false;
+   if (!set_tile_uv(tile_x, tile_y, u1/320.0, v1/16.0, u2/320.0, v2/16.0)) return false;
+   //if (!set_tile_uv(tile_x, tile_y, 0, 0, 1, 1)) return false; // <- temporary
 
    return true;
 }
@@ -191,7 +193,8 @@ bool MeshWithNormals::set_tile_uv(int tile_x, int tile_y, float u1, int v1, floa
    if (tile_y < 0) return false;
    if (tile_y >= num_rows) return false;
 
-   int id_start = (tile_x * 6) + tile_y * (num_columns*6);
+   int id_start = (tile_x + tile_y * num_columns) * 6;
+   //int id_start = (tile_x * 6) * (tile_y * num_columns);
 
    if (id_start >= vertexes.size())
    {
@@ -255,14 +258,24 @@ void MeshWithNormals::place_vertexes_into_tile_mesh_shape()
    // TODO: add test
 
    // place the vertexes to create a mesh of boxes for tiles
+   AllegroFlare::Random random(time(0));
    int num_vertexes = num_columns*num_rows*6;
    for (int v=0; v<num_vertexes; v+=6)
    {
+      std::cout << "A";
+      // << std::endl;
       int tile_num = v / 6;
-      int x1 = (tile_num % num_columns);
-      int y1 = (tile_num / num_columns);
-      int x2 = x1 + 1;
-      int y2 = y1 + 1;
+      float x1 = (tile_num % num_columns);
+      float y1 = (tile_num / num_columns);
+      float x2 = x1 + 1;
+      float y2 = y1 + 1;
+
+      //float x1 = random.get_random_float(0, 600); //(); //(tile_num % num_columns);
+      //float y1 = random.get_random_float(0, 600); //(tile_num / num_columns);
+      //float x2 = random.get_random_float(0, 600); //x1 + 1;
+      //float y2 = random.get_random_float(0, 600); //y1 + 1;
+
+      std::cout << "{" << x1 << "," << y1 << ";" << x1 << "," << y1 << "}";
 
       vertexes[v+0].x = x1;
       vertexes[v+0].y = y1;
@@ -277,6 +290,8 @@ void MeshWithNormals::place_vertexes_into_tile_mesh_shape()
       vertexes[v+5].x = x1;
       vertexes[v+5].y = y1;
    }
+
+   std::cout << std::endl;
 
    // "scale" the vertexes to tile_width and tile_height, and set other default values
    for (int v=0; v<num_vertexes; v++)
