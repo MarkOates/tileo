@@ -132,11 +132,9 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    atlas.duplicate_bitmap_and_load(tile_map_texture, 16, 16);
    Tileo::MeshWithNormals mesh_with_normals(25, 15, 16*3, 16*3, &atlas);
    mesh_with_normals.initialize();
-   //Tileo::Shaders::MeshWithNormals shader;
-   Tileo::Shaders::AllegroDefault shader;
+   Tileo::Shaders::MeshWithNormals shader;
    shader.initialize();
 
-   // HERE...
    int num_tiles_in_atlas = atlas.get_tile_index_size();
    for (int y=0; y<mesh_with_normals.get_num_rows(); y++)
       for (int x=0; x<mesh_with_normals.get_num_columns(); x++)
@@ -151,9 +149,8 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    ALLEGRO_BITMAP* texture = atlas.get_bitmap();
 
    shader.activate();
-   //shader.set_flat_color(ALLEGRO_COLOR{1, 0, 1, 1}, 0.3);
+   shader.set_flat_color(ALLEGRO_COLOR{1, 0, 1, 1}, 0.3);
 
-   // ...AND HERE:
    al_draw_prim(&vertexes[0], vertex_declaration, texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
 
    //al_draw_bitmap(texture, 1920/2, 1080/2, 0);
