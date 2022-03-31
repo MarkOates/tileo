@@ -145,7 +145,9 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
          int tile_num_to_set = (x + y * mesh_with_normals.get_num_columns());
          tile_num_to_set = tile_num_to_set % num_tiles_in_atlas;
          mesh_with_normals.set_tile(x, y, tile_num_to_set);
-         mesh_with_normals.set_normal_tile(x, y, tile_num_to_set);
+
+         int normal_tile_num_to_set = (-tile_num_to_set + 256*256) % num_tiles_in_atlas;
+         mesh_with_normals.set_normal_tile(x, y, normal_tile_num_to_set);
       }
 
    std::vector<TILEO_TILE_VERTEX> &vertexes = mesh_with_normals.get_vertexes_ref();
