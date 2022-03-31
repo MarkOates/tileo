@@ -129,7 +129,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    ALLEGRO_BITMAP* tile_map_texture = bitmap_bin["tiles_dungeon_v1.1.png"];
    Tileo::Atlas atlas;
    atlas.duplicate_bitmap_and_load(tile_map_texture, 16, 16);
-   Tileo::MeshWithNormals mesh_with_normals(25, 20, 16*4, 16*4, &atlas);
+   Tileo::MeshWithNormals mesh_with_normals(25, 15, 16*4.8, 16*4.5, &atlas);
    mesh_with_normals.initialize();
    Tileo::Shaders::MeshWithNormals shader;
    shader.initialize();
@@ -139,7 +139,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
       for (int x=0; x<mesh_with_normals.get_num_columns(); x++)
       {
          int tile_num_to_set = (x + y * mesh_with_normals.get_num_columns());
-         tile_num_to_set = tile_num_to_set % 32;
+         //tile_num_to_set = tile_num_to_set % 32;
          //int tile_num_to_set = 6;
          mesh_with_normals.set_tile(x, y, tile_num_to_set);
       }
@@ -152,14 +152,12 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    //shader.activate();
 
    // ...AND HERE:
-   //al_draw_prim(&vertexes[0], vertex_declaration, texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
-   al_draw_prim(&vertexes[0], vertex_declaration, texture, 0, 18*3, ALLEGRO_PRIM_TRIANGLE_LIST);
-   //al_draw_prim(&vertexes[0], vertex_declaration, texture, 0, vertexes.size(), ALLEGRO_PRIM_LINE_LIST);
+   al_draw_prim(&vertexes[0], vertex_declaration, texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
 
-   al_draw_bitmap(texture, 1920/2, 1080/2, 0);
+   //al_draw_bitmap(texture, 1920/2, 1080/2, 0);
 
    al_flip_display();
-   sleep(1);
+   sleep(2);
 
    mesh_with_normals.destroy();
    al_shutdown_image_addon();

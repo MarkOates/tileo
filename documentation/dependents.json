@@ -13,9 +13,6 @@
   "std/vector<TILEO_TILE_VERTEX>": [
     "Tileo/MeshWithNormals"
   ],
-  "AllegroFlare/Random": [
-    "Tileo/MeshWithNormals"
-  ],
   "AllegroFlare/Shader": [
     "Tileo/Shaders/Base"
   ],
