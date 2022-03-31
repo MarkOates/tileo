@@ -9,6 +9,7 @@
 #include <Tileo/MeshWithNormals.hpp>
 
 #include <AllegroFlare/BitmapBin.hpp>
+#include <Tileo/Shaders/AllegroDefault.hpp>
 
 class Tileo_MeshWithNormalsRenderingFixtureTest : public ::testing::Test
 {
@@ -131,7 +132,8 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    atlas.duplicate_bitmap_and_load(tile_map_texture, 16, 16);
    Tileo::MeshWithNormals mesh_with_normals(25, 15, 16*3, 16*3, &atlas);
    mesh_with_normals.initialize();
-   Tileo::Shaders::MeshWithNormals shader;
+   //Tileo::Shaders::MeshWithNormals shader;
+   Tileo::Shaders::AllegroDefault shader;
    shader.initialize();
 
    // HERE...
@@ -149,7 +151,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    ALLEGRO_BITMAP* texture = atlas.get_bitmap();
 
    shader.activate();
-   shader.set_flat_color(ALLEGRO_COLOR{1, 0, 1, 1}, 0.3);
+   //shader.set_flat_color(ALLEGRO_COLOR{1, 0, 1, 1}, 0.3);
 
    // ...AND HERE:
    al_draw_prim(&vertexes[0], vertex_declaration, texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
