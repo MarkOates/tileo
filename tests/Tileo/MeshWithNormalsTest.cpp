@@ -130,7 +130,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    Tileo::MeshWithNormals mesh_with_normals(25, 20, 16*4, 16*4, &atlas);
    mesh_with_normals.initialize();
 
-   // HERE:
+   // HERE...
    for (int y=0; y<mesh_with_normals.get_num_rows(); y++)
       for (int x=0; x<mesh_with_normals.get_num_columns(); x++)
       {
@@ -143,6 +143,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    ALLEGRO_VERTEX_DECL* vertex_declaration = mesh_with_normals.obtain_vertex_declaration();
    ALLEGRO_BITMAP* texture = atlas.get_bitmap();
 
+   // ...AND HERE:
    al_draw_prim(&vertexes[0], vertex_declaration, texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
 
    //al_draw_bitmap(texture, 0, 0, 0);
