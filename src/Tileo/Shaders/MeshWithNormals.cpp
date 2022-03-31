@@ -80,8 +80,8 @@ std::string MeshWithNormals::obtain_vertex_source()
        varying_color = al_color;
        if (al_use_tex_matrix)
        {
-         //vec4 uv = al_tex_matrix * vec4(al_texcoord, 0, 1);
-         //varying_texcoord = vec2(uv.x, uv.y);
+         vec4 uv = al_tex_matrix * vec4(al_texcoord, 0, 1);
+         varying_texcoord = vec2(uv.x, uv.y);
 
          // normals logic:
          vec4 normal_uv = al_tex_matrix * vec4(al_user_attr_0, 0, 1);
@@ -125,9 +125,9 @@ std::string MeshWithNormals::obtain_fragment_source()
      {
        vec4 c;
        if (al_use_tex)
-         //c = varying_color * texture2D(al_tex, varying_texcoord);
+         c = varying_color * texture2D(primary_texture, varying_texcoord); // <-- this is the base texture
          //c = varying_color * texture2D(primary_texture, varying_texcoord);
-         c = varying_color * texture2D(normal_texture, varying_normal_texcoord);
+         //c = varying_color * texture2D(normal_texture, varying_normal_texcoord); // <-- this is the normal texture
        else
          c = varying_color;
        if (!al_alpha_test || alpha_test_func(c.a, al_alpha_func, al_alpha_test_val))
