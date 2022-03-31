@@ -148,8 +148,8 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    ALLEGRO_VERTEX_DECL* vertex_declaration = mesh_with_normals.obtain_vertex_declaration();
    ALLEGRO_BITMAP* texture = atlas.get_bitmap();
 
-   //shader.set_flat_color(ALLEGRO_COLOR{0, 1, 1, 1});
-   //shader.activate();
+   shader.set_flat_color(ALLEGRO_COLOR{0, 1, 1, 1});
+   shader.activate();
 
    // ...AND HERE:
    al_draw_prim(&vertexes[0], vertex_declaration, texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);

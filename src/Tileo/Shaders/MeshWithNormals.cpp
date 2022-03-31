@@ -84,11 +84,6 @@ std::string MeshWithNormals::obtain_fragment_source()
         tmp.b = (tmp.b * inverse_tint_intensity + tint.b * tint_intensity) * tmp.a;
         tmp.a = tmp.a;
 
-        tmp.r = 1.0;
-        tmp.g = 1.0;
-        tmp.b = 0.0;
-        tmp.a = 1.0;
-
         gl_FragColor = tmp;
      }
    )DELIM";
