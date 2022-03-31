@@ -144,7 +144,7 @@ bool MeshWithNormals::set_tile(int tile_x, int tile_y, int tile_index_num)
 
    float u1, v1, u2, v2 = 0;
    if (!atlas->get_tile_uv(tile_index_num, &u1, &v1, &u2, &v2)) return false;
-   if (!set_tile_uv(tile_x, tile_y, u1/320.0, v1/384.0, u2/320.0, v2/384.0)) return false; // <- TODO: fix this scaling
+   if (!set_tile_uv(tile_x, tile_y, -u1/320.0, -v1/384.0, -u2/320.0, -v2/384.0)) return false; // <- TODO: fix this scaling
 
    return true;
 }

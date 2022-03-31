@@ -40,10 +40,10 @@ void MeshWithNormals::activate()
    Tileo::Shaders::Base::activate();
 }
 
-void MeshWithNormals::set_flat_color(ALLEGRO_COLOR flat_color)
+void MeshWithNormals::set_flat_color(ALLEGRO_COLOR flat_color, float intensity)
 {
    Shader::set_vec3("tint", flat_color.r, flat_color.g, flat_color.b);
-   Shader::set_float("tint_intensity", 1.0);
+   Shader::set_float("tint_intensity", intensity);
 }
 
 std::string MeshWithNormals::obtain_vertex_source()
