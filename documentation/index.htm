@@ -50,6 +50,7 @@ table td
 <h1>TOC</h1>
 <ul>
   <li><a href="#quintessence/Tileo/MeshWithNormals.q.yml">quintessence/Tileo/MeshWithNormals.q.yml</a></li>
+  <li><a href="#quintessence/Tileo/Shaders/AllegroDefault.q.yml">quintessence/Tileo/Shaders/AllegroDefault.q.yml</a></li>
   <li><a href="#quintessence/Tileo/Shaders/Base.q.yml">quintessence/Tileo/Shaders/Base.q.yml</a></li>
   <li><a href="#quintessence/Tileo/Shaders/MeshWithNormals.q.yml">quintessence/Tileo/Shaders/MeshWithNormals.q.yml</a></li>
   <li><a href="#quintessence/Tileo/TMJDataLoader.q.yml">quintessence/Tileo/TMJDataLoader.q.yml</a></li>
@@ -155,6 +156,39 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;std::vector&lt;TILEO_TILE_VERTEX&gt;&quot;, &quot;headers&quot;=&gt;[&quot;vector&quot;, &quot;Tileo/TileoTileVertex.hpp&quot;]}</td>
+</tr>
+    </table>
+  </div>
+</ul>
+<ul>
+  <div class="component">
+    <h3 id="quintessence/Tileo/Shaders/AllegroDefault.q.yml">quintessence/Tileo/Shaders/AllegroDefault.q.yml</h3>
+     <table>
+<tr>
+  <td class="property">initialized</td>
+  <td class="property">bool</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="method">initialize()</td>
+</tr>
+<tr>
+  <td class="method">activate()</td>
+</tr>
+<tr>
+  <td class="private_method">obtain_vertex_source()</td>
+</tr>
+<tr>
+  <td class="private_method">obtain_fragment_source()</td>
+</tr>
+    </table>
+     <table>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;Tileo::Shaders::Base&quot;, &quot;headers&quot;=&gt;[&quot;Tileo/Shaders/Base.hpp&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_COLOR&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro.h&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -505,14 +539,16 @@ table td
   "std/vector<TILEO_TILE_VERTEX>": [
     "Tileo/MeshWithNormals"
   ],
-  "AllegroFlare/Shader": [
-    "Tileo/Shaders/Base"
-  ],
   "Tileo/Shaders/Base": [
+    "Tileo/Shaders/AllegroDefault",
     "Tileo/Shaders/MeshWithNormals"
   ],
   "ALLEGRO_COLOR": [
+    "Tileo/Shaders/AllegroDefault",
     "Tileo/Shaders/MeshWithNormals"
+  ],
+  "AllegroFlare/Shader": [
+    "Tileo/Shaders/Base"
   ],
   "Blast/FileExistenceChecker": [
     "Tileo/TMJDataLoader"

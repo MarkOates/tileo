@@ -13,14 +13,16 @@
   "std/vector<TILEO_TILE_VERTEX>": [
     "Tileo/MeshWithNormals"
   ],
-  "AllegroFlare/Shader": [
-    "Tileo/Shaders/Base"
-  ],
   "Tileo/Shaders/Base": [
+    "Tileo/Shaders/AllegroDefault",
     "Tileo/Shaders/MeshWithNormals"
   ],
   "ALLEGRO_COLOR": [
+    "Tileo/Shaders/AllegroDefault",
     "Tileo/Shaders/MeshWithNormals"
+  ],
+  "AllegroFlare/Shader": [
+    "Tileo/Shaders/Base"
   ],
   "Blast/FileExistenceChecker": [
     "Tileo/TMJDataLoader"

@@ -131,22 +131,6 @@ TEST_F(Tileo_Shaders_MeshWithNormalsTest, when_active__renders_the_image_with_th
    std::string tmp_path = "/Users/markoates/Repos/hexagon/tmp/";
    std::string output_image_full_filename = tmp_path + "when_activated__renders_bitmaps_with_a_solid_tinted_overlay.png";
    ASSERT_EQ(true, al_save_bitmap(output_image_full_filename.c_str(), al_get_backbuffer(current_display)));
-
-
-   std::string vertex_source = al_get_default_shader_source(ALLEGRO_SHADER_AUTO, ALLEGRO_VERTEX_SHADER);
-   std::string pixel_source = al_get_default_shader_source(ALLEGRO_SHADER_AUTO, ALLEGRO_PIXEL_SHADER);
-
-
-ofstream myfile;
-  myfile.open ("examplevertex.glsl");
-  myfile << vertex_source;
-  myfile.close();
-
-   ofstream myfile2;
-  myfile2.open ("example_pixel.glsl");
-  myfile2 << pixel_source;
-  myfile2.close();
-
 }
 
 
