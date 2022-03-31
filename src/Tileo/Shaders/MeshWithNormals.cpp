@@ -89,15 +89,7 @@ std::string MeshWithNormals::obtain_fragment_source()
      uniform vec3 tint;
 
      bool alpha_test_func(float x, int op, float compare);
-
-     void alter_by_tint(inout vec4 color)
-     {
-        float inverse_tint_intensity = 1.0 - tint_intensity;
-        color.r = (color.r * inverse_tint_intensity + tint.r * tint_intensity) * color.a;
-        color.g = (color.g * inverse_tint_intensity + tint.g * tint_intensity) * color.a;
-        color.b = (color.b * inverse_tint_intensity + tint.b * tint_intensity) * color.a;
-        color.a = color.a;
-     }
+     void alter_by_tint(inout vec4 color);
 
      void main()
      {
@@ -124,6 +116,16 @@ std::string MeshWithNormals::obtain_fragment_source()
        else if (op == 7) return x >= compare;
        return false;
      }
+
+     void alter_by_tint(inout vec4 color)
+     {
+        float inverse_tint_intensity = 1.0 - tint_intensity;
+        color.r = (color.r * inverse_tint_intensity + tint.r * tint_intensity) * color.a;
+        color.g = (color.g * inverse_tint_intensity + tint.g * tint_intensity) * color.a;
+        color.b = (color.b * inverse_tint_intensity + tint.b * tint_intensity) * color.a;
+        color.a = color.a;
+     }
+
    )DELIM";
    return source;
 }
