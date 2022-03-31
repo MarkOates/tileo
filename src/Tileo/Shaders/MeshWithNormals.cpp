@@ -49,7 +49,7 @@ void MeshWithNormals::set_flat_color(ALLEGRO_COLOR flat_color, float intensity)
 
 void MeshWithNormals::set_normal_texture(ALLEGRO_BITMAP* normal_texture_bitmap)
 {
-   Shader::set_sampler("normal_texture", normal_texture_bitmap, 2);
+   Shader::set_sampler("normal_texture", normal_texture_bitmap, 1);
    return;
 }
 
@@ -118,8 +118,8 @@ std::string MeshWithNormals::obtain_fragment_source()
      {
        vec4 c;
        if (al_use_tex)
-         c = varying_color * texture2D(al_tex, varying_texcoord);
-         //c = varying_color * texture2D(normal_texture, varying_texcoord);
+         //c = varying_color * texture2D(al_tex, varying_texcoord);
+         c = varying_color * texture2D(normal_texture, varying_texcoord);
          //c = varying_color * texture2D(normal_texture, varying_normal_texcoord);
        else
          c = varying_color;

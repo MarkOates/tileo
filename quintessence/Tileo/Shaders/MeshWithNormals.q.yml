@@ -51,7 +51,7 @@ functions:
         type: ALLEGRO_BITMAP*
         default_argument: nullptr
     body: |
-      Shader::set_sampler("normal_texture", normal_texture_bitmap, 2);
+      Shader::set_sampler("normal_texture", normal_texture_bitmap, 1);
       return;
 
 
@@ -126,8 +126,8 @@ functions:
         {
           vec4 c;
           if (al_use_tex)
-            c = varying_color * texture2D(al_tex, varying_texcoord);
-            //c = varying_color * texture2D(normal_texture, varying_texcoord);
+            //c = varying_color * texture2D(al_tex, varying_texcoord);
+            c = varying_color * texture2D(normal_texture, varying_texcoord);
             //c = varying_color * texture2D(normal_texture, varying_normal_texcoord);
           else
             c = varying_color;
