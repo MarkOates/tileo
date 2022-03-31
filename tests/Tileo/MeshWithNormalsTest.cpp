@@ -135,12 +135,12 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    shader.initialize();
 
    // HERE...
+   int num_tiles_in_atlas = atlas.get_tile_index_size();
    for (int y=0; y<mesh_with_normals.get_num_rows(); y++)
       for (int x=0; x<mesh_with_normals.get_num_columns(); x++)
       {
          int tile_num_to_set = (x + y * mesh_with_normals.get_num_columns());
-         //tile_num_to_set = tile_num_to_set % 32;
-         //int tile_num_to_set = 6;
+         tile_num_to_set = tile_num_to_set % num_tiles_in_atlas;
          mesh_with_normals.set_tile(x, y, tile_num_to_set);
       }
 
