@@ -1,0 +1,101 @@
+parent_classes:
+
+
+  - class: Tileo::Shaders::Base
+    scope: private
+    init_with: "obtain_vertex_source(), obtain_fragment_source()"
+
+
+properties:
+
+
+  - name: initialized
+    type: bool
+    init_with: false
+
+
+functions:
+
+
+  - name: initialize
+    type: void
+    body: |
+      if (!initialized) Tileo::Shaders::Base::initialize();
+      initialized = true;
+
+
+  - name: activate
+    type: void
+    guards: [ initialized ]
+    body: |
+      Tileo::Shaders::Base::activate();
+
+
+  - name: set_flat_color
+    parameters:
+      - name: flat_color
+        type: ALLEGRO_COLOR
+        default_argument: "{}"
+    body: |
+      Shader:set_vec3("tint", flat_color.r, flat_color.g, flat_color.b);
+      Shader::set_float("tint_intensity", 1.0);
+
+
+  - name: obtain_vertex_source
+    type: std::string
+    static: true
+    private: true
+    body: |
+      static const std::string source = R"DELIM(
+        attribute vec4 al_pos;
+        attribute vec4 al_color;
+        attribute vec2 al_texcoord;
+        uniform mat4 al_projview_matrix;
+        varying vec4 varying_color;
+        varying vec2 varying_texcoord;
+
+        void main()
+        {
+           varying_color = al_color;
+           varying_texcoord = al_texcoord;
+           gl_Position = al_projview_matrix * al_pos;
+        }
+      )DELIM";
+      return source;
+
+
+  - name: obtain_fragment_source
+    type: std::string
+    static: true
+    private: true
+    body: |
+      static const std::string source = R"DELIM(
+        uniform sampler2D al_tex;
+        uniform float tint_intensity;
+        uniform vec3 tint;
+        varying vec4 varying_color;
+        varying vec2 varying_texcoord;
+
+        void main()
+        {
+           vec4 tmp = texture2D(al_tex, varying_texcoord);
+           float inverse_tint_intensity = 1.0 - tint_intensity;
+           tmp.r = (tmp.r * inverse_tint_intensity + tint.r * tint_intensity) * tmp.a;
+           tmp.g = (tmp.g * inverse_tint_intensity + tint.g * tint_intensity) * tmp.a;
+           tmp.b = (tmp.b * inverse_tint_intensity + tint.b * tint_intensity) * tmp.a;
+           tmp.a = tmp.a;
+           gl_FragColor = tmp;
+        }
+      )DELIM";
+      return source;
+
+
+dependencies:
+
+
+  - symbol: Tileo::Shaders::Base
+    headers: [ Tileo/Shaders/Base.hpp ]
+  - symbol: ALLEGRO_COLOR
+    headers: [ allegro5/allegro.h ]
+
+
