@@ -146,7 +146,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    // ...AND HERE:
    al_draw_prim(&vertexes[0], vertex_declaration, texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
 
-   //al_draw_bitmap(texture, 0, 0, 0);
+   al_draw_bitmap(texture, 1920/2, 1080/2, 0);
 
    al_flip_display();
    sleep(1);
