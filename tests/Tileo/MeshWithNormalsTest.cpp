@@ -147,11 +147,14 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    std::vector<TILEO_TILE_VERTEX> &vertexes = mesh_with_normals.get_vertexes_ref();
    ALLEGRO_VERTEX_DECL* vertex_declaration = mesh_with_normals.obtain_vertex_declaration();
    ALLEGRO_BITMAP* texture = atlas.get_bitmap();
+   //ALLEGRO_BITMAP* texture = nullptr;
 
    shader.activate();
    shader.set_flat_color(ALLEGRO_COLOR{1, 0, 1, 1}, 0.3);
+   shader.set_normal_texture(atlas.get_bitmap());
 
    al_draw_prim(&vertexes[0], vertex_declaration, texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+   //al_draw_prim(&vertexes[0], vertex_declaration, 0, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
 
    //al_draw_bitmap(texture, 1920/2, 1080/2, 0);
 

@@ -235,6 +235,9 @@ table td
   <td class="method">set_flat_color(2)</td>
 </tr>
 <tr>
+  <td class="method">set_normal_texture(1)</td>
+</tr>
+<tr>
   <td class="private_method">obtain_vertex_source()</td>
 </tr>
 <tr>
@@ -247,6 +250,9 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_COLOR&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_BITMAP*&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro.h&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -550,6 +556,10 @@ table td
   "AllegroFlare/Shader": [
     "Tileo/Shaders/Base"
   ],
+  "ALLEGRO_BITMAP": [
+    "Tileo/Shaders/MeshWithNormals",
+    "Tileo/TileIndexInfo"
+  ],
   "Blast/FileExistenceChecker": [
     "Tileo/TMJDataLoader"
   ],
@@ -583,9 +593,6 @@ table td
   ],
   "Tileo/TMJDataLoader": [
     "Tileo/TMJMeshLoader"
-  ],
-  "ALLEGRO_BITMAP": [
-    "Tileo/TileIndexInfo"
   ],
   "al_is_system_installed": [
     "Tileo/TileoTileVertexAllegroVertexDeclaration"

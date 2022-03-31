@@ -24,6 +24,10 @@
   "AllegroFlare/Shader": [
     "Tileo/Shaders/Base"
   ],
+  "ALLEGRO_BITMAP": [
+    "Tileo/Shaders/MeshWithNormals",
+    "Tileo/TileIndexInfo"
+  ],
   "Blast/FileExistenceChecker": [
     "Tileo/TMJDataLoader"
   ],
@@ -57,9 +61,6 @@
   ],
   "Tileo/TMJDataLoader": [
     "Tileo/TMJMeshLoader"
-  ],
-  "ALLEGRO_BITMAP": [
-    "Tileo/TileIndexInfo"
   ],
   "al_is_system_installed": [
     "Tileo/TileoTileVertexAllegroVertexDeclaration"
