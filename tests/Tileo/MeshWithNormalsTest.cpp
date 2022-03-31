@@ -17,7 +17,7 @@ private:
 
 public:
    Tileo_MeshWithNormalsRenderingFixtureTest()
-     : display(nullptr)
+      : display(nullptr)
    {}
 
    virtual void SetUp() override
@@ -26,7 +26,7 @@ public:
       ASSERT_EQ(true, al_init());
       al_init_primitives_addon();
       al_set_new_display_flags(ALLEGRO_PROGRAMMABLE_PIPELINE | ALLEGRO_OPENGL);
-      ALLEGRO_DISPLAY *display = al_create_display(1920, 1080);
+      display = al_create_display(1920, 1080);
    }
 
    virtual void TearDown() override
@@ -122,21 +122,35 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, vertexes_will_render_as_expect
 TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_render_as_expected)
 {
    al_init_image_addon();
-   Tileo::MeshWithNormals mesh_with_normals(6, 4, 16, 16);
-   mesh_with_normals.initialize();
    AllegroFlare::BitmapBin bitmap_bin;
    bitmap_bin.set_full_path("/Users/markoates/Repos/tileo/bin/programs/data/bitmaps/");
+   ALLEGRO_BITMAP* tile_map_texture = bitmap_bin["tiles_dungeon_v1.1.png"];
+   Tileo::Atlas atlas;
+   atlas.duplicate_bitmap_and_load(tile_map_texture, 16, 16);
+   //Tileo::MeshWithNormals mesh_with_normals(6, 4, 16, 16, &atlas);
+   Tileo::MeshWithNormals mesh_with_normals(7, 9, 16, 16, &atlas);
+   mesh_with_normals.initialize();
 
    // HERE:
-   //set_tile(...)
+   for (int y=0; y<mesh_with_normals.get_num_rows(); y++)
+      for (int x=0; x<mesh_with_normals.get_num_columns(); x++)
+      {
+         int tile_num_to_set = (x + y * mesh_with_normals.get_num_columns());
+         tile_num_to_set = tile_num_to_set % 32;
+         mesh_with_normals.set_tile(x, y, tile_num_to_set);
+      }
 
-   std::vector<TILEO_TILE_VERTEX> vertexes = mesh_with_normals.get_vertexes_ref();
+   std::vector<TILEO_TILE_VERTEX> &vertexes = mesh_with_normals.get_vertexes_ref();
    ALLEGRO_VERTEX_DECL* vertex_declaration = mesh_with_normals.obtain_vertex_declaration();
-   ALLEGRO_BITMAP* texture = bitmap_bin["tiles_dungeon_v1.1.png"];
+   //ALLEGRO_BITMAP* texture = atlas.get_bitmap();
+   ALLEGRO_BITMAP* texture = nullptr; //atlas.get_bitmap();
 
    al_draw_prim(&vertexes, vertex_declaration, texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
 
-   sleep(2);
+   //al_draw_bitmap(texture, 0, 0, 0);
+
+   al_flip_display();
+   sleep(1);
 
    mesh_with_normals.destroy();
    al_shutdown_image_addon();

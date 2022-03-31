@@ -30,6 +30,8 @@ namespace Tileo
       MeshWithNormals(int num_columns=0, int num_rows=0, float tile_width=1.0f, float tile_height=1.0f, Tileo::Atlas* atlas=nullptr, Tileo::Atlas* normal_atlas=nullptr);
       ~MeshWithNormals();
 
+      int get_num_columns();
+      int get_num_rows();
       std::vector<TILEO_TILE_VERTEX> &get_vertexes_ref();
       void initialize();
       void destroy();

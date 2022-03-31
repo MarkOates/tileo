@@ -41,6 +41,18 @@ MeshWithNormals::~MeshWithNormals()
 }
 
 
+int MeshWithNormals::get_num_columns()
+{
+   return num_columns;
+}
+
+
+int MeshWithNormals::get_num_rows()
+{
+   return num_rows;
+}
+
+
 std::vector<TILEO_TILE_VERTEX> &MeshWithNormals::get_vertexes_ref()
 {
    return vertexes;
@@ -104,6 +116,7 @@ void MeshWithNormals::resize(int num_columns, int num_rows)
    this->num_rows = num_rows;
 
    clear_and_reserve();
+
    place_vertexes_into_tile_mesh_shape();
 
    return;
@@ -245,7 +258,7 @@ void MeshWithNormals::place_vertexes_into_tile_mesh_shape()
    int num_vertexes = num_columns*num_rows*6;
    for (int v=0; v<num_vertexes; v+=6)
    {
-      long tile_num = v / 6;
+      int tile_num = v / 6;
       int x1 = (tile_num % num_columns);
       int y1 = (tile_num / num_columns);
       int x2 = x1 + 1;
