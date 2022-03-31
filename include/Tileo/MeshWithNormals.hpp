@@ -40,7 +40,7 @@ namespace Tileo
       bool set_tile(int tile_x=0, int tile_y=0, int tile_index_num=0);
       bool set_normal_tile(int tile_x=0, int tile_y=0, int tile_index_num=0);
       bool set_tile_uv(int tile_x=0, int tile_y=0, float u1=0.0f, float v1=0.0f, float u2=0.0f, float v2=0.0f);
-      bool set_normal_tile_uv(int tile_x=0, int tile_y=0, float u1=0.0f, int v1=0.0f, float u2=0.0f, int v2=0.0f);
+      bool set_normal_tile_uv(int tile_x=0, int tile_y=0, float u1=0.0f, float v1=0.0f, float u2=0.0f, float v2=0.0f);
       void place_vertexes_into_tile_mesh_shape();
       void clear_and_reserve();
    };

@@ -128,10 +128,12 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    AllegroFlare::BitmapBin bitmap_bin;
    bitmap_bin.set_full_path("/Users/markoates/Repos/tileo/bin/programs/data/bitmaps/");
    ALLEGRO_BITMAP* tile_map_texture = bitmap_bin["tiles_dungeon_v1.1.png"];
-   ALLEGRO_BITMAP* irrelevant_test_texture = bitmap_bin["test_texture.png"];
+   ALLEGRO_BITMAP* irrelevant_texture = bitmap_bin["test_texture.png"];
    Tileo::Atlas atlas;
    atlas.duplicate_bitmap_and_load(tile_map_texture, 16, 16);
-   Tileo::MeshWithNormals mesh_with_normals(25, 15, 16*4.8, 16*4.5, &atlas);
+   Tileo::Atlas normal_atlas;
+   normal_atlas.duplicate_bitmap_and_load(tile_map_texture, 16, 16);
+   Tileo::MeshWithNormals mesh_with_normals(25, 15, 16*4.8, 16*4.5, &atlas, &normal_atlas);
    mesh_with_normals.initialize();
    Tileo::Shaders::MeshWithNormals shader;
    shader.initialize();
@@ -143,6 +145,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
          int tile_num_to_set = (x + y * mesh_with_normals.get_num_columns());
          tile_num_to_set = tile_num_to_set % num_tiles_in_atlas;
          mesh_with_normals.set_tile(x, y, tile_num_to_set);
+         mesh_with_normals.set_normal_tile(x, y, tile_num_to_set);
       }
 
    std::vector<TILEO_TILE_VERTEX> &vertexes = mesh_with_normals.get_vertexes_ref();
@@ -152,10 +155,10 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
 
    shader.activate();
    shader.set_flat_color(ALLEGRO_COLOR{1, 0, 1, 1}, 0.3);
-   shader.set_normal_texture(atlas.get_bitmap());
+   shader.set_primary_texture(atlas.get_bitmap());
+   shader.set_normal_texture(normal_atlas.get_bitmap());
 
-   al_draw_prim(&vertexes[0], vertex_declaration, irrelevant_test_texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
-   //al_draw_prim(&vertexes[0], vertex_declaration, 0, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+   al_draw_prim(&vertexes[0], vertex_declaration, irrelevant_texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
 
    //al_draw_bitmap(texture, 1920/2, 1080/2, 0);
 

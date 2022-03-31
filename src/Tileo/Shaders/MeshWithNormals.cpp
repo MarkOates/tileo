@@ -47,9 +47,15 @@ void MeshWithNormals::set_flat_color(ALLEGRO_COLOR flat_color, float intensity)
    return;
 }
 
+void MeshWithNormals::set_primary_texture(ALLEGRO_BITMAP* primary_texture_bitmap)
+{
+   Shader::set_sampler("primary_texture", primary_texture_bitmap, 1);
+   return;
+}
+
 void MeshWithNormals::set_normal_texture(ALLEGRO_BITMAP* normal_texture_bitmap)
 {
-   Shader::set_sampler("normal_texture", normal_texture_bitmap, 1);
+   Shader::set_sampler("normal_texture", normal_texture_bitmap, 2);
    return;
 }
 
@@ -66,20 +72,20 @@ std::string MeshWithNormals::obtain_vertex_source()
      varying vec2 varying_texcoord;
 
      // normals logic:
-     //attribute vec2 normal_texcoord; // analagous to al_texcoord
-     //varying vec2 varying_normal_texcoord; // analagous to varying_texcoord
+     attribute vec2 al_user_attr_0; // this is the normal_u/normal_v
+     varying vec2 varying_normal_texcoord; // analagous to varying_texcoord
 
      void main()
      {
        varying_color = al_color;
        if (al_use_tex_matrix)
        {
-         vec4 uv = al_tex_matrix * vec4(al_texcoord, 0, 1);
-         varying_texcoord = vec2(uv.x, uv.y);
+         //vec4 uv = al_tex_matrix * vec4(al_texcoord, 0, 1);
+         //varying_texcoord = vec2(uv.x, uv.y);
 
          // normals logic:
-         //vec4 normal_uv = al_tex_matrix * vec4(normal_texcoord, 0, 1);
-         //varying_normal_texcoord = vec2(normal_uv.x, normal_uv.y);
+         vec4 normal_uv = al_tex_matrix * vec4(al_user_attr_0, 0, 1);
+         varying_normal_texcoord = vec2(normal_uv.x, normal_uv.y);
        }
        else
        {
@@ -108,6 +114,7 @@ std::string MeshWithNormals::obtain_fragment_source()
      uniform vec3 tint;
 
      // normals logic:
+     uniform sampler2D primary_texture; // analagous to al_tex
      uniform sampler2D normal_texture; // analagous to al_tex
      varying vec2 varying_normal_texcoord; // analagous to varying_texcoord
 
@@ -119,8 +126,8 @@ std::string MeshWithNormals::obtain_fragment_source()
        vec4 c;
        if (al_use_tex)
          //c = varying_color * texture2D(al_tex, varying_texcoord);
-         c = varying_color * texture2D(normal_texture, varying_texcoord);
-         //c = varying_color * texture2D(normal_texture, varying_normal_texcoord);
+         //c = varying_color * texture2D(primary_texture, varying_texcoord);
+         c = varying_color * texture2D(normal_texture, varying_normal_texcoord);
        else
          c = varying_color;
        if (!al_alpha_test || alpha_test_func(c.a, al_alpha_func, al_alpha_test_val))
