@@ -9,6 +9,7 @@
 #include <Tileo/MeshWithNormals.hpp>
 
 #include <AllegroFlare/BitmapBin.hpp>
+#include <AllegroFlare/Random.hpp>
 #include <Tileo/Shaders/AllegroDefault.hpp>
 
 class Tileo_MeshWithNormalsRenderingFixtureTest : public ::testing::Test
@@ -140,18 +141,25 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    Tileo::Shaders::MeshWithNormals shader;
    shader.initialize();
 
+   std::vector<std::pair<int, int>> tile_and_normal_tile_pairs = { { 2, 2 }, { 18, 3 }, { 19, 0 } };
+
    int num_tiles_in_atlas = atlas.get_tile_index_size();
    int num_tiles_in_normal_atlas = normal_atlas.get_tile_index_size();
+   AllegroFlare::Random random(time(0));
    for (int y=0; y<mesh_with_normals.get_num_rows(); y++)
       for (int x=0; x<mesh_with_normals.get_num_columns(); x++)
       {
-         int tile_num_to_set = (x + y * mesh_with_normals.get_num_columns());
-         tile_num_to_set = tile_num_to_set % num_tiles_in_atlas;
-         mesh_with_normals.set_tile(x, y, tile_num_to_set);
+         //int pair_to_pick = (x + y * mesh_with_normals.get_num_columns()) % tile_and_normal_tile_pairs.size();
+         int pair_to_pick = random.get_random_int(0, (tile_and_normal_tile_pairs.size()-1));
+         //int tile_num_to_set = (x + y * mesh_with_normals.get_num_columns());
+         //tile_num_to_set = tile_num_to_set % num_tiles_in_atlas;
+         int tile_id = tile_and_normal_tile_pairs[pair_to_pick].first;
+         mesh_with_normals.set_tile(x, y, tile_id); //tile_num_to_set);
 
-         int normal_tile_num_to_set = tile_num_to_set % (num_tiles_in_normal_atlas / 3);
+         //int normal_tile_num_to_set = tile_num_to_set % (num_tiles_in_normal_atlas / 3);
          //normal_tile_num_to_set = (-tile_num_to_set + 256*256) % num_tiles_in_atlas;
-         mesh_with_normals.set_normal_tile(x, y, normal_tile_num_to_set);
+         int normal_tile_id = tile_and_normal_tile_pairs[pair_to_pick].second;
+         mesh_with_normals.set_normal_tile(x, y, normal_tile_id); //normal_tile_num_to_set);
       }
 
    std::vector<TILEO_TILE_VERTEX> &vertexes = mesh_with_normals.get_vertexes_ref();
@@ -159,7 +167,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    ALLEGRO_BITMAP* texture = atlas.get_bitmap();
    //ALLEGRO_BITMAP* texture = nullptr;
 
-   int passes = 60*2;
+   int passes = 60*15;
    for (int i=0; i<passes; i++)
    {
       al_clear_to_color(ALLEGRO_COLOR{0, 0, 0, 0});
@@ -169,6 +177,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
       shader.set_primary_texture(atlas.get_bitmap());
       shader.set_normal_texture(normal_atlas.get_bitmap());
       shader.set_light_angle_of_incidence((float)(i)/passes);
+      shader.set_light_spread(1);
 
       al_draw_prim(&vertexes[0], vertex_declaration, irrelevant_texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
 

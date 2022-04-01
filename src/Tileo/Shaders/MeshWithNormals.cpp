@@ -53,6 +53,12 @@ void MeshWithNormals::set_light_angle_of_incidence(float light_angle_of_incidenc
    return;
 }
 
+void MeshWithNormals::set_light_spread(int light_spread)
+{
+   Shader::set_int("light_spread", light_spread);
+   return;
+}
+
 void MeshWithNormals::set_primary_texture(ALLEGRO_BITMAP* primary_texture_bitmap)
 {
    Shader::set_sampler("primary_texture", primary_texture_bitmap, 1);
@@ -121,6 +127,7 @@ std::string MeshWithNormals::obtain_fragment_source()
 
      // lights logic:
      uniform float light_angle_of_incidence;
+     uniform int light_spread;
 
      // normals logic:
      uniform sampler2D primary_texture; // analagous to al_tex
@@ -182,11 +189,15 @@ std::string MeshWithNormals::obtain_fragment_source()
 
      void alter_by_normal_texture_color(inout vec4 color, in vec4 normal_color)
      {
+        //int spread = 1;
         int light_direction_y = int(floor(light_angle_of_incidence * 8.0 + 0.5));
         int angle_to_light_y = int(floor(normal_color.g * 8.0 + 0.5));
-        bool light_modified = (light_direction_y == angle_to_light_y);
+        bool in_shadow =
+          (abs(float(light_direction_y) - float(angle_to_light_y)) > float(4));
+        bool in_light =
+          (abs(float(light_direction_y) - float(angle_to_light_y)) < max(1.0, float(light_spread * 2)));
 
-        if (!light_modified)
+        if (in_shadow)
         {
            // darken
            color.r = color.r *= 0.8; //normal_color.r; //inverse_tint_intensity + tint.r * tint_intensity) * color.a;
@@ -194,15 +205,16 @@ std::string MeshWithNormals::obtain_fragment_source()
            color.b = color.b *= 0.8; //normal_color.b; //inverse_tint_intensity + tint.b * tint_intensity) * color.a;
            color.a = color.a *= 0.8;
         }
-        else
+
+        if (in_light)
         {
-           return;
+           //return;
 
            // brighten
-           color.r = color.r += 0.5; //normal_color.r; //inverse_tint_intensity + tint.r * tint_intensity) * color.a;
-           color.g = color.g += 0.5; //normal_color.g; //inverse_tint_intensity + tint.g * tint_intensity) * color.a;
-           color.b = color.b += 0.5; //normal_color.b; //inverse_tint_intensity + tint.b * tint_intensity) * color.a;
-           color.a = color.a += 0.5;
+           color.r = color.r += 0.2; //normal_color.r; //inverse_tint_intensity + tint.r * tint_intensity) * color.a;
+           color.g = color.g += 0.2; //normal_color.g; //inverse_tint_intensity + tint.g * tint_intensity) * color.a;
+           color.b = color.b += 0.2; //normal_color.b; //inverse_tint_intensity + tint.b * tint_intensity) * color.a;
+           color.a = color.a += 0.2;
         }
      }
 
