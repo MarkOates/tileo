@@ -235,7 +235,7 @@ table td
   <td class="method">set_flat_color(2)</td>
 </tr>
 <tr>
-  <td class="method">set_light_angle_of_incidence(1)</td>
+  <td class="method">set_light_position(1)</td>
 </tr>
 <tr>
   <td class="method">set_light_spread(1)</td>
@@ -262,6 +262,9 @@ table td
 </tr>
 <tr>
   <td class="dependency">{&quot;symbol&quot;=&gt;&quot;ALLEGRO_BITMAP*&quot;, &quot;headers&quot;=&gt;[&quot;allegro5/allegro.h&quot;]}</td>
+</tr>
+<tr>
+  <td class="dependency">{&quot;symbol&quot;=&gt;&quot;AllegroFlare::vec2d&quot;, &quot;headers&quot;=&gt;[&quot;AllegroFlare/Vec2D.hpp&quot;]}</td>
 </tr>
     </table>
   </div>
@@ -568,6 +571,9 @@ table td
   "ALLEGRO_BITMAP": [
     "Tileo/Shaders/MeshWithNormals",
     "Tileo/TileIndexInfo"
+  ],
+  "AllegroFlare/vec2d": [
+    "Tileo/Shaders/MeshWithNormals"
   ],
   "Blast/FileExistenceChecker": [
     "Tileo/TMJDataLoader"

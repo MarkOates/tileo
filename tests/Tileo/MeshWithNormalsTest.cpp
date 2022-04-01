@@ -141,7 +141,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    Tileo::Shaders::MeshWithNormals shader;
    shader.initialize();
 
-   std::vector<std::pair<int, int>> tile_and_normal_tile_pairs = { { 2, 2 }, { 18, 3 }, { 19, 0 } };
+   std::vector<std::pair<int, int>> tile_and_normal_tile_pairs = { { 2, 2 }, { 18, 3 }, { 19, 0 }, { 12, 5 }, { 17, 6 } };
 
    int num_tiles_in_atlas = atlas.get_tile_index_size();
    int num_tiles_in_normal_atlas = normal_atlas.get_tile_index_size();
@@ -176,8 +176,8 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
       shader.set_flat_color(ALLEGRO_COLOR{1, 0, 1, 1}, 0.3);
       shader.set_primary_texture(atlas.get_bitmap());
       shader.set_normal_texture(normal_atlas.get_bitmap());
-      shader.set_light_angle_of_incidence((float)(i)/passes);
-      shader.set_light_spread(1);
+      shader.set_light_position({0.5, (float)(i)/passes});
+      shader.set_light_spread(0);
 
       al_draw_prim(&vertexes[0], vertex_declaration, irrelevant_texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
 

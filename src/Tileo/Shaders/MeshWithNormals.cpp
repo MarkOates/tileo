@@ -47,9 +47,9 @@ void MeshWithNormals::set_flat_color(ALLEGRO_COLOR flat_color, float intensity)
    return;
 }
 
-void MeshWithNormals::set_light_angle_of_incidence(float light_angle_of_incidence)
+void MeshWithNormals::set_light_position(AllegroFlare::vec2d light_position)
 {
-   Shader::set_float("light_angle_of_incidence", light_angle_of_incidence);
+   Shader::set_vec2("light_position", light_position.x, light_position.y);
    return;
 }
 
@@ -126,7 +126,7 @@ std::string MeshWithNormals::obtain_fragment_source()
      uniform vec3 tint;
 
      // lights logic:
-     uniform float light_angle_of_incidence;
+     uniform vec2 light_position;
      uniform int light_spread;
 
      // normals logic:
@@ -190,7 +190,7 @@ std::string MeshWithNormals::obtain_fragment_source()
      void alter_by_normal_texture_color(inout vec4 color, in vec4 normal_color)
      {
         //int spread = 1;
-        int light_direction_y = int(floor(light_angle_of_incidence * 8.0 + 0.5));
+        int light_direction_y = int(floor(light_position.y * 8.0 + 0.5));
         int angle_to_light_y = int(floor(normal_color.g * 8.0 + 0.5));
         bool in_shadow =
           (abs(float(light_direction_y) - float(angle_to_light_y)) > float(4));
@@ -208,13 +208,19 @@ std::string MeshWithNormals::obtain_fragment_source()
 
         if (in_light)
         {
-           //return;
-
+           return;
            // brighten
            color.r = color.r += 0.2; //normal_color.r; //inverse_tint_intensity + tint.r * tint_intensity) * color.a;
            color.g = color.g += 0.2; //normal_color.g; //inverse_tint_intensity + tint.g * tint_intensity) * color.a;
            color.b = color.b += 0.2; //normal_color.b; //inverse_tint_intensity + tint.b * tint_intensity) * color.a;
            color.a = color.a += 0.2;
+        }
+        else
+        {
+           color.r = color.r *= 0.8; //normal_color.r; //inverse_tint_intensity + tint.r * tint_intensity) * color.a;
+           color.g = color.g *= 0.8; //normal_color.g; //inverse_tint_intensity + tint.g * tint_intensity) * color.a;
+           color.b = color.b *= 0.8; //normal_color.b; //inverse_tint_intensity + tint.b * tint_intensity) * color.a;
+           color.a = color.a *= 0.8;
         }
      }
 

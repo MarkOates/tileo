@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include <AllegroFlare/Vec2D.hpp>
 #include <Tileo/Shaders/Base.hpp>
 #include <allegro5/allegro.h>
 #include <string>
@@ -22,7 +23,7 @@ namespace Tileo
          void initialize();
          void activate();
          void set_flat_color(ALLEGRO_COLOR flat_color={}, float intensity=1.0f);
-         void set_light_angle_of_incidence(float light_angle_of_incidence=0.0f);
+         void set_light_position(AllegroFlare::vec2d light_position=0.0f);
          void set_light_spread(int light_spread=0);
          void set_primary_texture(ALLEGRO_BITMAP* primary_texture_bitmap=nullptr);
          void set_normal_texture(ALLEGRO_BITMAP* normal_texture_bitmap=nullptr);
