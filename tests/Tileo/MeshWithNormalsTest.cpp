@@ -127,7 +127,8 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    al_init_image_addon();
    AllegroFlare::BitmapBin bitmap_bin;
    bitmap_bin.set_full_path("/Users/markoates/Repos/tileo/bin/programs/data/bitmaps/");
-   ALLEGRO_BITMAP* tile_map_texture = bitmap_bin["tiles_dungeon_v1.1.png"];
+   ALLEGRO_BITMAP* tile_map_texture = bitmap_bin["even-illumination-01.png"];
+   //ALLEGRO_BITMAP* tile_map_texture = bitmap_bin["tiles_dungeon_v1.1.png"];
    ALLEGRO_BITMAP* irrelevant_texture = bitmap_bin["test_texture.png"];
    ALLEGRO_BITMAP* normal_map_texture = bitmap_bin["normal-tileset-01.png"];
    Tileo::Atlas atlas;
@@ -148,7 +149,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
          tile_num_to_set = tile_num_to_set % num_tiles_in_atlas;
          mesh_with_normals.set_tile(x, y, tile_num_to_set);
 
-         int normal_tile_num_to_set = tile_num_to_set % num_tiles_in_normal_atlas;
+         int normal_tile_num_to_set = tile_num_to_set % (num_tiles_in_normal_atlas / 3);
          //normal_tile_num_to_set = (-tile_num_to_set + 256*256) % num_tiles_in_atlas;
          mesh_with_normals.set_normal_tile(x, y, normal_tile_num_to_set);
       }
@@ -158,17 +159,25 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    ALLEGRO_BITMAP* texture = atlas.get_bitmap();
    //ALLEGRO_BITMAP* texture = nullptr;
 
-   shader.activate();
-   shader.set_flat_color(ALLEGRO_COLOR{1, 0, 1, 1}, 0.3);
-   shader.set_primary_texture(atlas.get_bitmap());
-   shader.set_normal_texture(normal_atlas.get_bitmap());
+   int passes = 60*2;
+   for (int i=0; i<passes; i++)
+   {
+      al_clear_to_color(ALLEGRO_COLOR{0, 0, 0, 0});
 
-   al_draw_prim(&vertexes[0], vertex_declaration, irrelevant_texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+      shader.activate();
+      shader.set_flat_color(ALLEGRO_COLOR{1, 0, 1, 1}, 0.3);
+      shader.set_primary_texture(atlas.get_bitmap());
+      shader.set_normal_texture(normal_atlas.get_bitmap());
+      shader.set_light_angle_of_incidence((float)(i)/passes);
 
-   //al_draw_bitmap(texture, 1920/2, 1080/2, 0);
+      al_draw_prim(&vertexes[0], vertex_declaration, irrelevant_texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
 
-   al_flip_display();
-   sleep(2);
+      //al_draw_bitmap(texture, 1920/2, 1080/2, 0);
+
+      al_flip_display();
+   }
+
+   //sleep(2);
 
    mesh_with_normals.destroy();
    al_shutdown_image_addon();

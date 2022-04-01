@@ -142,8 +142,10 @@ bool MeshWithNormals::set_tile(int tile_x, int tile_y, int tile_index_num)
 
    tile_ids[tile_x + tile_y * num_columns] = tile_index_num;
 
-   int atlas_bitmap_width = 320; // <- TODO: fix this scaling
-   int atlas_bitmap_height = 384;
+   int atlas_bitmap_width = atlas->get_bitmap_width(); // <- TODO: consider revising scaling by atlas size
+   int atlas_bitmap_height = atlas->get_bitmap_height();
+
+   if (atlas_bitmap_width <= 0 || atlas_bitmap_height <= 0) throw std::runtime_error("jiopjojop");
 
    float u1, v1, u2, v2 = 0;
    if (!atlas->get_tile_uv(tile_index_num, &u1, &v1, &u2, &v2)) return false;
@@ -177,8 +179,10 @@ bool MeshWithNormals::set_normal_tile(int tile_x, int tile_y, int tile_index_num
 
    normal_tile_ids[tile_x + tile_y * num_columns] = tile_index_num;
 
-   int normal_atlas_bitmap_width = 48; // <-- TODO: fix this scaling
-   int normal_atlas_bitmap_height = 48;
+   int normal_atlas_bitmap_width = normal_atlas->get_bitmap_width(); // <-- TODO: consider revising scaling by atlas
+   int normal_atlas_bitmap_height = normal_atlas->get_bitmap_height();
+
+   if (normal_atlas_bitmap_width <= 0 || normal_atlas_bitmap_height <= 0) throw std::runtime_error("asdfadfs");
 
    float u1, v1, u2, v2 = 0;
    if (!normal_atlas->get_tile_uv(tile_index_num, &u1, &v1, &u2, &v2)) return false;

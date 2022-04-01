@@ -66,6 +66,20 @@ ALLEGRO_BITMAP *Atlas::get_bitmap()
 }
 
 
+int Atlas::get_bitmap_width()
+{
+   if (!bitmap) return 0;
+   return al_get_bitmap_width(bitmap);
+}
+
+
+int Atlas::get_bitmap_height()
+{
+   if (!bitmap) return 0;
+   return al_get_bitmap_height(bitmap);
+}
+
+
 std::string Atlas::get_bitmap_filename() const
 {
    return bitmap_filename;

@@ -40,6 +40,8 @@ namespace Tileo
 
       ALLEGRO_BITMAP *get_bitmap();
       int get_tile_index_size();
+      int get_bitmap_width();
+      int get_bitmap_height();
 
       void draw_tile_to_atlas(ALLEGRO_BITMAP *tile, int tile_num, ALLEGRO_COLOR color=al_map_rgba_f(1, 1, 1, 1));
       bool get_tile_uv(int index_num, int *u1, int *v1, int *u2, int *v2);
