@@ -127,10 +127,8 @@ std::string MeshWithNormals::obtain_fragment_source()
        vec4 c, normal_c;
        if (al_use_tex)
        {
-         //c = varying_color * texture2D(al_tex, varying_texcoord); // <-- this is the base texture
-         c = varying_color * texture2D(primary_texture, varying_texcoord); // <-- this is the base texture
-         //c = varying_color * texture2D(primary_texture, varying_texcoord);
-         normal_c = varying_color * texture2D(normal_texture, varying_normal_texcoord); // <-- this is the normal texture
+         c = varying_color * texture2D(primary_texture, varying_texcoord);
+         normal_c = varying_color * texture2D(normal_texture, varying_normal_texcoord);
        }
        else
        {
