@@ -129,16 +129,18 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    bitmap_bin.set_full_path("/Users/markoates/Repos/tileo/bin/programs/data/bitmaps/");
    ALLEGRO_BITMAP* tile_map_texture = bitmap_bin["tiles_dungeon_v1.1.png"];
    ALLEGRO_BITMAP* irrelevant_texture = bitmap_bin["test_texture.png"];
+   ALLEGRO_BITMAP* normal_map_texture = bitmap_bin["normal-tileset-01.png"];
    Tileo::Atlas atlas;
    atlas.duplicate_bitmap_and_load(tile_map_texture, 16, 16);
    Tileo::Atlas normal_atlas;
-   normal_atlas.duplicate_bitmap_and_load(tile_map_texture, 16, 16);
+   normal_atlas.duplicate_bitmap_and_load(normal_map_texture, 16, 16);
    Tileo::MeshWithNormals mesh_with_normals(25, 15, 16*4.8, 16*4.5, &atlas, &normal_atlas);
    mesh_with_normals.initialize();
    Tileo::Shaders::MeshWithNormals shader;
    shader.initialize();
 
    int num_tiles_in_atlas = atlas.get_tile_index_size();
+   int num_tiles_in_normal_atlas = normal_atlas.get_tile_index_size();
    for (int y=0; y<mesh_with_normals.get_num_rows(); y++)
       for (int x=0; x<mesh_with_normals.get_num_columns(); x++)
       {
@@ -146,7 +148,8 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
          tile_num_to_set = tile_num_to_set % num_tiles_in_atlas;
          mesh_with_normals.set_tile(x, y, tile_num_to_set);
 
-         int normal_tile_num_to_set = (-tile_num_to_set + 256*256) % num_tiles_in_atlas;
+         int normal_tile_num_to_set = tile_num_to_set % num_tiles_in_normal_atlas;
+         //normal_tile_num_to_set = (-tile_num_to_set + 256*256) % num_tiles_in_atlas;
          mesh_with_normals.set_normal_tile(x, y, normal_tile_num_to_set);
       }
 

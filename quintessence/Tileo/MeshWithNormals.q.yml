@@ -125,9 +125,16 @@ functions:
 
       tile_ids[tile_x + tile_y * num_columns] = tile_index_num;
 
+      int atlas_bitmap_width = 320;
+      int atlas_bitmap_height = 384;
+
       float u1, v1, u2, v2 = 0;
       if (!atlas->get_tile_uv(tile_index_num, &u1, &v1, &u2, &v2)) return false;
-      if (!set_tile_uv(tile_x, tile_y, u1/320.0, v1/384.0, u2/320.0, v2/384.0)) return false; // <- TODO: fix this scaling
+      u1 /= atlas_bitmap_width;
+      v1 /= atlas_bitmap_height;
+      u2 /= atlas_bitmap_width;
+      v2 /= atlas_bitmap_height;
+      if (!set_tile_uv(tile_x, tile_y, u1, v1, u2, v2)) return false; // <- TODO: fix this scaling
 
       return true;
     
@@ -153,9 +160,16 @@ functions:
 
       normal_tile_ids[tile_x + tile_y * num_columns] = tile_index_num;
 
+      int normal_atlas_bitmap_width = 48;
+      int normal_atlas_bitmap_height = 48;
+
       float u1, v1, u2, v2 = 0;
       if (!normal_atlas->get_tile_uv(tile_index_num, &u1, &v1, &u2, &v2)) return false;
-      if (!set_normal_tile_uv(tile_x, tile_y, u1/320.0, v1/384.0, u2/320.0, v2/384.0)) return false; // <- TODO: fix this scaling
+      u1 /= normal_atlas_bitmap_width;
+      v1 /= normal_atlas_bitmap_height;
+      u2 /= normal_atlas_bitmap_width;
+      v2 /= normal_atlas_bitmap_height;
+      if (!set_normal_tile_uv(tile_x, tile_y, u1, v1, u2, v2)) return false; // <- TODO: fix this scaling
 
       return true;
     
