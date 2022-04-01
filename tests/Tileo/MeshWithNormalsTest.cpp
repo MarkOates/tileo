@@ -141,7 +141,9 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    Tileo::Shaders::MeshWithNormals shader;
    shader.initialize();
 
-   std::vector<std::pair<int, int>> tile_and_normal_tile_pairs = { { 2, 2 }, { 18, 3 }, { 19, 0 }, { 12, 5 }, { 17, 6 } };
+   std::vector<std::pair<int, int>> tile_and_normal_tile_pairs = {
+      { 2, 2 }, { 18, 3 }, { 19, 0 }, { 12, 5 }, { 17, 6 }, { 8, 7 }
+   };
 
    int num_tiles_in_atlas = atlas.get_tile_index_size();
    int num_tiles_in_normal_atlas = normal_atlas.get_tile_index_size();
@@ -167,19 +169,33 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    ALLEGRO_BITMAP* texture = atlas.get_bitmap();
    //ALLEGRO_BITMAP* texture = nullptr;
 
-   int passes = 60*15;
+   int passes = 60*26;
+
+   //int passes = 30;
    for (int i=0; i<passes; i++)
    {
       al_clear_to_color(ALLEGRO_COLOR{0, 0, 0, 0});
+      float arc = (float)(i)/passes;
+      AllegroFlare::vec2d vec = AllegroFlare::vec2d::polar_coords(arc * 3.14159 * 2, 1.0f); //*(3.14159 / 2), 1.0f);
+      AllegroFlare::vec2d vec_n = vec.normalized();
+      vec_n.y *= -1;
 
       shader.activate();
       shader.set_flat_color(ALLEGRO_COLOR{1, 0, 1, 1}, 0.3);
       shader.set_primary_texture(atlas.get_bitmap());
       shader.set_normal_texture(normal_atlas.get_bitmap());
-      shader.set_light_position({0.5, (float)(i)/passes});
+      shader.set_light_position(vec_n);
       shader.set_light_spread(0);
 
+
       al_draw_prim(&vertexes[0], vertex_declaration, irrelevant_texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
+
+
+      al_use_shader(nullptr);
+      //shader.deactivate();
+      float x = 1920/2, y = 1080/2, r=300;
+      al_draw_circle(x, y, r, ALLEGRO_COLOR{0, 1, 1, 1}, 3.0f);
+      al_draw_filled_circle(x+r*vec_n.x, y+-r*vec_n.y, 6, ALLEGRO_COLOR{1, 1, 1, 1});
 
       //al_draw_bitmap(texture, 1920/2, 1080/2, 0);
 

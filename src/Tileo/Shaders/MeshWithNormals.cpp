@@ -189,6 +189,26 @@ std::string MeshWithNormals::obtain_fragment_source()
 
      void alter_by_normal_texture_color(inout vec4 color, in vec4 normal_color)
      {
+        //vec3 normalized_normal_texture_angle = normalize(vec3(normal_color.r, normal_color.g, normal_color.b));
+        vec3 normalized_normal_texture_angle = normalize(
+           vec3(2.0 * normal_color.r - 1.0, 2.0 * normal_color.g - 1.0, 2.0 * normal_color.b - 1.0)
+        );
+        //vec3 normalized_normal_texture_angle = normalize(vec3(1., 1., 0.));
+        vec3 normalized_light_angle = normalize(vec3(light_position.x, light_position.y, 0.0));
+
+        float dot_product = dot(normalized_light_angle, normalized_normal_texture_angle);
+
+        //float m = pow(dot_product, 5.0);
+        float m = dot_product;
+
+        color.r = color.r *= m; //normal_color.r; //inverse_tint_intensity + tint.r * tint_intensity) * color.a;
+        color.g = color.g *= m; //normal_color.g; //inverse_tint_intensity + tint.g * tint_intensity) * color.a;
+        color.b = color.b *= m; //normal_color.b; //inverse_tint_intensity + tint.b * tint_intensity) * color.a;
+        color.a = color.a;
+     }
+
+     void alter_by_normal_texture_color_OLD(inout vec4 color, in vec4 normal_color)
+     {
         //int spread = 1;
         int light_direction_y = int(floor(light_position.y * 8.0 + 0.5));
         int angle_to_light_y = int(floor(normal_color.g * 8.0 + 0.5));
