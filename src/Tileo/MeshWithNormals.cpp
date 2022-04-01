@@ -142,7 +142,7 @@ bool MeshWithNormals::set_tile(int tile_x, int tile_y, int tile_index_num)
 
    tile_ids[tile_x + tile_y * num_columns] = tile_index_num;
 
-   int atlas_bitmap_width = 320;
+   int atlas_bitmap_width = 320; // <- TODO: fix this scaling
    int atlas_bitmap_height = 384;
 
    float u1, v1, u2, v2 = 0;
@@ -151,7 +151,7 @@ bool MeshWithNormals::set_tile(int tile_x, int tile_y, int tile_index_num)
    v1 /= atlas_bitmap_height;
    u2 /= atlas_bitmap_width;
    v2 /= atlas_bitmap_height;
-   if (!set_tile_uv(tile_x, tile_y, u1, v1, u2, v2)) return false; // <- TODO: fix this scaling
+   if (!set_tile_uv(tile_x, tile_y, u1, v1, u2, v2)) return false;
 
    return true;
 }
@@ -177,7 +177,7 @@ bool MeshWithNormals::set_normal_tile(int tile_x, int tile_y, int tile_index_num
 
    normal_tile_ids[tile_x + tile_y * num_columns] = tile_index_num;
 
-   int normal_atlas_bitmap_width = 48;
+   int normal_atlas_bitmap_width = 48; // <-- TODO: fix this scaling
    int normal_atlas_bitmap_height = 48;
 
    float u1, v1, u2, v2 = 0;
@@ -186,7 +186,7 @@ bool MeshWithNormals::set_normal_tile(int tile_x, int tile_y, int tile_index_num
    v1 /= normal_atlas_bitmap_height;
    u2 /= normal_atlas_bitmap_width;
    v2 /= normal_atlas_bitmap_height;
-   if (!set_normal_tile_uv(tile_x, tile_y, u1, v1, u2, v2)) return false; // <- TODO: fix this scaling
+   if (!set_normal_tile_uv(tile_x, tile_y, u1, v1, u2, v2)) return false;
 
    return true;
 }
