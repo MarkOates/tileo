@@ -12,6 +12,7 @@
 #include <AllegroFlare/Vec2D.hpp>
 #include <AllegroFlare/Random.hpp>
 #include <Tileo/Shaders/AllegroDefault.hpp>
+#include <allegro5/allegro_color.h> // for al_color_html
 
 class Tileo_MeshWithNormalsRenderingFixtureTest : public ::testing::Test
 {
@@ -124,6 +125,36 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, vertexes_will_render_as_expect
 
 #include <Tileo/Shaders/MeshWithNormals.hpp>
 
+
+typedef std::pair<int, int> normaled_tile;
+
+void fill_rect(int x1, int y1, int x2, int y2, normaled_tile t, Tileo::MeshWithNormals &mesh)
+{
+   for (int y=y1; y<=y2; y++)
+      for (int x=x1; x<=x2; x++)
+   {
+      mesh.set_tile(x, y, t.first); //tile_id);
+      mesh.set_normal_tile(x, y, t.second); //normal_til_id);
+   }
+}
+
+void set_tile(int x, int y, normaled_tile t, Tileo::MeshWithNormals &mesh)
+{
+   mesh.set_tile(x, y, t.first);
+   mesh.set_normal_tile(x, y, t.second);
+}
+
+AllegroFlare::vec3d build_light_from(float arc, float z=1.0)
+{
+   AllegroFlare::vec2d vec = AllegroFlare::vec2d::polar_coords(arc * (3.14159 * 2), 1.0f);
+   return AllegroFlare::vec3d({vec.x, vec.y, z}).normalized();
+}
+
+
+AllegroFlare::vec3d build_light_from_top_right(float z=1.0) { return build_light_from(0.875, z); }
+AllegroFlare::vec3d build_light_from_top(float z=1.0) { return build_light_from(0.75, z); }
+
+
 TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_render_as_expected)
 {
    al_init_image_addon();
@@ -162,7 +193,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
          // random
          int r1 = random.get_random_int(0, num_tiles_in_atlas-1);
          int r2 = random.get_random_int(0, num_tiles_in_normal_atlas-1);
-         while (r2 == 7) r2 = random.get_random_int(0, num_tiles_in_normal_atlas-1);
+         while (r2 == 9) r2 = random.get_random_int(0, num_tiles_in_normal_atlas-1);
          int tile_id = r1 % num_tiles_in_atlas;
          int normal_tile_id = r2 % num_tiles_in_normal_atlas;
 
@@ -179,20 +210,35 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
          mesh_with_normals.set_normal_tile(x, y, normal_tile_id); //normal_tile_num_to_set);
       }
 
+   fill_rect(5, 4, 25-6, 15-4, {0, 0}, mesh_with_normals);
+   fill_rect(5, 15-3, 25-6, 15, {4, 3}, mesh_with_normals);
+
+   set_tile(9, 15-4, {22, 12}, mesh_with_normals);
+   set_tile(10, 15-4, {22, 13}, mesh_with_normals);
+   set_tile(11, 15-4, {22, 14}, mesh_with_normals);
+
    std::vector<TILEO_TILE_VERTEX> &vertexes = mesh_with_normals.get_vertexes_ref();
    ALLEGRO_VERTEX_DECL* vertex_declaration = mesh_with_normals.obtain_vertex_declaration();
    ALLEGRO_BITMAP* texture = atlas.get_bitmap();
    //ALLEGRO_BITMAP* texture = nullptr;
 
-   int passes = 60*26;
+   int passes = 60*8;
 
    //int passes = 30;
    for (int i=0; i<passes; i++)
    {
-      al_clear_to_color(ALLEGRO_COLOR{0, 0, 0, 0});
+      //al_clear_to_color(ALLEGRO_COLOR{0, 0, 0, 0});
+      al_clear_to_color(al_color_html("a4dddb"));
       float arc = (float)(i)/passes;
-      AllegroFlare::vec2d vec = AllegroFlare::vec2d::polar_coords(arc * 3.14159 * 2, 1.0f); //*(3.14159 / 2), 1.0f);
-      AllegroFlare::vec3d vec_n = AllegroFlare::vec3d({vec.x, vec.y, 1.0}).normalized();
+
+      // spinning
+      AllegroFlare::vec2d vec = AllegroFlare::vec2d::polar_coords(arc * (3.14159 * 2), 3.0f); //*(3.14159 / 2), 1.0f);
+      AllegroFlare::vec3d vec_n = AllegroFlare::vec3d({vec.x, vec.y, 3.0}).normalized();
+
+      // fixed
+      //AllegroFlare::vec3d vec_n = build_light_from_top_right();
+      //AllegroFlare::vec3d vec_n = build_light_from_top();
+
       vec_n.y *= -1;
 
       shader.activate();
@@ -201,6 +247,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
       shader.set_normal_texture(normal_atlas.get_bitmap());
       shader.set_light_position(vec_n);
       shader.set_light_spread(0);
+      shader.set_light_attenuation(1.0);
 
 
       al_draw_prim(&vertexes[0], vertex_declaration, irrelevant_texture, 0, vertexes.size(), ALLEGRO_PRIM_TRIANGLE_LIST);
@@ -209,8 +256,8 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
       al_use_shader(nullptr);
       //shader.deactivate();
       float x = 1920/2, y = 1080/2, r=300;
-      al_draw_circle(x, y, r, ALLEGRO_COLOR{0, 1, 1, 1}, 3.0f);
-      al_draw_filled_circle(x+r*vec_n.x, y+-r*vec_n.y, 6, ALLEGRO_COLOR{1, 1, 1, 1});
+      //al_draw_circle(x, y, r, ALLEGRO_COLOR{0, 1, 1, 1}, 3.0f);
+      //al_draw_filled_circle(x+r*vec_n.x, y+-r*vec_n.y, 6, ALLEGRO_COLOR{1, 1, 1, 1});
 
       //al_draw_bitmap(texture, 1920/2, 1080/2, 0);
 

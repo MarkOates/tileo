@@ -25,6 +25,7 @@ namespace Tileo
          void set_flat_color(ALLEGRO_COLOR flat_color={}, float intensity=1.0f);
          void set_light_position(AllegroFlare::vec3d light_position={0, 0, 0});
          void set_light_spread(int light_spread=0);
+         void set_light_attenuation(float light_attenuation=1.0f);
          void set_primary_texture(ALLEGRO_BITMAP* primary_texture_bitmap=nullptr);
          void set_normal_texture(ALLEGRO_BITMAP* normal_texture_bitmap=nullptr);
          static std::string obtain_vertex_source();

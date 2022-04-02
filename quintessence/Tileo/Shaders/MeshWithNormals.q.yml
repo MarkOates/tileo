@@ -65,6 +65,16 @@ functions:
       return;
 
 
+  - name: set_light_attenuation
+    parameters:
+      - name: light_attenuation
+        type: float
+        default_argument: 1.0f
+    body: |
+      Shader::set_float("light_attenuation", light_attenuation);
+      return;
+
+
   - name: set_primary_texture
     parameters:
       - name: primary_texture_bitmap
@@ -148,6 +158,7 @@ functions:
         // lights logic:
         uniform vec3 light_position;
         uniform int light_spread;
+        uniform float light_attenuation;
 
         // normals logic:
         uniform sampler2D primary_texture; // analagous to al_tex
@@ -236,8 +247,8 @@ functions:
 
            float dot_product = dot(normalized_light_angle, normalized_normal_texture_angle);
 
-           //float m = pow(dot_product, 5.0);
-           float m = dot_product;
+           float m = pow(dot_product, light_attenuation);
+           //float m = dot_product;
 
            color.r = color.r *= m; //normal_color.r; //inverse_tint_intensity + tint.r * tint_intensity) * color.a;
            color.g = color.g *= m; //normal_color.g; //inverse_tint_intensity + tint.g * tint_intensity) * color.a;

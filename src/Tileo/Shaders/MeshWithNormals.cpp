@@ -59,6 +59,12 @@ void MeshWithNormals::set_light_spread(int light_spread)
    return;
 }
 
+void MeshWithNormals::set_light_attenuation(float light_attenuation)
+{
+   Shader::set_float("light_attenuation", light_attenuation);
+   return;
+}
+
 void MeshWithNormals::set_primary_texture(ALLEGRO_BITMAP* primary_texture_bitmap)
 {
    Shader::set_sampler("primary_texture", primary_texture_bitmap, 1);
@@ -128,6 +134,7 @@ std::string MeshWithNormals::obtain_fragment_source()
      // lights logic:
      uniform vec3 light_position;
      uniform int light_spread;
+     uniform float light_attenuation;
 
      // normals logic:
      uniform sampler2D primary_texture; // analagous to al_tex
@@ -216,8 +223,8 @@ std::string MeshWithNormals::obtain_fragment_source()
 
         float dot_product = dot(normalized_light_angle, normalized_normal_texture_angle);
 
-        //float m = pow(dot_product, 5.0);
-        float m = dot_product;
+        float m = pow(dot_product, light_attenuation);
+        //float m = dot_product;
 
         color.r = color.r *= m; //normal_color.r; //inverse_tint_intensity + tint.r * tint_intensity) * color.a;
         color.g = color.g *= m; //normal_color.g; //inverse_tint_intensity + tint.g * tint_intensity) * color.a;
