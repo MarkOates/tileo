@@ -137,7 +137,8 @@ std::string MeshWithNormals::obtain_fragment_source()
      bool alpha_test_func(float x, int op, float compare);
      void alter_by_tint(inout vec4 color);
      void alter_by_normal_texture_color(inout vec4 color, in vec4 normal_color);
-     void downsample_color(inout vec4 color);
+     void downsample_color_8bit(inout vec4 color);
+     void downsample_color_16bit(inout vec4 color);
 
      void main()
      {
@@ -156,7 +157,7 @@ std::string MeshWithNormals::obtain_fragment_source()
        {
          c = alter_by_normal_texture_color(c, normal_c);
          c = alter_by_tint(c);
-         c = downsample_color(c);
+         c = downsample_color_16bit(c);
 
          gl_FragColor = c;
        }
@@ -190,11 +191,18 @@ std::string MeshWithNormals::obtain_fragment_source()
         color.a = color.a;
      }
 
-     void downsample_color(inout vec4 color)
+     void downsample_color_8bit(inout vec4 color)
      {
         color.r = floor(color.r * 9. + 0.5) / 9.;
         color.g = floor(color.g * 8. + 0.5) / 8.;
         color.b = floor(color.b * 4. + 0.5) / 4.;
+     }
+
+     void downsample_color_16bit(inout vec4 color)
+     {
+        color.r = floor(color.r * 12. + 0.5) / 12.;
+        color.g = floor(color.g * 16. + 0.5) / 16.;
+        color.b = floor(color.b * 9. + 0.5) / 9.;
      }
 
      void alter_by_normal_texture_color(inout vec4 color, in vec4 normal_color)

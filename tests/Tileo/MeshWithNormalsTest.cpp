@@ -159,9 +159,16 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
          //tile_num_to_set = tile_num_to_set % num_tiles_in_atlas;
          //mesh_with_normals.set_tile(x, y, tile_id); //tile_num_to_set);
 
-         int tile_id = i % num_tiles_in_atlas;
-         int normal_tile_id = i % num_tiles_in_normal_atlas;
-         //normal_tile_num_to_set = (-tile_num_to_set + 256*256) % num_tiles_in_atlas;
+         // random
+         int r1 = random.get_random_int(0, num_tiles_in_atlas-1);
+         int r2 = random.get_random_int(0, num_tiles_in_normal_atlas-1);
+         while (r2 == 7) r2 = random.get_random_int(0, num_tiles_in_normal_atlas-1);
+         int tile_id = r1 % num_tiles_in_atlas;
+         int normal_tile_id = r2 % num_tiles_in_normal_atlas;
+
+         // sequential
+         //int tile_id = i % num_tiles_in_atlas;
+         //int normal_tile_id = i % num_tiles_in_normal_atlas;
 
          // picking from preset pairs:
          //int pair_to_pick = random.get_random_int(0, (tile_and_normal_tile_pairs.size()-1));
