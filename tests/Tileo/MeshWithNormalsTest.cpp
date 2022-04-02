@@ -9,6 +9,7 @@
 #include <Tileo/MeshWithNormals.hpp>
 
 #include <AllegroFlare/BitmapBin.hpp>
+#include <AllegroFlare/Vec2D.hpp>
 #include <AllegroFlare/Random.hpp>
 #include <Tileo/Shaders/AllegroDefault.hpp>
 
@@ -151,16 +152,23 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    for (int y=0; y<mesh_with_normals.get_num_rows(); y++)
       for (int x=0; x<mesh_with_normals.get_num_columns(); x++)
       {
+         int i = (x + y * mesh_with_normals.get_num_columns());
          //int pair_to_pick = (x + y * mesh_with_normals.get_num_columns()) % tile_and_normal_tile_pairs.size();
-         int pair_to_pick = random.get_random_int(0, (tile_and_normal_tile_pairs.size()-1));
-         //int tile_num_to_set = (x + y * mesh_with_normals.get_num_columns());
+         //int pair_to_pick = random.get_random_int(0, (tile_and_normal_tile_pairs.size()-1));
+         ////int tile_id = (x + y * mesh_with_normals.get_num_columns());
          //tile_num_to_set = tile_num_to_set % num_tiles_in_atlas;
-         int tile_id = tile_and_normal_tile_pairs[pair_to_pick].first;
-         mesh_with_normals.set_tile(x, y, tile_id); //tile_num_to_set);
+         //mesh_with_normals.set_tile(x, y, tile_id); //tile_num_to_set);
 
-         //int normal_tile_num_to_set = tile_num_to_set % (num_tiles_in_normal_atlas / 3);
+         int tile_id = i % num_tiles_in_atlas;
+         int normal_tile_id = i % num_tiles_in_normal_atlas;
          //normal_tile_num_to_set = (-tile_num_to_set + 256*256) % num_tiles_in_atlas;
-         int normal_tile_id = tile_and_normal_tile_pairs[pair_to_pick].second;
+
+         // picking from preset pairs:
+         //int pair_to_pick = random.get_random_int(0, (tile_and_normal_tile_pairs.size()-1));
+         //int tile_id = tile_and_normal_tile_pairs[pair_to_pick].first;
+         //int normal_tile_id = tile_and_normal_tile_pairs[pair_to_pick].second;
+
+         mesh_with_normals.set_tile(x, y, tile_id); //tile_num_to_set);
          mesh_with_normals.set_normal_tile(x, y, normal_tile_id); //normal_tile_num_to_set);
       }
 
@@ -177,7 +185,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
       al_clear_to_color(ALLEGRO_COLOR{0, 0, 0, 0});
       float arc = (float)(i)/passes;
       AllegroFlare::vec2d vec = AllegroFlare::vec2d::polar_coords(arc * 3.14159 * 2, 1.0f); //*(3.14159 / 2), 1.0f);
-      AllegroFlare::vec2d vec_n = vec.normalized();
+      AllegroFlare::vec3d vec_n = AllegroFlare::vec3d({vec.x, vec.y, 1.0}).normalized();
       vec_n.y *= -1;
 
       shader.activate();

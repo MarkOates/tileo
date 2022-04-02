@@ -47,9 +47,9 @@ void MeshWithNormals::set_flat_color(ALLEGRO_COLOR flat_color, float intensity)
    return;
 }
 
-void MeshWithNormals::set_light_position(AllegroFlare::vec2d light_position)
+void MeshWithNormals::set_light_position(AllegroFlare::vec3d light_position)
 {
-   Shader::set_vec2("light_position", light_position.x, light_position.y);
+   Shader::set_vec3("light_position", light_position.x, light_position.y, light_position.z);
    return;
 }
 
@@ -126,7 +126,7 @@ std::string MeshWithNormals::obtain_fragment_source()
      uniform vec3 tint;
 
      // lights logic:
-     uniform vec2 light_position;
+     uniform vec3 light_position;
      uniform int light_spread;
 
      // normals logic:
@@ -137,6 +137,7 @@ std::string MeshWithNormals::obtain_fragment_source()
      bool alpha_test_func(float x, int op, float compare);
      void alter_by_tint(inout vec4 color);
      void alter_by_normal_texture_color(inout vec4 color, in vec4 normal_color);
+     void downsample_color(inout vec4 color);
 
      void main()
      {
@@ -153,9 +154,11 @@ std::string MeshWithNormals::obtain_fragment_source()
 
        if (!al_alpha_test || alpha_test_func(c.a, al_alpha_func, al_alpha_test_val))
        {
-         vec4 normal_altered_c = alter_by_normal_texture_color(c, normal_c);
+         c = alter_by_normal_texture_color(c, normal_c);
+         c = alter_by_tint(c);
+         c = downsample_color(c);
 
-         gl_FragColor = alter_by_tint(normal_altered_c);
+         gl_FragColor = c;
        }
        else
        {
@@ -187,6 +190,13 @@ std::string MeshWithNormals::obtain_fragment_source()
         color.a = color.a;
      }
 
+     void downsample_color(inout vec4 color)
+     {
+        color.r = floor(color.r * 9. + 0.5) / 9.;
+        color.g = floor(color.g * 8. + 0.5) / 8.;
+        color.b = floor(color.b * 4. + 0.5) / 4.;
+     }
+
      void alter_by_normal_texture_color(inout vec4 color, in vec4 normal_color)
      {
         //vec3 normalized_normal_texture_angle = normalize(vec3(normal_color.r, normal_color.g, normal_color.b));
@@ -194,7 +204,7 @@ std::string MeshWithNormals::obtain_fragment_source()
            vec3(2.0 * normal_color.r - 1.0, 2.0 * normal_color.g - 1.0, 2.0 * normal_color.b - 1.0)
         );
         //vec3 normalized_normal_texture_angle = normalize(vec3(1., 1., 0.));
-        vec3 normalized_light_angle = normalize(vec3(light_position.x, light_position.y, 0.0));
+        vec3 normalized_light_angle = normalize(vec3(light_position.x, light_position.y, light_position.z));
 
         float dot_product = dot(normalized_light_angle, normalized_normal_texture_angle);
 

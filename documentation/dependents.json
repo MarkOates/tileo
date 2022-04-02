@@ -28,7 +28,7 @@
     "Tileo/Shaders/MeshWithNormals",
     "Tileo/TileIndexInfo"
   ],
-  "AllegroFlare/vec2d": [
+  "AllegroFlare/vec3d": [
     "Tileo/Shaders/MeshWithNormals"
   ],
   "Blast/FileExistenceChecker": [
