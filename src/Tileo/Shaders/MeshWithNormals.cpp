@@ -146,6 +146,7 @@ std::string MeshWithNormals::obtain_fragment_source()
      void alter_by_normal_texture_color(inout vec4 color, in vec4 normal_color);
      void downsample_color_8bit(inout vec4 color);
      void downsample_color_16bit(inout vec4 color);
+     void downsample_color_32bit(inout vec4 color);
 
      void main()
      {
@@ -164,7 +165,7 @@ std::string MeshWithNormals::obtain_fragment_source()
        {
          c = alter_by_normal_texture_color(c, normal_c);
          c = alter_by_tint(c);
-         c = downsample_color_16bit(c);
+         c = downsample_color_32bit(c);
 
          gl_FragColor = c;
        }
@@ -212,6 +213,13 @@ std::string MeshWithNormals::obtain_fragment_source()
         color.b = floor(color.b * 9. + 0.5) / 9.;
      }
 
+     void downsample_color_32bit(inout vec4 color)
+     {
+        color.r = floor(color.r * 24. + 0.5) / 24.;
+        color.g = floor(color.g * 24. + 0.5) / 24.;
+        color.b = floor(color.b * 24. + 0.5) / 24.;
+     }
+
      void alter_by_normal_texture_color(inout vec4 color, in vec4 normal_color)
      {
         //vec3 normalized_normal_texture_angle = normalize(vec3(normal_color.r, normal_color.g, normal_color.b));
@@ -245,15 +253,15 @@ std::string MeshWithNormals::obtain_fragment_source()
         if (in_shadow)
         {
            // darken
-           color.r = color.r *= 0.8; //normal_color.r; //inverse_tint_intensity + tint.r * tint_intensity) * color.a;
-           color.g = color.g *= 0.8; //normal_color.g; //inverse_tint_intensity + tint.g * tint_intensity) * color.a;
-           color.b = color.b *= 0.8; //normal_color.b; //inverse_tint_intensity + tint.b * tint_intensity) * color.a;
-           color.a = color.a *= 0.8;
+           color.r = color.r *= 0.9; //normal_color.r; //inverse_tint_intensity + tint.r * tint_intensity) * color.a;
+           color.g = color.g *= 0.9; //normal_color.g; //inverse_tint_intensity + tint.g * tint_intensity) * color.a;
+           color.b = color.b *= 0.9; //normal_color.b; //inverse_tint_intensity + tint.b * tint_intensity) * color.a;
+           color.a = color.a *= 0.9;
         }
 
         if (in_light)
         {
-           return;
+           //return;
            // brighten
            color.r = color.r += 0.2; //normal_color.r; //inverse_tint_intensity + tint.r * tint_intensity) * color.a;
            color.g = color.g += 0.2; //normal_color.g; //inverse_tint_intensity + tint.g * tint_intensity) * color.a;
@@ -262,10 +270,11 @@ std::string MeshWithNormals::obtain_fragment_source()
         }
         else
         {
-           color.r = color.r *= 0.8; //normal_color.r; //inverse_tint_intensity + tint.r * tint_intensity) * color.a;
-           color.g = color.g *= 0.8; //normal_color.g; //inverse_tint_intensity + tint.g * tint_intensity) * color.a;
-           color.b = color.b *= 0.8; //normal_color.b; //inverse_tint_intensity + tint.b * tint_intensity) * color.a;
-           color.a = color.a *= 0.8;
+           return;
+           color.r = color.r *= 0.9; //normal_color.r; //inverse_tint_intensity + tint.r * tint_intensity) * color.a;
+           color.g = color.g *= 0.9; //normal_color.g; //inverse_tint_intensity + tint.g * tint_intensity) * color.a;
+           color.b = color.b *= 0.9; //normal_color.b; //inverse_tint_intensity + tint.b * tint_intensity) * color.a;
+           color.a = color.a *= 0.9;
         }
      }
 

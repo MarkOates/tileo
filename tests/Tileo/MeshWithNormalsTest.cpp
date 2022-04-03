@@ -160,8 +160,8 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    al_init_image_addon();
    AllegroFlare::BitmapBin bitmap_bin;
    bitmap_bin.set_full_path("/Users/markoates/Repos/tileo/bin/programs/data/bitmaps/");
-   ALLEGRO_BITMAP* tile_map_texture = bitmap_bin["even-illumination-01.png"];
-   //ALLEGRO_BITMAP* tile_map_texture = bitmap_bin["tiles_dungeon_v1.1.png"];
+   //ALLEGRO_BITMAP* tile_map_texture = bitmap_bin["even-illumination-01.png"];
+   ALLEGRO_BITMAP* tile_map_texture = bitmap_bin["tiles_dungeon_v1.1.png"];
    ALLEGRO_BITMAP* irrelevant_texture = bitmap_bin["test_texture.png"];
    ALLEGRO_BITMAP* normal_map_texture = bitmap_bin["normal-tileset-01.png"];
    Tileo::Atlas atlas;
@@ -191,7 +191,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
          //mesh_with_normals.set_tile(x, y, tile_id); //tile_num_to_set);
 
          // random
-         int r1 = random.get_random_int(0, num_tiles_in_atlas-1);
+         int r1 = random.get_random_int(0, (num_tiles_in_atlas/2)-1);
          int r2 = random.get_random_int(0, num_tiles_in_normal_atlas-1);
          while (r2 == 9) r2 = random.get_random_int(0, num_tiles_in_normal_atlas-1);
          int tile_id = r1 % num_tiles_in_atlas;
@@ -210,8 +210,8 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
          mesh_with_normals.set_normal_tile(x, y, normal_tile_id); //normal_tile_num_to_set);
       }
 
-   fill_rect(5, 4, 25-6, 15-4, {0, 0}, mesh_with_normals);
-   fill_rect(5, 15-3, 25-6, 15, {4, 3}, mesh_with_normals);
+   //fill_rect(5, 4, 25-6, 15-4, {0, 0}, mesh_with_normals);
+   //fill_rect(5, 15-3, 25-6, 15, {4, 3}, mesh_with_normals);
 
    set_tile(9, 15-4, {22, 12}, mesh_with_normals);
    set_tile(10, 15-4, {22, 13}, mesh_with_normals);
@@ -222,14 +222,14 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    ALLEGRO_BITMAP* texture = atlas.get_bitmap();
    //ALLEGRO_BITMAP* texture = nullptr;
 
-   int passes = 60*8;
+   int passes = 60*14;
 
    //int passes = 30;
    for (int i=0; i<passes; i++)
    {
-      //al_clear_to_color(ALLEGRO_COLOR{0, 0, 0, 0});
-      al_clear_to_color(al_color_html("a4dddb"));
-      float arc = (float)(i)/passes;
+      al_clear_to_color(ALLEGRO_COLOR{0, 0, 0, 0});
+      //al_clear_to_color(al_color_html("a4dddb"));
+      float arc = (float)((int)(((float)(i)/passes * 16))) / 16;
 
       // spinning
       AllegroFlare::vec2d vec = AllegroFlare::vec2d::polar_coords(arc * (3.14159 * 2), 3.0f); //*(3.14159 / 2), 1.0f);
