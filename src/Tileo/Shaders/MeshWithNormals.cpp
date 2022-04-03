@@ -47,9 +47,9 @@ void MeshWithNormals::set_flat_color(ALLEGRO_COLOR flat_color, float intensity)
    return;
 }
 
-void MeshWithNormals::set_light_position(AllegroFlare::vec3d light_position)
+void MeshWithNormals::set_light_direction(AllegroFlare::vec3d light_direction)
 {
-   Shader::set_vec3("light_position", light_position.x, light_position.y, light_position.z);
+   Shader::set_vec3("light_direction", light_direction.x, light_direction.y, light_direction.z);
    return;
 }
 
@@ -132,7 +132,7 @@ std::string MeshWithNormals::obtain_fragment_source()
      uniform vec3 tint;
 
      // lights logic:
-     uniform vec3 light_position;
+     uniform vec3 light_direction;
      uniform int light_spread;
      uniform float light_attenuation;
 
@@ -227,7 +227,27 @@ std::string MeshWithNormals::obtain_fragment_source()
            vec3(2.0 * normal_color.r - 1.0, 2.0 * normal_color.g - 1.0, 2.0 * normal_color.b - 1.0)
         );
         //vec3 normalized_normal_texture_angle = normalize(vec3(1., 1., 0.));
-        vec3 normalized_light_angle = normalize(vec3(light_position.x, light_position.y, light_position.z));
+        vec3 normalized_light_angle = normalize(vec3(light_direction.x, light_direction.y, light_direction.z));
+
+        float dot_product = dot(normalized_light_angle, normalized_normal_texture_angle);
+
+        float m = pow(dot_product, light_attenuation);
+        //float m = dot_product;
+
+        color.r = color.r *= m; //normal_color.r; //inverse_tint_intensity + tint.r * tint_intensity) * color.a;
+        color.g = color.g *= m; //normal_color.g; //inverse_tint_intensity + tint.g * tint_intensity) * color.a;
+        color.b = color.b *= m; //normal_color.b; //inverse_tint_intensity + tint.b * tint_intensity) * color.a;
+        color.a = color.a;
+     }
+
+     void alter_by_normal_texture_color_GLOBAL_LIGHT(inout vec4 color, in vec4 normal_color)
+     {
+        //vec3 normalized_normal_texture_angle = normalize(vec3(normal_color.r, normal_color.g, normal_color.b));
+        vec3 normalized_normal_texture_angle = normalize(
+           vec3(2.0 * normal_color.r - 1.0, 2.0 * normal_color.g - 1.0, 2.0 * normal_color.b - 1.0)
+        );
+        //vec3 normalized_normal_texture_angle = normalize(vec3(1., 1., 0.));
+        vec3 normalized_light_angle = normalize(vec3(light_direction.x, light_direction.y, light_direction.z));
 
         float dot_product = dot(normalized_light_angle, normalized_normal_texture_angle);
 
@@ -243,7 +263,7 @@ std::string MeshWithNormals::obtain_fragment_source()
      void alter_by_normal_texture_color_OLD(inout vec4 color, in vec4 normal_color)
      {
         //int spread = 1;
-        int light_direction_y = int(floor(light_position.y * 8.0 + 0.5));
+        int light_direction_y = int(floor(light_direction.y * 8.0 + 0.5));
         int angle_to_light_y = int(floor(normal_color.g * 8.0 + 0.5));
         bool in_shadow =
           (abs(float(light_direction_y) - float(angle_to_light_y)) > float(4));

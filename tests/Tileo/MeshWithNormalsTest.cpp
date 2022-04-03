@@ -245,7 +245,7 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
       shader.set_flat_color(ALLEGRO_COLOR{1, 0, 1, 1}, 0.3);
       shader.set_primary_texture(atlas.get_bitmap());
       shader.set_normal_texture(normal_atlas.get_bitmap());
-      shader.set_light_position(vec_n);
+      shader.set_light_direction(vec_n);
       shader.set_light_spread(0);
       shader.set_light_attenuation(1.0);
 
