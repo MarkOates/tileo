@@ -160,8 +160,8 @@ TEST_F(Tileo_MeshWithNormalsRenderingFixtureTest, INTERACTIVE__vertexes_will_ren
    al_init_image_addon();
    AllegroFlare::BitmapBin bitmap_bin;
    bitmap_bin.set_full_path("/Users/markoates/Repos/tileo/bin/programs/data/bitmaps/");
-   //ALLEGRO_BITMAP* tile_map_texture = bitmap_bin["even-illumination-01.png"];
-   ALLEGRO_BITMAP* tile_map_texture = bitmap_bin["tiles_dungeon_v1.1.png"];
+   ALLEGRO_BITMAP* tile_map_texture = bitmap_bin["even-illumination-01.png"];
+   //ALLEGRO_BITMAP* tile_map_texture = bitmap_bin["tiles_dungeon_v1.1.png"];
    ALLEGRO_BITMAP* irrelevant_texture = bitmap_bin["test_texture.png"];
    ALLEGRO_BITMAP* normal_map_texture = bitmap_bin["normal-tileset-01.png"];
    Tileo::Atlas atlas;
