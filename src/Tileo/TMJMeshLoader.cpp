@@ -200,7 +200,8 @@ bool TMJMeshLoader::load()
       for (int x=0; x<num_columns; x++)
       {
          int tile_id = tiles[y * num_columns + x];
-         created_mesh->set_tile_id(x, y, tile_id-1);
+         if (tile_id == 0) created_mesh->set_tile_id(x, y, 72); // <- TODO: this is a hack to have 0 be transparent
+         else created_mesh->set_tile_id(x, y, tile_id-1);
       }
    }
 
