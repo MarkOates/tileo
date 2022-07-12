@@ -2,7 +2,7 @@
 
 #include <Tileo/TileAtlasBuilder.hpp>
 
-#include <allegro_flare/image_processing.h>
+#include <AllegroFlare/ImageProcessing.hpp>
 
 
 
@@ -185,8 +185,9 @@ ALLEGRO_BITMAP *TileAtlasBuilder::create_pixel_perfect_scaled_render(ALLEGRO_BIT
    }
 
 
+   AllegroFlare::ImageProcessing image_processing(bitmap);
    // scale up the original bitmap
-   ALLEGRO_BITMAP *scaled = allegro_flare::create_pixel_perfect_scaled_render(bitmap, scale);
+   ALLEGRO_BITMAP *scaled = image_processing.create_pixel_perfect_scaled_render(scale);
 
    return scaled;
 
