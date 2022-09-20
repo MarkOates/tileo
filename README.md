@@ -1,3 +1,5 @@
+> ⚠️  IMPORTANT: This repo is now archived. The majority of the functionality has been integrated into [AllegroFlare](https://github.com/allegroflare/allegro_flare).
+
 # Tileo
 
 This project is a consolidation of many different implementations of tilemaps.
